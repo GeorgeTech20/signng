@@ -1,0 +1,31 @@
+{
+  "$schema": "https://signng.dev/schema/registry.json",
+  "name": "signng-ui",
+  "homepage": "https://signng.dev",
+  "items": [
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "description": "cn() class-merge helper.",
+      "integrity": "sha256-19saZq7QlRK4R1B3muj7uHJxWQKaV9ig2LPadhq0zBk="
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "description": "Button with CVA variants. WCAG 2.2 AA focus + target size.",
+      "integrity": "sha256-ItnBBjDmROEQYhkfVTKB36iwIlrdn2wIPODMuDIyXO0="
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "description": "Accessible slider styled on the @signng/core/slider primitive.",
+      "integrity": "sha256-ecISmj4yHdLvOAkY08tDlvI1px1Sh0geZ02Yionwrkg="
+    },
+    {
+      "name": "theme",
+      "type": "registry:theme",
+      "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
+      "integrity": "sha256-fdheWO8RMTky1aAb+vYFGh+qeFvDgZQWNZRkND1CSD8="
+    }
+  ]
+}

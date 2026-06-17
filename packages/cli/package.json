@@ -1,0 +1,16 @@
+{
+  "name": "@signng/cli",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Secure copy-paste installer for signng components (SRI-verified, sandboxed writer).",
+  "bin": {
+    "signng": "./dist/index.mjs"
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@clack/prompts": "^1.5.1",
+    "commander": "^15.0.0",
+    "diff": "^9.0.0",
+    "picocolors": "^1.1.1"
+  }
+}

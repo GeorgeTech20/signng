@@ -1,0 +1,22 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "button",
+  "type": "registry:ui",
+  "description": "Button with CVA variants. WCAG 2.2 AA focus + target size.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/button.ts",
+      "target": "src/components/ui/button.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\n// WCAG 2.2 AA baked in: `focus-visible:ring-2` (2.4.7 focus visible, 1.4.11 UI contrast),\n// every size ≥ 24px tall (2.5.8 target size). No `:focus` outline removal without replacement.\nexport const buttonVariants = cva(\n  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50',\n  {\n    variants: {\n      variant: {\n        default: 'bg-primary text-primary-foreground hover:bg-primary/90',\n        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',\n        outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',\n        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',\n        ghost: 'hover:bg-accent hover:text-accent-foreground',\n        link: 'text-primary underline-offset-4 hover:underline',\n      },\n      size: {\n        default: 'h-10 px-4 py-2',\n        sm: 'h-9 px-3',\n        lg: 'h-11 px-8',\n        icon: 'h-10 w-10',\n      },\n    },\n    defaultVariants: { variant: 'default', size: 'default' },\n  },\n);\n\ntype ButtonVariant = VariantProps<typeof buttonVariants>['variant'];\ntype ButtonSize = VariantProps<typeof buttonVariants>['size'];\n\n@Component({\n  selector: 'button[signngButton], a[signngButton]',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `<ng-content />`,\n  host: {\n    '[class]': 'classes()',\n  },\n})\nexport class Button {\n  readonly variant = input<ButtonVariant>('default');\n  readonly size = input<ButtonSize>('default');\n  readonly class = input('');\n\n  protected readonly classes = computed(() =>\n    cn(buttonVariants({ variant: this.variant(), size: this.size() }), this.class()),\n  );\n}\n",
+      "integrity": "sha256-xRNALtHw0YNWCGvuSgwUBf4GPnYbOKTjx3JmwolyKZw="
+    }
+  ],
+  "integrity": "sha256-ItnBBjDmROEQYhkfVTKB36iwIlrdn2wIPODMuDIyXO0="
+}

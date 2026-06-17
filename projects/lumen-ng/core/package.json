@@ -1,0 +1,16 @@
+{
+  "name": "@signng/core",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/aria": "^22.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@angular/aria": { "optional": true }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

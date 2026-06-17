@@ -1,0 +1,9 @@
+{
+  "registry": "../../registry/public/r",
+  "aliases": {
+    "components": "src/components",
+    "ui": "src/components/ui",
+    "lib": "src/lib"
+  },
+  "theme": "src/signng-theme.css"
+}

@@ -1,0 +1,145 @@
+#!/usr/bin/env node
+// @signng/cli — secure copy-paste installer (shadcn-style registry, hardened).
+// Security: SRI verify + item-manifest verify + write sandbox + dry-run/diff + confirm gate.
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, relative, resolve } from 'node:path';
+import { Command } from 'commander';
+import { createTwoFilesPatch } from 'diff';
+import pc from 'picocolors';
+import { resolveItems, type RegistryItem } from './registry.mts';
+import { assertSafeTarget, verifyFileIntegrity, verifyItemIntegrity } from './security.mts';
+
+interface UiConfig {
+  registry: string;
+  aliases: { components: string; ui: string; lib: string };
+  theme: string;
+}
+
+const DEFAULT_CONFIG: UiConfig = {
+  registry: '../../registry/public/r',
+  aliases: { components: 'src/components', ui: 'src/components/ui', lib: 'src/lib' },
+  theme: 'src/signng-theme.css',
+};
+
+function loadConfig(projectRoot: string): UiConfig {
+  const file = resolve(projectRoot, 'ui.config.json');
+  if (existsSync(file)) return { ...DEFAULT_CONFIG, ...JSON.parse(readFileSync(file, 'utf8')) };
+  return DEFAULT_CONFIG;
+}
+
+function plan(items: RegistryItem[], projectRoot: string) {
+  const writes: { abs: string; target: string; content: string; existed: boolean }[] = [];
+  const npmDeps = new Set<string>();
+  for (const item of items) {
+    verifyItemIntegrity(item); // tamper-evident manifest
+    for (const file of item.files) {
+      verifyFileIntegrity(file); // SRI — fail closed on mismatch
+      const abs = assertSafeTarget(file.target, projectRoot); // sandbox — no traversal/sensitive
+      writes.push({ abs, target: file.target, content: file.content, existed: existsSync(abs) });
+    }
+    for (const d of item.dependencies) npmDeps.add(d);
+  }
+  return { writes, npmDeps };
+}
+
+function showDiff(target: string, oldContent: string, newContent: string): void {
+  if (oldContent === newContent) return;
+  const patch = createTwoFilesPatch(target, target, oldContent, newContent, 'current', 'incoming');
+  for (const line of patch.split('\n').slice(2)) {
+    if (line.startsWith('+') && !line.startsWith('+++')) console.log(pc.green(line));
+    else if (line.startsWith('-') && !line.startsWith('---')) console.log(pc.red(line));
+    else if (line.startsWith('@@')) console.log(pc.cyan(line));
+    else console.log(pc.dim(line));
+  }
+}
+
+async function runAdd(names: string[], opts: { cwd: string; yes?: boolean; dryRun?: boolean }) {
+  const projectRoot = resolve(process.cwd(), opts.cwd);
+  const config = loadConfig(projectRoot);
+  const base = resolve(projectRoot, config.registry);
+
+  console.log(pc.bold(`\nsignng add ${names.join(' ')}`));
+  console.log(pc.dim(`  project : ${projectRoot}`));
+  console.log(pc.dim(`  registry: ${base}\n`));
+
+  const items = await resolveItems(names, base);
+  console.log(pc.dim(`resolved ${items.length} item(s): ${items.map((i) => i.name).join(', ')}`));
+
+  const { writes, npmDeps } = plan(items, projectRoot); // throws if any check fails
+
+  console.log(pc.bold('\nplanned writes (verified ✓):'));
+  for (const w of writes) {
+    console.log(`  ${w.existed ? pc.yellow('overwrite') : pc.green('create   ')} ${relative(projectRoot, w.abs)}`);
+  }
+  for (const w of writes) {
+    console.log(pc.bold(`\n— ${w.target} —`));
+    showDiff(w.target, w.existed ? readFileSync(w.abs, 'utf8') : '', w.content);
+  }
+
+  if (opts.dryRun) {
+    console.log(pc.yellow('\ndry-run: no files written.'));
+    return;
+  }
+  if (!opts.yes) {
+    console.log(pc.yellow('\nre-run with --yes to apply (interactive confirm skipped in non-TTY).'));
+    return;
+  }
+
+  for (const w of writes) {
+    mkdirSync(dirname(w.abs), { recursive: true });
+    writeFileSync(w.abs, w.content);
+  }
+  console.log(pc.green(`\n✔ wrote ${writes.length} file(s).`));
+  if (npmDeps.size) console.log(pc.dim(`  ensure deps: ${[...npmDeps].join(' ')}`));
+}
+
+function ensureThemeImport(projectRoot: string, themePath: string): void {
+  const styles = resolve(projectRoot, 'src/styles.css');
+  const importLine = `@import './${relative(resolve(projectRoot, 'src'), resolve(projectRoot, themePath)).replace(/\\/g, '/')}';`;
+  let current = existsSync(styles) ? readFileSync(styles, 'utf8') : '';
+  if (!current.includes(importLine)) {
+    current = `${importLine}\n${current}`;
+    writeFileSync(styles, current);
+    console.log(pc.green(`✔ wired ${importLine} into src/styles.css`));
+  }
+}
+
+async function runInit(opts: { cwd: string; registry: string; yes?: boolean }) {
+  const projectRoot = resolve(process.cwd(), opts.cwd);
+  const cfgFile = resolve(projectRoot, 'ui.config.json');
+  if (!existsSync(cfgFile)) {
+    const cfg = { ...DEFAULT_CONFIG, registry: opts.registry };
+    writeFileSync(cfgFile, JSON.stringify(cfg, null, 2));
+    console.log(pc.green(`✔ created ui.config.json`));
+  } else {
+    console.log(pc.dim('ui.config.json already exists — keeping.'));
+  }
+  const config = loadConfig(projectRoot);
+  await runAdd(['theme'], { cwd: opts.cwd, yes: true });
+  ensureThemeImport(projectRoot, config.theme);
+}
+
+const program = new Command();
+program.name('signng').description('signng secure component installer').version('0.0.1');
+
+program
+  .command('init')
+  .option('--cwd <dir>', 'target project directory', '.')
+  .option('--registry <base>', 'registry base (https:// or local path)', DEFAULT_CONFIG.registry)
+  .option('--yes', 'skip confirmation', false)
+  .action((opts) => runInit(opts).catch(fail));
+
+program
+  .command('add')
+  .argument('<names...>', 'registry item names')
+  .option('--cwd <dir>', 'target project directory', '.')
+  .option('--dry-run', 'show plan + diff, write nothing', false)
+  .option('--yes', 'apply without confirm', false)
+  .action((names, opts) => runAdd(names, opts).catch(fail));
+
+function fail(err: unknown): never {
+  console.error(pc.red(`\n✖ ${err instanceof Error ? err.message : String(err)}`));
+  process.exit(1);
+}
+
+program.parseAsync(process.argv);
