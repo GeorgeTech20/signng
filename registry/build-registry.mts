@@ -277,6 +277,14 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/hover-card.ts', target: 'src/components/ui/hover-card.ts', type: 'registry:ui' }],
   },
   {
+    name: 'navigation-menu',
+    type: 'registry:ui',
+    description: 'Navigation menu: disclosure triggers revealing projected panels (CDK overlay, hover/click).',
+    dependencies: ['@angular/cdk'],
+    registryDependencies: ['overlay'],
+    files: [{ src: 'ui/navigation-menu.ts', target: 'src/components/ui/navigation-menu.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'menubar',
     type: 'registry:ui',
     description: 'Menubar: role=menubar of menu buttons, each an @angular/aria Menu in a CDK overlay.',

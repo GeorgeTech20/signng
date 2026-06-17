@@ -177,11 +177,22 @@
     </section>
 
     <section class="space-y-4">
-      <h2 class="text-sm font-medium">Menubar</h2>
+      <h2 class="text-sm font-medium">Menubar · NavigationMenu</h2>
       <signng-menubar [menus]="barMenus" (selected)="barAction.set($event.menu + ':' + $event.value)" />
       @if (barAction()) {
         <p class="text-sm" data-testid="bar-value">Menubar: {{ barAction() }}</p>
       }
+      <signng-nav-menu>
+        <signng-nav-item label="Productos">
+          <div class="grid gap-2">
+            <a href="#" class="block rounded px-2 py-1 hover:bg-accent">Analytics</a>
+            <a href="#" class="block rounded px-2 py-1 hover:bg-accent">Compliance</a>
+          </div>
+        </signng-nav-item>
+        <signng-nav-item label="Recursos">
+          <a href="#" class="block rounded px-2 py-1 hover:bg-accent">Documentación</a>
+        </signng-nav-item>
+      </signng-nav-menu>
     </section>
 
     <section class="space-y-4">

@@ -202,6 +202,12 @@
       "integrity": "sha256-FMpZ77AXZZETFC7FvDoyp3BqRILh68PZdlWRXOtiY5s="
     },
     {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "description": "Navigation menu: disclosure triggers revealing projected panels (CDK overlay, hover/click).",
+      "integrity": "sha256-g0TvqYVq9aoggc8IZs0lSlWTIhFWPVfdTGV0M5rwJSI="
+    },
+    {
       "name": "menubar",
       "type": "registry:ui",
       "description": "Menubar: role=menubar of menu buttons, each an @angular/aria Menu in a CDK overlay.",
@@ -275,6 +281,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "fuOjsNAQuK3JlyY+syOovmi+J2Sa+CQEDNJ9uG6pt13SJsqVObhQuVq4220+8RluovSkcPS3zJef6BXjXfAtAQ==",
+  "signature": "WSUxbY/dFVdx+BelKMV7VXdMUDXGrVUUH5YBuU3vGHDSOgSDOjoiRPSJfzNnMx6hrCAsuZyVzAr8/c/gipNIBg==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

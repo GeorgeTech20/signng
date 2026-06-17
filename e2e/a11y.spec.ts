@@ -212,6 +212,15 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-20$/);
   });
 
+  test('navigation-menu: trigger reveals projected panel on click', async ({ page }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('button', { name: 'Productos' });
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.getByRole('region', { name: 'Productos' })).toBeVisible();
+  });
+
   test('menubar: role=menubar, open menu + select emits {menu,value}', async ({ page }) => {
     await page.goto('/');
     const menubar = page.getByRole('menubar');

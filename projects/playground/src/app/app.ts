@@ -30,6 +30,7 @@ import { InputOtp } from '@/components/ui/input-otp';
 import { SIGNNG_CAROUSEL } from '@/components/ui/carousel';
 import { SignngResizable } from '@/components/ui/resizable';
 import { Menubar } from '@/components/ui/menubar';
+import { SIGNNG_NAVIGATION_MENU } from '@/components/ui/navigation-menu';
 import { SIGNNG_CARD } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -53,7 +54,7 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
     Skeleton, Progress, Combobox, Calendar, DatePicker, Pagination, Command,
     Toggle, Collapsible, HoverCard, ContextMenu, ScrollArea, AspectRatio,
     InputOtp, SignngResizable, Menubar,
-    ...SIGNNG_CAROUSEL, ...SIGNNG_TOGGLE_GROUP, ...SIGNNG_BREADCRUMB, ...SIGNNG_ALERT,
+    ...SIGNNG_NAVIGATION_MENU, ...SIGNNG_CAROUSEL, ...SIGNNG_TOGGLE_GROUP, ...SIGNNG_BREADCRUMB, ...SIGNNG_ALERT,
     ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
   templateUrl: './app.html',
