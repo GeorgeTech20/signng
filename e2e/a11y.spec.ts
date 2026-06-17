@@ -184,6 +184,27 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(page.getByRole('listbox')).toHaveCount(0);
   });
 
+  test('calendar: grid keyboard (activedescendant) + Enter/click select', async ({ page }) => {
+    await page.goto('/');
+    const grid = page.getByRole('grid', { name: /Fecha/ });
+    await expect(grid).toBeVisible();
+    await expect(page.getByRole('gridcell', { name: /15 de junio/ })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    await grid.focus();
+    await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-15$/);
+    await page.keyboard.press('ArrowRight');
+    await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-16$/);
+    await page.keyboard.press('Enter');
+    await expect(page.getByTestId('cal-value')).toContainText('2026-06-16');
+    await page.getByRole('gridcell', { name: /20 de junio/ }).click();
+    await expect(page.getByTestId('cal-value')).toContainText('2026-06-20');
+    // B1: nav hard-stops at max (27 > 2026-06-25) — activedescendant stays on 20
+    await page.keyboard.press('ArrowDown');
+    await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-20$/);
+  });
+
   test('progress: role=progressbar with aria-valuenow/min/max', async ({ page }) => {
     await page.goto('/');
     const bar = page.getByRole('progressbar', { name: 'Carga' });

@@ -177,6 +177,12 @@
     </section>
 
     <section class="space-y-3">
+      <h2 class="text-sm font-medium">Calendar (grid de fechas · APG controlado)</h2>
+      <signng-calendar label="Fecha" [(value)]="date" min="2026-06-01" max="2026-06-25" />
+      <p class="text-sm" data-testid="cal-value">Seleccionado: {{ date() ?? '—' }}</p>
+    </section>
+
+    <section class="space-y-3">
       <h2 class="text-sm font-medium">Tabs (@angular/aria · a11y heredada)</h2>
       <div ngTabs class="rounded-lg border border-border">
         <ul ngTabList [(selectedTab)]="selectedTab" class="flex gap-1 border-b border-border p-1">

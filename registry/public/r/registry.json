@@ -130,6 +130,12 @@
       "integrity": "sha256-7XfLSn860XENp0BJwmzqEpk4dAwDnULbGG+eWdIXRzY="
     },
     {
+      "name": "calendar",
+      "type": "registry:ui",
+      "description": "Date-grid calendar (controlled APG grid: arrows/Home/End/PageUp-Down, Intl labels).",
+      "integrity": "sha256-Gs4xo9vwsYxPRPmbK3jy4+4qILyWhzoqIF2psB19Azw="
+    },
+    {
       "name": "combobox",
       "type": "registry:ui",
       "description": "Searchable single-select (controlled APG combobox: input + CDK overlay listbox).",
@@ -179,6 +185,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "uCPAI8y2anC7pX9MivMnuX0YAOj8mOJFtxPXDkgOmEst2y4/2X/SAeZuUFUnfKxhFCEPNoLCus1uBQm5QUEpAQ==",
+  "signature": "P8RbsBNhnRBDHboY85kysGTSa0Gfja4lAuXqinoeETZW3JnPC+9v2SPJwpr6y3spwI923Xj+/Xbwb4y7PNfhAw==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

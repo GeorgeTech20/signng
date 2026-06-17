@@ -185,6 +185,14 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/dropdown-menu.ts', target: 'src/components/ui/dropdown-menu.ts', type: 'registry:ui' }],
   },
   {
+    name: 'calendar',
+    type: 'registry:ui',
+    description: 'Date-grid calendar (controlled APG grid: arrows/Home/End/PageUp-Down, Intl labels).',
+    dependencies: ['@angular/cdk'],
+    registryDependencies: ['utils'],
+    files: [{ src: 'ui/calendar.ts', target: 'src/components/ui/calendar.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'combobox',
     type: 'registry:ui',
     description: 'Searchable single-select (controlled APG combobox: input + CDK overlay listbox).',
