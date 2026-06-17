@@ -129,6 +129,15 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(page.getByRole('menu')).toHaveCount(0);
   });
 
+  test('toast: appears in a persistent polite live region, close removes it', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Mostrar toast' }).click();
+    const polite = page.locator('[aria-live="polite"]');
+    await expect(polite.getByText('Guardado', { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Cerrar' }).click();
+    await expect(page.getByText('Cambios guardados correctamente.')).toHaveCount(0);
+  });
+
   test('dropdown-menu: keyboard (arrow + Enter) activates an item (B1 regression)', async ({
     page,
   }) => {

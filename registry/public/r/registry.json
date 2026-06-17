@@ -130,6 +130,12 @@
       "integrity": "sha256-7XfLSn860XENp0BJwmzqEpk4dAwDnULbGG+eWdIXRzY="
     },
     {
+      "name": "toast",
+      "type": "registry:ui",
+      "description": "Toast service + viewport (signal queue, auto-dismiss, aria-live status/alert).",
+      "integrity": "sha256-pnU/eoyWjrx6qPAUCdFYZu5uopev/3JqaMcG2fFAwjI="
+    },
+    {
       "name": "theme",
       "type": "registry:theme",
       "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
@@ -137,6 +143,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "2YRPQGosWMFcwrG+2iSXiZSCiszsJ2bkFqJ2yDdkBXSlaCQn3QKglUdbbBpoBxUD8mZbCr618B+l1RJyCAaBAQ==",
+  "signature": "YSlgZnheBsezrvDtasJPNbFo5Dwv7AueFS2N+izjSps+03L4W7/ARNtxe8lgcAqN+d3dyMgl63pWXUqbLCJuDA==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

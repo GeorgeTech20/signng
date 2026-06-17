@@ -185,6 +185,13 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/dropdown-menu.ts', target: 'src/components/ui/dropdown-menu.ts', type: 'registry:ui' }],
   },
   {
+    name: 'toast',
+    type: 'registry:ui',
+    description: 'Toast service + viewport (signal queue, auto-dismiss, aria-live status/alert).',
+    registryDependencies: ['utils'],
+    files: [{ src: 'ui/toast.ts', target: 'src/components/ui/toast.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'theme',
     type: 'registry:theme',
     description: 'signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.',
