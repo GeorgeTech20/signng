@@ -11,8 +11,9 @@
     "registry:build": "tsx registry/build-registry.mts",
     "signng": "tsx packages/cli/src/index.mts",
     "a11y": "playwright test",
+    "security:lint": "tsx tools/security-lint.mts",
     "security:test": "tsx e2e/security-negative.mts",
-    "verify:all": "ng build @signng/core && ng test @signng/core --watch=false && pnpm tokens:build && pnpm registry:build && pnpm security:test && ng build playground && playwright test",
+    "verify:all": "ng build @signng/core && ng test @signng/core --watch=false && pnpm tokens:build && pnpm registry:build && pnpm security:lint && pnpm security:test && ng build playground && playwright test",
     "serve:ssr:playground": "node dist/playground/server/server.mjs"
   },
   "private": true,

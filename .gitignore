@@ -39,6 +39,9 @@ testem.log
 /typings
 __screenshots__/
 
+# Signing — private key never committed (public key IS committed for pinning)
+/registry/keys/signing.key
+
 # Playwright
 /test-results
 /playwright-report

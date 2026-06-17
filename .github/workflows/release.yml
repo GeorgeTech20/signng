@@ -1,0 +1,31 @@
+name: release
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write # OIDC for npm Trusted Publishing + provenance (no long-lived NPM_TOKEN)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm verify:all
+      - run: pnpm exec ng build @signng/core
+      # Trusted Publishing (OIDC) + Sigstore provenance attestation. Requires npm >= 11.5.1
+      # and a configured trusted publisher for @signng/core on npmjs.com.
+      - run: npm publish --provenance --access public
+        working-directory: dist/signng/core
+      - run: npm publish --provenance --access public
+        working-directory: packages/cli

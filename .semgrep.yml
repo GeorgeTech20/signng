@@ -1,0 +1,28 @@
+rules:
+  - id: no-bypass-security-trust
+    languages: [typescript]
+    severity: ERROR
+    message: >-
+      Never call bypassSecurityTrust* on data/consumer values (stored-XSS sink + forces
+      consumers onto the angular#unsafe-bypass Trusted Types policy). Accept a SafeValue from
+      the consumer, or sanitize via DomSanitizer.sanitize()/DOMPurify.
+    patterns:
+      - pattern-regex: bypassSecurityTrust\w*
+
+  - id: no-raw-inner-html-write
+    languages: [typescript]
+    severity: ERROR
+    message: >-
+      Raw innerHTML/outerHTML assignment bypasses Angular sanitization and breaks Trusted Types.
+      Use [innerHTML] binding (Angular sanitizes) or render via the template.
+    patterns:
+      - pattern-regex: \.(inner|outer)HTML\s*=
+
+  - id: no-eval-or-new-function
+    languages: [typescript]
+    severity: ERROR
+    message: 'eval()/new Function() break strict-CSP and Trusted Types.'
+    patterns:
+      - pattern-either:
+          - pattern-regex: \beval\s*\(
+          - pattern-regex: new\s+Function\s*\(

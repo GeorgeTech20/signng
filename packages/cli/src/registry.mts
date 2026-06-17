@@ -22,8 +22,27 @@ export interface RegistryItem {
 
 const MAX_DEPTH = 8;
 
+export interface RegistryIndex {
+  name: string;
+  items: { name: string; type: string; integrity: string }[];
+  algorithm?: string;
+  signature?: string;
+  publicKey?: string;
+}
+
 function isHttps(base: string): boolean {
   return /^https:\/\//i.test(base);
+}
+
+/** Fetch the signed registry index (registry.json). */
+export async function fetchIndex(base: string): Promise<RegistryIndex> {
+  assertSafeRegistry(base);
+  if (isHttps(base)) {
+    const res = await fetch(`${base.replace(/\/$/, '')}/registry.json`, { redirect: 'error' });
+    if (!res.ok) throw new Error(`registry index fetch failed: HTTP ${res.status}`);
+    return (await res.json()) as RegistryIndex;
+  }
+  return JSON.parse(readFileSync(resolve(base, 'registry.json'), 'utf8')) as RegistryIndex;
 }
 
 /** Reject insecure transports up front (security LAYER 2a: HTTPS-only). */

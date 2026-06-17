@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadOrCreateKeys, signRegistry, type SignedIndexItem } from '../packages/cli/src/signature.mts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -93,11 +94,19 @@ for (const item of ITEMS) {
   console.log(`  ✔ ${item.name}  (${files.length} file, ${itemIntegrity.slice(0, 24)}…)`);
 }
 
+// Sign the manifest (Ed25519). Private key stays local/gitignored; pubkey is pinned by consumers.
+const { privatePem, publicPem } = loadOrCreateKeys(resolve(__dirname, 'keys'));
+const signed = index as SignedIndexItem[];
+const signature = signRegistry(signed, privatePem);
+
 const registry = {
   $schema: 'https://signng.dev/schema/registry.json',
   name: 'signng-ui',
   homepage: 'https://signng.dev',
   items: index,
+  algorithm: 'ed25519',
+  signature,
+  publicKey: publicPem, // informational; trust is the PINNED key, not this one
 };
 writeFileSync(resolve(OUT_DIR, 'registry.json'), JSON.stringify(registry, null, 2));
-console.log(`✔ registry -> ${OUT_DIR.replace(ROOT, '.')}  (${ITEMS.length} items)`);
+console.log(`✔ registry -> ${OUT_DIR.replace(ROOT, '.')}  (${ITEMS.length} items, signed ed25519)`);

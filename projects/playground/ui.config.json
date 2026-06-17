@@ -5,5 +5,6 @@
     "ui": "src/components/ui",
     "lib": "src/lib"
   },
-  "theme": "src/signng-theme.css"
+  "theme": "src/signng-theme.css",
+  "signer": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----"
 }

@@ -1,0 +1,7 @@
+# RFC 9116 — served at https://signng.dev/.well-known/security.txt
+Contact: mailto:security@signng.dev
+Contact: https://github.com/signng/signng/security/advisories/new
+Expires: 2027-06-16T00:00:00.000Z
+Preferred-Languages: en, es
+Canonical: https://signng.dev/.well-known/security.txt
+Policy: https://github.com/signng/signng/blob/main/SECURITY.md

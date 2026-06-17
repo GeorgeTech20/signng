@@ -6,13 +6,15 @@ import { dirname, relative, resolve } from 'node:path';
 import { Command } from 'commander';
 import { createTwoFilesPatch } from 'diff';
 import pc from 'picocolors';
-import { resolveItems, type RegistryItem } from './registry.mts';
+import { fetchIndex, resolveItems, type RegistryItem } from './registry.mts';
 import { assertSafeTarget, verifyFileIntegrity, verifyItemIntegrity } from './security.mts';
+import { normalizePem, verifyRegistry } from './signature.mts';
 
 interface UiConfig {
   registry: string;
   aliases: { components: string; ui: string; lib: string };
   theme: string;
+  signer?: string; // pinned Ed25519 signer pubkey (PEM)
 }
 
 const DEFAULT_CONFIG: UiConfig = {
@@ -27,10 +29,15 @@ function loadConfig(projectRoot: string): UiConfig {
   return DEFAULT_CONFIG;
 }
 
-function plan(items: RegistryItem[], projectRoot: string) {
+function plan(items: RegistryItem[], projectRoot: string, signedIntegrity: Map<string, string>) {
   const writes: { abs: string; target: string; content: string; existed: boolean }[] = [];
   const npmDeps = new Set<string>();
   for (const item of items) {
+    // Cross-check: the item's integrity must match the SIGNED manifest entry.
+    const signed = signedIntegrity.get(item.name);
+    if (signed !== item.integrity) {
+      throw new Error(`"${item.name}" not covered by signed manifest (integrity mismatch)`);
+    }
     verifyItemIntegrity(item); // tamper-evident manifest
     for (const file of item.files) {
       verifyFileIntegrity(file); // SRI — fail closed on mismatch
@@ -62,10 +69,21 @@ async function runAdd(names: string[], opts: { cwd: string; yes?: boolean; dryRu
   console.log(pc.dim(`  project : ${projectRoot}`));
   console.log(pc.dim(`  registry: ${base}\n`));
 
+  // 1) Fetch the signed registry index and verify it against the PINNED signer.
+  const index = await fetchIndex(base);
+  if (!config.signer) {
+    throw new Error('no pinned signer in ui.config.json — run `signng init` first (fail-closed)');
+  }
+  if (!index.signature || !verifyRegistry(index.items, index.signature, config.signer)) {
+    throw new Error('registry signature verification FAILED — pinned signer mismatch or tampered manifest');
+  }
+  console.log(pc.green('✔ registry signature verified (ed25519, pinned signer)'));
+  const signedIntegrity = new Map(index.items.map((i) => [i.name, i.integrity]));
+
   const items = await resolveItems(names, base);
   console.log(pc.dim(`resolved ${items.length} item(s): ${items.map((i) => i.name).join(', ')}`));
 
-  const { writes, npmDeps } = plan(items, projectRoot); // throws if any check fails
+  const { writes, npmDeps } = plan(items, projectRoot, signedIntegrity); // throws if any check fails
 
   console.log(pc.bold('\nplanned writes (verified ✓):'));
   for (const w of writes) {
@@ -104,16 +122,26 @@ function ensureThemeImport(projectRoot: string, themePath: string): void {
   }
 }
 
+function pinSigner(base: string): string | undefined {
+  // Local POC: read the published pubkey beside the registry (registry/public/r -> registry/keys).
+  // Production (https): fetch the cosign/Sigstore identity out-of-band and pin it here.
+  const localPub = resolve(base, '..', '..', 'keys', 'signing.pub');
+  return existsSync(localPub) ? normalizePem(readFileSync(localPub, 'utf8')) : undefined;
+}
+
 async function runInit(opts: { cwd: string; registry: string; yes?: boolean }) {
   const projectRoot = resolve(process.cwd(), opts.cwd);
   const cfgFile = resolve(projectRoot, 'ui.config.json');
-  if (!existsSync(cfgFile)) {
-    const cfg = { ...DEFAULT_CONFIG, registry: opts.registry };
-    writeFileSync(cfgFile, JSON.stringify(cfg, null, 2));
-    console.log(pc.green(`✔ created ui.config.json`));
-  } else {
-    console.log(pc.dim('ui.config.json already exists — keeping.'));
-  }
+  const base = resolve(projectRoot, opts.registry);
+
+  const signer = pinSigner(base);
+  if (!signer) console.log(pc.yellow('⚠ no signer pubkey found — `add` will refuse until one is pinned.'));
+
+  const existing = existsSync(cfgFile) ? JSON.parse(readFileSync(cfgFile, 'utf8')) : {};
+  const cfg = { ...DEFAULT_CONFIG, ...existing, registry: opts.registry, signer };
+  writeFileSync(cfgFile, JSON.stringify(cfg, null, 2));
+  console.log(pc.green(`✔ ui.config.json (signer pinned: ${signer ? 'yes' : 'no'})`));
+
   const config = loadConfig(projectRoot);
   await runAdd(['theme'], { cwd: opts.cwd, yes: true });
   ensureThemeImport(projectRoot, config.theme);

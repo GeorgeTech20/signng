@@ -27,5 +27,8 @@
       "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
       "integrity": "sha256-fdheWO8RMTky1aAb+vYFGh+qeFvDgZQWNZRkND1CSD8="
     }
-  ]
+  ],
+  "algorithm": "ed25519",
+  "signature": "lLw/CVCGr4uP+2HOqamza9l01Q28zTNm8NCNftoO7nYFeQsXSAlFVvM7kEOqKoSQLv97mM87iS0Zu4RMT/qOBQ==",
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
