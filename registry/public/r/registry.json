@@ -130,6 +130,12 @@
       "integrity": "sha256-7XfLSn860XENp0BJwmzqEpk4dAwDnULbGG+eWdIXRzY="
     },
     {
+      "name": "sheet",
+      "type": "registry:ui",
+      "description": "Side drawer (edge-positioned modal) on @signng/core/dialog.",
+      "integrity": "sha256-lqwgHwO5BDeWIeMQv9M3yFipf68N7KhKcXqxckjaZGY="
+    },
+    {
       "name": "toast",
       "type": "registry:ui",
       "description": "Toast service + viewport (signal queue, auto-dismiss, aria-live status/alert).",
@@ -143,6 +149,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "YSlgZnheBsezrvDtasJPNbFo5Dwv7AueFS2N+izjSps+03L4W7/ARNtxe8lgcAqN+d3dyMgl63pWXUqbLCJuDA==",
+  "signature": "ktcvXgKP3O94M13/uRxFYwHwYs7t9o/LPE6R4w1HI+f2QLTMds+Wm7O2Smixq4RvitQhsbeCBPS+3NO1+K3rBw==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

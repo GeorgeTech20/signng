@@ -10,6 +10,7 @@ import { RadioGroup, Radio } from '@/components/ui/radio-group';
 import { Dialog } from '@/components/ui/dialog';
 import { Tooltip } from '@/components/ui/tooltip';
 import { Popover } from '@/components/ui/popover';
+import { Sheet } from '@/components/ui/sheet';
 import { Accordion } from '@/components/ui/accordion';
 import { Select } from '@/components/ui/select';
 import { SIGNNG_CARD } from '@/components/ui/card';
@@ -27,7 +28,7 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
   imports: [
     Button, Slider, Switch, Checkbox, Input, Label, Textarea,
     RadioGroup, Radio, Dialog, Tooltip, Popover, Accordion, Select,
-    Badge, Separator, Avatar, AlertDialog, DropdownMenu, Toaster, ...SIGNNG_CARD, ...SIGNNG_TABS,
+    Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
   templateUrl: './app.html',
 })

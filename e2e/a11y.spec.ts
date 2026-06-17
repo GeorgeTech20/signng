@@ -161,6 +161,18 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(page.getByTestId('last-action')).toContainText('deleted');
   });
 
+  test('sheet: edge drawer opens modal, Esc closes + restores focus', async ({ page }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('button', { name: 'Abrir sheet' });
+    await trigger.click();
+    const sheet = page.getByRole('dialog', { name: 'Panel lateral' });
+    await expect(sheet).toBeVisible();
+    await expect(sheet).toHaveAttribute('aria-modal', 'true');
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog', { name: 'Panel lateral' })).toHaveCount(0);
+    await expect(trigger).toBeFocused();
+  });
+
   test('accordion: aria-expanded toggles + lazy content (inherited from @angular/aria)', async ({
     page,
   }) => {

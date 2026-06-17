@@ -39,6 +39,9 @@ export class SignngDialogTrigger implements OnDestroy {
   /** Dialog content template. Receives `{ close }` via `let-ctx`. */
   readonly content = input.required<TemplateRef<SignngDialogContext>>({ alias: 'signngDialogTrigger' });
 
+  /** Overlay placement: centered modal (default) or an edge sheet/drawer. */
+  readonly position = input<'center' | 'left' | 'right' | 'top' | 'bottom'>('center');
+
   readonly isOpen = signal(false);
   private overlayRef?: OverlayRef;
   private restoreTo: HTMLElement | null = null;
@@ -47,10 +50,19 @@ export class SignngDialogTrigger implements OnDestroy {
     if (this.overlayRef) return;
     this.restoreTo = typeof document !== 'undefined' ? (document.activeElement as HTMLElement) : null;
 
+    const pos = this.overlay.position().global();
+    switch (this.position()) {
+      case 'right': pos.top('0').right('0'); break;
+      case 'left': pos.top('0').left('0'); break;
+      case 'top': pos.top('0').left('0'); break;
+      case 'bottom': pos.bottom('0').left('0'); break;
+      default: pos.centerHorizontally().centerVertically();
+    }
+
     const ref = this.overlay.create({
       hasBackdrop: true,
       backdropClass: 'signng-dialog-backdrop',
-      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+      positionStrategy: pos,
       scrollStrategy: this.overlay.scrollStrategies.block(),
     });
     this.overlayRef = ref;

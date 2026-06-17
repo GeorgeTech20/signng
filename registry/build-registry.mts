@@ -185,6 +185,14 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/dropdown-menu.ts', target: 'src/components/ui/dropdown-menu.ts', type: 'registry:ui' }],
   },
   {
+    name: 'sheet',
+    type: 'registry:ui',
+    description: 'Side drawer (edge-positioned modal) on @signng/core/dialog.',
+    dependencies: ['@signng/core', '@angular/cdk'],
+    registryDependencies: ['utils', 'button', 'overlay'],
+    files: [{ src: 'ui/sheet.ts', target: 'src/components/ui/sheet.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'toast',
     type: 'registry:ui',
     description: 'Toast service + viewport (signal queue, auto-dismiss, aria-live status/alert).',
