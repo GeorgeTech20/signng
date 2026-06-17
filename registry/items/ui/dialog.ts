@@ -23,7 +23,8 @@ import { Button } from '@/components/ui/button';
         [cdkTrapFocusAutoCapture]="true"
         role="dialog"
         aria-modal="true"
-        [attr.aria-labelledby]="titleId"
+        [attr.aria-labelledby]="title() ? titleId : null"
+        [attr.aria-label]="title() ? null : 'Diálogo'"
         [attr.aria-describedby]="description() ? descId : null"
         class="w-[calc(100vw-2rem)] max-w-lg rounded-lg border border-border bg-background p-6 shadow-lg"
       >

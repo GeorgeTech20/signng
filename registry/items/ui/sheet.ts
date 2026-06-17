@@ -23,7 +23,8 @@ import { cn } from '@/lib/utils';
         [cdkTrapFocusAutoCapture]="true"
         role="dialog"
         aria-modal="true"
-        [attr.aria-labelledby]="titleId"
+        [attr.aria-labelledby]="title() ? titleId : null"
+        [attr.aria-label]="title() ? null : 'Panel'"
         [attr.aria-describedby]="description() ? descId : null"
         [class]="cn('flex flex-col border border-border bg-background p-6 shadow-lg', sideClass())"
       >

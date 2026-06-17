@@ -55,13 +55,13 @@
       "name": "dialog",
       "type": "registry:ui",
       "description": "Modal dialog (focus trap, backdrop, Esc, restore focus) on @signng/core/dialog.",
-      "integrity": "sha256-819vPrmIjrM7brMSQ799/TsI0VHRze6RgONId1TEbnc="
+      "integrity": "sha256-3B6pLqloPedqyoGbdWLpuu5btDSxsFcWiznyxB/BwWc="
     },
     {
       "name": "tooltip",
       "type": "registry:ui",
       "description": "Tooltip via CDK connected overlay (hover/focus, role=tooltip).",
-      "integrity": "sha256-Mwii0nZVh95YIRy7YOhZfDC+n8SLhj9c7ct9g8NjY8A="
+      "integrity": "sha256-gfGKGHL1Vp722J29VBR+UPybTMbiJXz5saHBmj5gL98="
     },
     {
       "name": "radio-group",
@@ -121,7 +121,7 @@
       "name": "alert-dialog",
       "type": "registry:ui",
       "description": "Confirm/cancel modal (role=alertdialog) on @signng/core/dialog.",
-      "integrity": "sha256-thrknNc8k3ZNEOeEaQK1U/MtrqemtQLdH5l8Zh7pgMI="
+      "integrity": "sha256-lBYXv1qIwnoQ39mJlD84wmTAvOC6IYz2DNtuPywhEok="
     },
     {
       "name": "dropdown-menu",
@@ -133,7 +133,7 @@
       "name": "calendar",
       "type": "registry:ui",
       "description": "Date-grid calendar (controlled APG grid: arrows/Home/End/PageUp-Down, Intl labels).",
-      "integrity": "sha256-Gs4xo9vwsYxPRPmbK3jy4+4qILyWhzoqIF2psB19Azw="
+      "integrity": "sha256-b5hQbO2vxQBRVbdCtU/biIURWiFEJKjZaFJfe5v060Y="
     },
     {
       "name": "combobox",
@@ -145,7 +145,7 @@
       "name": "sheet",
       "type": "registry:ui",
       "description": "Side drawer (edge-positioned modal) on @signng/core/dialog.",
-      "integrity": "sha256-lqwgHwO5BDeWIeMQv9M3yFipf68N7KhKcXqxckjaZGY="
+      "integrity": "sha256-s74zf4Gb7WDKBQEc5+WVorbofDHf3me21zuDAs+38t8="
     },
     {
       "name": "toast",
@@ -185,6 +185,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "P8RbsBNhnRBDHboY85kysGTSa0Gfja4lAuXqinoeETZW3JnPC+9v2SPJwpr6y3spwI923Xj+/Xbwb4y7PNfhAw==",
+  "signature": "G0ncDFw5WfV/5zLW9vBK1BvqQlIYOmEBaKgdQghVjEhIudxqt63Fc4eK5iG+2QNxHjJoHRt+lRNyt52xRRqMAw==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

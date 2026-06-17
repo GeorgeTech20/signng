@@ -102,6 +102,12 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     // H3: Escape dismisses regardless of focus path
     await page.keyboard.press('Escape');
     await expect(page.getByRole('tooltip')).toHaveCount(0);
+
+    // WCAG 1.4.13: tooltip is hoverable — stays open when the pointer moves onto the bubble
+    await page.getByRole('button', { name: 'Hover / focus me' }).hover();
+    await expect(page.getByRole('tooltip')).toBeVisible();
+    await page.getByRole('tooltip').hover();
+    await expect(page.getByRole('tooltip')).toBeVisible();
   });
 
   test('radiogroup: roving tabindex + arrow selection follows focus', async ({ page }) => {
@@ -188,6 +194,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await page.goto('/');
     const grid = page.getByRole('grid', { name: /Fecha/ });
     await expect(grid).toBeVisible();
+    await expect(grid.getByRole('columnheader').first()).toHaveAttribute('aria-label', 'lunes'); // Monday-first
     await expect(page.getByRole('gridcell', { name: /15 de junio/ })).toHaveAttribute(
       'aria-selected',
       'true',

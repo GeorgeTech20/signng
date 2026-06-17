@@ -148,6 +148,8 @@ export class Calendar {
   readonly label = input('');
   readonly class = input('');
   readonly locale = input('es');
+  /** First day of week: 0=Sun … 6=Sat. Default 1 (Monday) — correct for es and most CLDR locales. */
+  readonly weekStartsOn = input(1);
 
   protected readonly cn = cn;
   protected readonly addMonths = addMonths;
@@ -173,7 +175,7 @@ export class Calendar {
     const fmtShort = new Intl.DateTimeFormat(this.locale(), { weekday: 'short' });
     const fmtLong = new Intl.DateTimeFormat(this.locale(), { weekday: 'long' });
     return Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(2024, 0, 7 + i); // 2024-01-07 is a Sunday
+      const d = new Date(2024, 0, 7 + ((this.weekStartsOn() + i) % 7)); // 2024-01-07 is a Sunday (getDay 0)
       return { key: i, short: fmtShort.format(d), long: fmtLong.format(d) };
     });
   });
@@ -186,7 +188,9 @@ export class Calendar {
     const c = parse(this.cursor());
     const year = c.getFullYear();
     const month = c.getMonth();
-    const gridStart = new Date(year, month, 1 - new Date(year, month, 1).getDay());
+    const firstDow = new Date(year, month, 1).getDay();
+    const offset = (firstDow - this.weekStartsOn() + 7) % 7;
+    const gridStart = new Date(year, month, 1 - offset);
     const dayFmt = new Intl.DateTimeFormat(this.locale(), { dateStyle: 'long' });
     const weeks: Day[][] = [];
     for (let w = 0; w < 6; w++) {
@@ -232,8 +236,8 @@ export class Calendar {
       case 'ArrowRight': next = addDays(c, 1); break;
       case 'ArrowUp': next = addDays(c, -7); break;
       case 'ArrowDown': next = addDays(c, 7); break;
-      case 'Home': next = addDays(c, -parse(c).getDay()); break;
-      case 'End': next = addDays(c, 6 - parse(c).getDay()); break;
+      case 'Home': next = addDays(c, -((parse(c).getDay() - this.weekStartsOn() + 7) % 7)); break;
+      case 'End': next = addDays(c, 6 - ((parse(c).getDay() - this.weekStartsOn() + 7) % 7)); break;
       case 'PageUp': next = addMonthsKeepDay(c, -1); break;
       case 'PageDown': next = addMonthsKeepDay(c, 1); break;
       case 'Enter':

@@ -38,6 +38,8 @@ import { CdkConnectedOverlay, CdkOverlayOrigin, type ConnectedPosition } from '@
       <div
         [id]="id"
         role="tooltip"
+        (mouseenter)="bubbleHovered.set(true)"
+        (mouseleave)="bubbleHovered.set(false)"
         class="z-50 max-w-xs rounded-md bg-foreground px-3 py-1.5 text-xs text-background shadow-md"
       >
         {{ text() }}
@@ -51,11 +53,14 @@ export class Tooltip {
   protected readonly id = inject(_IdGenerator).getId('signng-tooltip-');
   protected readonly hovered = signal(false);
   protected readonly focused = signal(false);
-  protected readonly open = computed(() => this.hovered() || this.focused());
+  // WCAG 1.4.13: the tooltip stays open while the pointer is over the bubble itself (hoverable).
+  protected readonly bubbleHovered = signal(false);
+  protected readonly open = computed(() => this.hovered() || this.focused() || this.bubbleHovered());
 
   protected dismiss(): void {
     this.hovered.set(false);
     this.focused.set(false);
+    this.bubbleHovered.set(false);
   }
 
   protected readonly positions: ConnectedPosition[] = [
