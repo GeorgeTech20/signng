@@ -212,6 +212,29 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-20$/);
   });
 
+  test('pagination: aria-current page, navigation updates page', async ({ page }) => {
+    await page.goto('/');
+    const nav = page.getByRole('navigation', { name: 'Paginación' });
+    await expect(nav.getByRole('button', { name: 'Página 3' })).toHaveAttribute('aria-current', 'page');
+    await nav.getByRole('button', { name: 'Página siguiente' }).click();
+    await expect(nav.getByRole('button', { name: 'Página 4' })).toHaveAttribute('aria-current', 'page');
+  });
+
+  test('command: modal palette filters by query, Enter runs + closes', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: /Buscar comando/ }).click();
+    const dialog = page.getByRole('dialog', { name: 'Paleta de comandos' });
+    await expect(dialog).toBeVisible();
+    const search = dialog.getByRole('combobox');
+    await expect(search).toBeFocused();
+    await search.pressSequentially('guar');
+    await expect(dialog.getByRole('option', { name: 'Guardar' })).toBeVisible();
+    await expect(dialog.getByRole('option', { name: 'Nuevo archivo' })).toHaveCount(0);
+    await page.keyboard.press('Enter');
+    await expect(page.getByTestId('cmd-value')).toContainText('save');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+  });
+
   test('date-picker: opens calendar dialog, picking a day commits + closes + restores focus', async ({
     page,
   }) => {

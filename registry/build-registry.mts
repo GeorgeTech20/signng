@@ -253,6 +253,28 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/table.ts', target: 'src/components/ui/table.ts', type: 'registry:ui' }],
   },
   {
+    name: 'breadcrumb',
+    type: 'registry:ui',
+    description: 'Breadcrumb nav part directives (aria-current page, separator).',
+    registryDependencies: ['utils'],
+    files: [{ src: 'ui/breadcrumb.ts', target: 'src/components/ui/breadcrumb.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'pagination',
+    type: 'registry:ui',
+    description: 'Pagination nav (prev/next + windowed page numbers, aria-current page).',
+    registryDependencies: ['utils'],
+    files: [{ src: 'ui/pagination.ts', target: 'src/components/ui/pagination.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'command',
+    type: 'registry:ui',
+    description: 'Command palette: modal (@signng/core/dialog) + filtered command listbox.',
+    dependencies: ['@signng/core', '@angular/cdk'],
+    registryDependencies: ['utils', 'button', 'overlay'],
+    files: [{ src: 'ui/command.ts', target: 'src/components/ui/command.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'theme',
     type: 'registry:theme',
     description: 'signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.',

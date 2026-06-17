@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "pagination",
+  "type": "registry:ui",
+  "description": "Pagination nav (prev/next + windowed page numbers, aria-current page).",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/pagination.ts",
+      "target": "src/components/ui/pagination.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/**\n * Styled Pagination (helm). nav landmark with prev/next + numbered pages; the current page carries\n * aria-current=\"page\". A compact window with ellipses is shown for large totals.\n */\n@Component({\n  selector: 'signng-pagination',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'block' },\n  template: `\n    <nav [attr.aria-label]=\"label()\" class=\"flex items-center gap-1\">\n      <button\n        type=\"button\"\n        [disabled]=\"page() <= 1\"\n        (click)=\"go(page() - 1)\"\n        aria-label=\"Página anterior\"\n        [class]=\"btn\"\n      >\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" class=\"size-4\" aria-hidden=\"true\">\n          <path d=\"M15 18l-6-6 6-6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n        </svg>\n      </button>\n      @for (item of items(); track $index) {\n        @if (item === 0) {\n          <span class=\"px-2 text-sm text-muted-foreground\" aria-hidden=\"true\">…</span>\n        } @else {\n          <button\n            type=\"button\"\n            (click)=\"go(item)\"\n            [attr.aria-current]=\"item === page() ? 'page' : null\"\n            [attr.aria-label]=\"'Página ' + item\"\n            [class]=\"cn(btn, item === page() ? 'border-input bg-accent text-accent-foreground' : '')\"\n          >\n            {{ item }}\n          </button>\n        }\n      }\n      <button\n        type=\"button\"\n        [disabled]=\"page() >= total()\"\n        (click)=\"go(page() + 1)\"\n        aria-label=\"Página siguiente\"\n        [class]=\"btn\"\n      >\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" class=\"size-4\" aria-hidden=\"true\">\n          <path d=\"M9 18l6-6-6-6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n        </svg>\n      </button>\n    </nav>\n  `,\n})\nexport class Pagination {\n  readonly page = model(1);\n  readonly total = input(1);\n  readonly label = input('Paginación');\n\n  protected readonly cn = cn;\n  protected readonly btn =\n    'inline-flex size-9 items-center justify-center rounded-md border border-transparent text-sm transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50';\n\n  // Page list with ellipses (0 = ellipsis): first, last, current ±1, always 1.\n  protected readonly items = computed<number[]>(() => {\n    const total = this.total();\n    const page = this.page();\n    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);\n    const out = new Set<number>([1, total, page, page - 1, page + 1]);\n    const sorted = [...out].filter((p) => p >= 1 && p <= total).sort((a, b) => a - b);\n    const result: number[] = [];\n    let prev = 0;\n    for (const p of sorted) {\n      if (prev && p - prev > 1) result.push(0); // ellipsis\n      result.push(p);\n      prev = p;\n    }\n    return result;\n  });\n\n  protected go(p: number): void {\n    if (p >= 1 && p <= this.total()) this.page.set(p);\n  }\n}\n",
+      "integrity": "sha256-D9cFdvG6iHbcLZQIFFFeLjlsajvXoNYZHuOJIEBWkXU="
+    }
+  ],
+  "integrity": "sha256-SRuu1W2OzPXo0KdVsq1gfYzvqefxwh0GRbxJzH2v6lU="
+}

@@ -176,6 +176,25 @@
       </div>
     </section>
 
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">Breadcrumb · Pagination · Command</h2>
+      <nav signngBreadcrumb>
+        <ol signngBreadcrumbList>
+          <li signngBreadcrumbItem><a signngBreadcrumbLink href="#">Inicio</a></li>
+          <li signngBreadcrumbSeparator></li>
+          <li signngBreadcrumbItem><a signngBreadcrumbLink href="#">Componentes</a></li>
+          <li signngBreadcrumbSeparator></li>
+          <li signngBreadcrumbItem><span signngBreadcrumbPage>Command</span></li>
+        </ol>
+      </nav>
+      <signng-pagination [(page)]="currentPage" [total]="10" />
+      <p class="text-sm">Página: {{ currentPage() }}</p>
+      <signng-command triggerLabel="Buscar comando… (⌘K)" [commands]="cmds" (selected)="lastCmd.set($event)" />
+      @if (lastCmd()) {
+        <p class="text-sm" data-testid="cmd-value">Comando: {{ lastCmd() }}</p>
+      }
+    </section>
+
     <section class="space-y-3">
       <h2 class="text-sm font-medium">Calendar (grid de fechas · APG controlado)</h2>
       <signng-calendar label="Fecha" [(value)]="date" min="2026-06-01" max="2026-06-25" />

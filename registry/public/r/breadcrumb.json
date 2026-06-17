@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "breadcrumb",
+  "type": "registry:ui",
+  "description": "Breadcrumb nav part directives (aria-current page, separator).",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/breadcrumb.ts",
+      "target": "src/components/ui/breadcrumb.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, Directive, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/** Breadcrumb part directives (helm). Native nav/ol/li semantics + skin. */\n@Directive({ selector: 'nav[signngBreadcrumb]', host: { 'aria-label': 'breadcrumb' } })\nexport class Breadcrumb {}\n\n@Directive({ selector: 'ol[signngBreadcrumbList]', host: { '[class]': 'cls()' } })\nexport class BreadcrumbList {\n  readonly class = input('');\n  protected readonly cls = computed(() =>\n    cn('flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground', this.class()),\n  );\n}\n\n@Directive({ selector: 'li[signngBreadcrumbItem]', host: { '[class]': 'cls()' } })\nexport class BreadcrumbItem {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('inline-flex items-center gap-1.5', this.class()));\n}\n\n@Directive({ selector: 'a[signngBreadcrumbLink]', host: { '[class]': 'cls()' } })\nexport class BreadcrumbLink {\n  readonly class = input('');\n  protected readonly cls = computed(() =>\n    cn('transition-colors hover:text-foreground focus-visible:outline-none focus-visible:underline', this.class()),\n  );\n}\n\n/** The current page — not a link; conveys location to AT. */\n@Directive({\n  selector: '[signngBreadcrumbPage]',\n  host: { role: 'link', 'aria-disabled': 'true', 'aria-current': 'page', '[class]': 'cls()' },\n})\nexport class BreadcrumbPage {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('font-normal text-foreground', this.class()));\n}\n\n/** Visual separator (decorative). A real <li> so the parent <ol> only contains list items. */\n@Component({\n  selector: 'li[signngBreadcrumbSeparator]',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { 'aria-hidden': 'true', class: 'inline-flex items-center text-muted-foreground/60' },\n  template: `\n    <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" class=\"size-3.5\">\n      <path d=\"M9 18l6-6-6-6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n    </svg>\n  `,\n})\nexport class BreadcrumbSeparator {}\n\nexport const SIGNNG_BREADCRUMB = [\n  Breadcrumb,\n  BreadcrumbList,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n] as const;\n",
+      "integrity": "sha256-rWSkILoJ7rBk1sB/vNAogKTMG9bf6mwblpQcyNlB/Oo="
+    }
+  ],
+  "integrity": "sha256-4KPhViUp4FQst/OhHMXk1sgJK3/X9o850WMBI5O56Kw="
+}

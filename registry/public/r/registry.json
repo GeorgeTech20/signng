@@ -184,6 +184,24 @@
       "integrity": "sha256-4ZcPUwJUjWvpkNCDryQCwp/VVC7TYmdkNK1z9jJF0mc="
     },
     {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "description": "Breadcrumb nav part directives (aria-current page, separator).",
+      "integrity": "sha256-4KPhViUp4FQst/OhHMXk1sgJK3/X9o850WMBI5O56Kw="
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "description": "Pagination nav (prev/next + windowed page numbers, aria-current page).",
+      "integrity": "sha256-SRuu1W2OzPXo0KdVsq1gfYzvqefxwh0GRbxJzH2v6lU="
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "description": "Command palette: modal (@signng/core/dialog) + filtered command listbox.",
+      "integrity": "sha256-HSPXpuEUgBZh8VzAENKK9PHQGN7Vxa+7js5sDi5bJgE="
+    },
+    {
       "name": "theme",
       "type": "registry:theme",
       "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
@@ -191,6 +209,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "E+jjAz6nFkDZxI7ifc7rCMMyYcKzHOqC2+r/E+efV2qAT/YDsbzRVBnsGSHV0ViytekW73OXGKu/rMX//UFaCw==",
+  "signature": "dMW2YjX6q4P0UlbvK/hY0COIBSQVvlq5BwItq3reMbK1XGVJny8yUGEK6xecH+/Q6khB7pMP2wqrqptUuluqBQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

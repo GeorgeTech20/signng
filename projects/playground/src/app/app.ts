@@ -16,6 +16,9 @@ import { Select } from '@/components/ui/select';
 import { Combobox } from '@/components/ui/combobox';
 import { Calendar } from '@/components/ui/calendar';
 import { DatePicker } from '@/components/ui/date-picker';
+import { SIGNNG_BREADCRUMB } from '@/components/ui/breadcrumb';
+import { Pagination } from '@/components/ui/pagination';
+import { Command } from '@/components/ui/command';
 import { SIGNNG_CARD } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -36,8 +39,8 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
     Button, Slider, Switch, Checkbox, Input, Label, Textarea,
     RadioGroup, Radio, Dialog, Tooltip, Popover, Accordion, Select,
     Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster,
-    Skeleton, Progress, Combobox, Calendar, DatePicker,
-    ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
+    Skeleton, Progress, Combobox, Calendar, DatePicker, Pagination, Command,
+    ...SIGNNG_BREADCRUMB, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
   templateUrl: './app.html',
 })
@@ -51,6 +54,15 @@ export class App {
   protected readonly tech = signal<string | null>(null);
   protected readonly date = signal<string | null>('2026-06-15');
   protected readonly dob = signal<string | null>(null);
+  protected readonly currentPage = signal(3);
+  protected readonly lastCmd = signal('');
+  protected readonly cmds = [
+    { value: 'new', label: 'Nuevo archivo' },
+    { value: 'open', label: 'Abrir…' },
+    { value: 'save', label: 'Guardar' },
+    { value: 'settings', label: 'Preferencias' },
+    { value: 'logout', label: 'Cerrar sesión' },
+  ];
   protected readonly frameworks = [
     { value: 'ng', label: 'Angular' },
     { value: 'react', label: 'React' },
