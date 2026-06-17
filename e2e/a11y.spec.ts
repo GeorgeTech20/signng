@@ -212,6 +212,22 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-20$/);
   });
 
+  test('date-picker: opens calendar dialog, picking a day commits + closes + restores focus', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('button', { name: 'Fecha de nacimiento' });
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await trigger.click();
+    const dialog = page.getByRole('dialog', { name: 'Fecha de nacimiento' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole('grid')).toBeFocused(); // focus lands on the grid (APG)
+    await dialog.getByRole('gridcell', { name: /10 de/ }).first().click();
+    await expect(page.getByTestId('dob-value')).not.toContainText('—');
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await expect(trigger).toBeFocused();
+  });
+
   test('progress: role=progressbar with aria-valuenow/min/max', async ({ page }) => {
     await page.goto('/');
     const bar = page.getByRole('progressbar', { name: 'Carga' });

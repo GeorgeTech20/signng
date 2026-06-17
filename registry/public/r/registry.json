@@ -136,6 +136,12 @@
       "integrity": "sha256-b5hQbO2vxQBRVbdCtU/biIURWiFEJKjZaFJfe5v060Y="
     },
     {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "description": "Date picker: trigger button + Calendar in a CDK overlay dialog (focus trap, Esc).",
+      "integrity": "sha256-hiCBMgVrRBPBz3pyWGRbEWtIn8h++gAbptvjVt1axQQ="
+    },
+    {
       "name": "combobox",
       "type": "registry:ui",
       "description": "Searchable single-select (controlled APG combobox: input + CDK overlay listbox).",
@@ -185,6 +191,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "G0ncDFw5WfV/5zLW9vBK1BvqQlIYOmEBaKgdQghVjEhIudxqt63Fc4eK5iG+2QNxHjJoHRt+lRNyt52xRRqMAw==",
+  "signature": "E+jjAz6nFkDZxI7ifc7rCMMyYcKzHOqC2+r/E+efV2qAT/YDsbzRVBnsGSHV0ViytekW73OXGKu/rMX//UFaCw==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

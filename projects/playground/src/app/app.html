@@ -180,6 +180,10 @@
       <h2 class="text-sm font-medium">Calendar (grid de fechas · APG controlado)</h2>
       <signng-calendar label="Fecha" [(value)]="date" min="2026-06-01" max="2026-06-25" />
       <p class="text-sm" data-testid="cal-value">Seleccionado: {{ date() ?? '—' }}</p>
+      <div class="max-w-xs">
+        <signng-date-picker label="Fecha de nacimiento" [(value)]="dob" />
+      </div>
+      <p class="text-sm" data-testid="dob-value">DOB: {{ dob() ?? '—' }}</p>
     </section>
 
     <section class="space-y-3">

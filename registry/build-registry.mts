@@ -193,6 +193,14 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/calendar.ts', target: 'src/components/ui/calendar.ts', type: 'registry:ui' }],
   },
   {
+    name: 'date-picker',
+    type: 'registry:ui',
+    description: 'Date picker: trigger button + Calendar in a CDK overlay dialog (focus trap, Esc).',
+    dependencies: ['@angular/cdk'],
+    registryDependencies: ['utils', 'overlay', 'calendar'],
+    files: [{ src: 'ui/date-picker.ts', target: 'src/components/ui/date-picker.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'combobox',
     type: 'registry:ui',
     description: 'Searchable single-select (controlled APG combobox: input + CDK overlay listbox).',
