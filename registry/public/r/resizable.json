@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "resizable",
+  "type": "registry:ui",
+  "description": "Resizable two-panel split (pointer drag + keyboard, role=separator).",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/resizable.ts",
+      "target": "src/components/ui/resizable.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, input, model } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/**\n * Styled Resizable (helm) — two panels split by a draggable separator. Pointer drag (with pointer\n * capture) and keyboard (Arrows ±5%, Home/End) adjust the split. role=separator + aria-orientation +\n * aria-valuenow/min/max. Project `[resizableStart]` and `[resizableEnd]`.\n */\n@Component({\n  selector: 'signng-resizable',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: {\n    '[class]': 'hostClass()',\n  },\n  template: `\n    <div [style.flex-basis.%]=\"split()\" class=\"min-h-0 min-w-0 overflow-auto\">\n      <ng-content select=\"[resizableStart]\" />\n    </div>\n    <div\n      role=\"separator\"\n      tabindex=\"0\"\n      [attr.aria-orientation]=\"orientation()\"\n      aria-valuemin=\"0\"\n      aria-valuemax=\"100\"\n      [attr.aria-valuenow]=\"round()\"\n      [attr.aria-label]=\"label() || 'Redimensionar paneles'\"\n      (pointerdown)=\"onDown($event)\"\n      (pointermove)=\"onMove($event)\"\n      (pointerup)=\"onUp($event)\"\n      (keydown)=\"onKey($event)\"\n      [class]=\"\n        cn(\n          'relative shrink-0 bg-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',\n          orientation() === 'vertical' ? 'h-1.5 w-full cursor-row-resize' : 'w-1.5 cursor-col-resize'\n        )\n      \"\n    ></div>\n    <div class=\"min-h-0 min-w-0 flex-1 overflow-auto\">\n      <ng-content select=\"[resizableEnd]\" />\n    </div>\n  `,\n})\nexport class SignngResizable {\n  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');\n  readonly label = input('');\n  readonly split = model(50); // percent of the start panel\n\n  protected readonly cn = cn;\n  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);\n  private dragging = false;\n\n  protected readonly hostClass = computed(() =>\n    cn('flex w-full', this.orientation() === 'vertical' ? 'flex-col' : 'flex-row'),\n  );\n  protected round(): number {\n    return Math.round(this.split());\n  }\n\n  protected onDown(event: PointerEvent): void {\n    (event.target as HTMLElement).setPointerCapture(event.pointerId);\n    this.dragging = true;\n    event.preventDefault();\n  }\n\n  protected onMove(event: PointerEvent): void {\n    if (!this.dragging) return;\n    const rect = this.host.nativeElement.getBoundingClientRect();\n    const pct =\n      this.orientation() === 'vertical'\n        ? ((event.clientY - rect.top) / rect.height) * 100\n        : ((event.clientX - rect.left) / rect.width) * 100;\n    this.split.set(Math.min(95, Math.max(5, pct)));\n  }\n\n  protected onUp(event: PointerEvent): void {\n    this.dragging = false;\n    (event.target as HTMLElement).releasePointerCapture(event.pointerId);\n  }\n\n  protected onKey(event: KeyboardEvent): void {\n    const back = this.orientation() === 'vertical' ? 'ArrowUp' : 'ArrowLeft';\n    const fwd = this.orientation() === 'vertical' ? 'ArrowDown' : 'ArrowRight';\n    let next: number | undefined;\n    if (event.key === back) next = this.split() - 5;\n    else if (event.key === fwd) next = this.split() + 5;\n    else if (event.key === 'Home') next = 5;\n    else if (event.key === 'End') next = 95;\n    else return;\n    event.preventDefault();\n    this.split.set(Math.min(95, Math.max(5, next)));\n  }\n}\n",
+      "integrity": "sha256-MGjuRz3kk0lGNDxV9bjgd2vTB8o8PGUQvrl63Uj/mE0="
+    }
+  ],
+  "integrity": "sha256-p7G/znbAhrHSu9JGL+ONAOws4mIQzBQzXB0GnJ8T3XY="
+}

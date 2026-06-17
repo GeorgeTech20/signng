@@ -212,6 +212,35 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-20$/);
   });
 
+  test('input-otp: sequential entry advances focus + builds value', async ({ page }) => {
+    await page.goto('/');
+    const boxes = page.getByRole('group', { name: 'Código 2FA' }).getByRole('textbox');
+    await expect(boxes).toHaveCount(6);
+    await boxes.nth(0).click();
+    await page.keyboard.type('12');
+    await expect(page.getByTestId('otp-value')).toContainText('12');
+    await expect(boxes.nth(2)).toBeFocused();
+  });
+
+  test('carousel: region roledescription, next advances slide', async ({ page }) => {
+    await page.goto('/');
+    const carousel = page.getByRole('region', { name: 'Galería' });
+    await expect(carousel).toHaveAttribute('aria-roledescription', 'carrusel');
+    const prev = carousel.getByRole('button', { name: 'Diapositiva anterior' });
+    await expect(prev).toBeDisabled();
+    await carousel.getByRole('button', { name: 'Diapositiva siguiente' }).click();
+    await expect(prev).toBeEnabled();
+  });
+
+  test('resizable: separator aria-valuenow changes with arrow key', async ({ page }) => {
+    await page.goto('/');
+    const sep = page.getByRole('separator', { name: 'Editor y vista previa' });
+    await expect(sep).toHaveAttribute('aria-valuenow', '40');
+    await sep.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(sep).toHaveAttribute('aria-valuenow', '45');
+  });
+
   test('toggle-group: single-select roving — selecting one clears the other', async ({ page }) => {
     await page.goto('/');
     const group = page.getByRole('group', { name: 'Alineación de texto' });

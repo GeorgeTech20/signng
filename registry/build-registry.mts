@@ -277,6 +277,26 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/hover-card.ts', target: 'src/components/ui/hover-card.ts', type: 'registry:ui' }],
   },
   {
+    name: 'input-otp',
+    type: 'registry:ui',
+    description: 'Segmented OTP input (role=group, auto-advance, paste, numeric autofill).',
+    registryDependencies: ['utils'],
+    files: [{ src: 'ui/input-otp.ts', target: 'src/components/ui/input-otp.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'carousel',
+    type: 'registry:ui',
+    description: 'Carousel region (prev/next + arrow keys, aria-roledescription, live region).',
+    files: [{ src: 'ui/carousel.ts', target: 'src/components/ui/carousel.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'resizable',
+    type: 'registry:ui',
+    description: 'Resizable two-panel split (pointer drag + keyboard, role=separator).',
+    registryDependencies: ['utils'],
+    files: [{ src: 'ui/resizable.ts', target: 'src/components/ui/resizable.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'toggle-group',
     type: 'registry:ui',
     description: 'Roving toggle group (single/multiple, role=group, arrow nav) reusing toggle variants.',

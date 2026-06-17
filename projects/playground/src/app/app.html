@@ -177,6 +177,23 @@
     </section>
 
     <section class="space-y-4">
+      <h2 class="text-sm font-medium">InputOTP · Carousel · Resizable</h2>
+      <signng-input-otp [(value)]="otp" [length]="6" label="Código 2FA" />
+      <p class="text-sm" data-testid="otp-value">OTP: {{ otp() || '—' }}</p>
+
+      <signng-carousel label="Galería" [(index)]="slide" class="max-w-sm">
+        <div signngCarouselItem class="flex h-32 items-center justify-center bg-muted text-base font-medium text-foreground">Slide 1</div>
+        <div signngCarouselItem class="flex h-32 items-center justify-center bg-accent text-base font-medium text-accent-foreground">Slide 2</div>
+        <div signngCarouselItem class="flex h-32 items-center justify-center bg-primary text-base font-medium text-primary-foreground">Slide 3</div>
+      </signng-carousel>
+
+      <signng-resizable label="Editor y vista previa" [(split)]="splitPct" class="h-32 max-w-md overflow-hidden rounded-md border border-border">
+        <div resizableStart class="h-full bg-muted p-3 text-sm text-foreground">Panel A</div>
+        <div resizableEnd class="h-full p-3 text-sm">Panel B</div>
+      </signng-resizable>
+    </section>
+
+    <section class="space-y-4">
       <h2 class="text-sm font-medium">ToggleGroup · ContextMenu · ScrollArea · AspectRatio</h2>
       <div signngToggleGroup [(value)]="align" type="single" aria-label="Alineación de texto">
         <button signngToggleItem value="left">Izq</button>
