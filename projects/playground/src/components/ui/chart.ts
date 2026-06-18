@@ -44,7 +44,7 @@ const tipWidth = (text: string) => Math.max(12, text.length * 2.1 + 4);
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block' },
   template: `
-    <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="h-auto w-full overflow-visible" role="img" [attr.aria-label]="summary()">
+    <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="block max-h-52 w-full overflow-visible" role="img" [attr.aria-label]="summary()">
       <title>{{ summary() }}</title>
       <defs>
         <linearGradient [attr.id]="gid" x1="0" y1="0" x2="0" y2="1">
@@ -114,7 +114,7 @@ export class BarChart {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block' },
   template: `
-    <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="h-auto w-full overflow-visible" role="img" [attr.aria-label]="summary()">
+    <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="block max-h-52 w-full overflow-visible" role="img" [attr.aria-label]="summary()">
       <title>{{ summary() }}</title>
       <defs>
         <linearGradient [attr.id]="gid" x1="0" y1="0" x2="0" y2="1">
