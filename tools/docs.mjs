@@ -197,3 +197,92 @@ document.querySelectorAll('.icon-card').forEach(function (b) {
 mkdirSync(OUT, { recursive: true });
 writeFileSync(resolve(OUT, 'index.html'), html);
 console.log(`✔ docs -> docs/index.html  (${items.length} components, ${(html.length / 1024) | 0} kB)`);
+
+// ---- Standalone icon library page (search + copy SVG / component) ----
+const svgMarkup = (paths, sw = 2) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">` +
+  paths.map((d) => `<path d="${d}"/>`).join('') +
+  `</svg>`;
+const libCard = (e) =>
+  `<button class="ic" data-name="${esc(e.name)}" data-svg="${esc(svgMarkup(e.paths))}">` +
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">` +
+  e.paths.map((d) => `<path d="${esc(d)}"/>`).join('') +
+  `</svg><span>${esc(e.name)}</span></button>`;
+
+const iconsPage = `<!doctype html>
+<html lang="es" class="">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>signng — librería de iconos</title>
+<style>
+${themeCss}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--color-background); color: var(--color-foreground); font: 15px/1.6 ui-sans-serif, system-ui, sans-serif; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+header { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+h1 { font-size: 1.6rem; letter-spacing: -.02em; margin: 0; display: flex; align-items: center; gap: .5rem; }
+h1 svg { color: var(--color-primary); }
+.muted { color: var(--color-muted-foreground); font-size: 14px; }
+.controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 1rem 0 1.25rem; }
+input[type=search] { flex: 1; min-width: 200px; height: 40px; padding: 0 .8rem; border: 1px solid var(--color-input); border-radius: 10px; background: var(--color-background); color: var(--color-foreground); font: inherit; outline: none; }
+input[type=search]:focus { box-shadow: 0 0 0 2px var(--color-ring); }
+.seg { display: inline-flex; border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden; }
+.seg button { border: 0; background: var(--color-background); color: var(--color-foreground); padding: 8px 14px; font: inherit; font-size: 13px; cursor: pointer; }
+.seg button.on { background: var(--color-accent); color: var(--color-accent-foreground); }
+.toggle { border: 1px solid var(--color-border); background: var(--color-card); color: var(--color-foreground); border-radius: 10px; padding: 8px 12px; cursor: pointer; font-size: 13px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+.ic { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 6px; border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-card); color: var(--color-foreground); cursor: pointer; font: inherit; font-size: 11px; transition: background .12s, border-color .12s, transform .12s; }
+.ic:hover { background: var(--color-accent); color: var(--color-accent-foreground); transform: translateY(-1px); }
+.ic.copied { border-color: var(--color-primary); }
+.ic span { color: var(--color-muted-foreground); }
+.ic.hide { display: none; }
+.toast { position: fixed; bottom: 1.25rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--color-foreground); color: var(--color-background); padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; opacity: 0; transition: .2s; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+      Librería de iconos <span class="muted">${ICON_ENTRIES.length} · signng</span>
+    </h1>
+    <button class="toggle" onclick="document.documentElement.classList.toggle('dark')">◐ tema</button>
+  </header>
+  <p class="muted">Iconos stroke propios (24px, sin dependencia). Busca, elige el formato y click para copiar. <a href="index.html">← docs</a></p>
+  <div class="controls">
+    <input type="search" id="q" placeholder="Buscar icono…" autocomplete="off" />
+    <div class="seg">
+      <button id="m-comp" class="on">&lt;signng-icon&gt;</button>
+      <button id="m-svg">SVG</button>
+    </div>
+  </div>
+  <div class="grid" id="grid">${ICON_ENTRIES.map(libCard).join('')}</div>
+</div>
+<div class="toast" id="toast">Copiado</div>
+<script>
+var mode = 'comp';
+document.getElementById('m-comp').onclick = function () { mode = 'comp'; this.classList.add('on'); document.getElementById('m-svg').classList.remove('on'); };
+document.getElementById('m-svg').onclick = function () { mode = 'svg'; this.classList.add('on'); document.getElementById('m-comp').classList.remove('on'); };
+var toast = document.getElementById('toast');
+document.querySelectorAll('.ic').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var text = mode === 'svg' ? b.dataset.svg : '<signng-icon name="' + b.dataset.name + '" />';
+    navigator.clipboard.writeText(text);
+    b.classList.add('copied'); setTimeout(function () { b.classList.remove('copied'); }, 700);
+    toast.textContent = 'Copiado: ' + b.dataset.name; toast.classList.add('show');
+    setTimeout(function () { toast.classList.remove('show'); }, 1100);
+  });
+});
+document.getElementById('q').addEventListener('input', function (e) {
+  var q = e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.ic').forEach(function (b) {
+    b.classList.toggle('hide', q && b.dataset.name.indexOf(q) === -1);
+  });
+});
+</script>
+</body>
+</html>`;
+writeFileSync(resolve(OUT, 'icons.html'), iconsPage);
+console.log(`✔ icons -> docs/icons.html  (${ICON_ENTRIES.length} icons)`);
