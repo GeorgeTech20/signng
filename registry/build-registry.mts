@@ -121,6 +121,32 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/date-range-picker.ts', target: 'src/components/ui/date-range-picker.ts', type: 'registry:ui' }],
   },
   {
+    name: 'rating',
+    type: 'registry:ui',
+    description: 'Star rating control (hover preview, keyboard, role=slider).',
+    files: [{ src: 'ui/rating.ts', target: 'src/components/ui/rating.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'color-picker',
+    type: 'registry:ui',
+    description: 'Color picker: preset swatches + native picker + hex field, popover.',
+    files: [{ src: 'ui/color-picker.ts', target: 'src/components/ui/color-picker.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'kanban',
+    type: 'registry:ui',
+    description: 'Drag-and-drop Kanban board on @angular/cdk/drag-drop (reorder + cross-column transfer).',
+    dependencies: ['@angular/cdk'],
+    files: [{ src: 'ui/kanban.ts', target: 'src/components/ui/kanban.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'notification-center',
+    type: 'registry:ui',
+    description: 'Bell trigger + unread badge + dropdown inbox (mark read / mark all).',
+    registryDependencies: ['icon'],
+    files: [{ src: 'ui/notification-center.ts', target: 'src/components/ui/notification-center.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'utils',
     type: 'registry:lib',
     description: 'cn() class-merge helper.',

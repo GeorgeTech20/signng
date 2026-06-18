@@ -153,6 +153,29 @@
               </article> }
             }
 
+            <!-- ============ PRO ============ -->
+            @if (cat === 'Pro') {
+              @if (match('Kanban')) { <article class="dc" [class.lg:col-span-2]="true">
+                <div class="dh"><span class="dn">Kanban</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">DRAG-DROP</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Kanban'}" /></div>
+                @if (mode('Kanban')==='code') { <pre class="dco">{{ code('Kanban') }}</pre> } @else { <div class="p-4"><signng-kanban [(columns)]="board" /><p class="mt-2 text-xs text-muted-foreground">Arrastra tarjetas entre columnas (mouse o teclado).</p></div> }
+              </article> }
+
+              @if (match('NotificationCenter')) { <article class="dc">
+                <div class="dh"><span class="dn">NotificationCenter</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'NotificationCenter'}" /></div>
+                @if (mode('NotificationCenter')==='code') { <pre class="dco">{{ code('NotificationCenter') }}</pre> } @else { <div class="dp"><signng-notification-center [(items)]="notifs" /><span class="text-sm text-muted-foreground">← click la campana</span></div> }
+              </article> }
+
+              @if (match('Rating')) { <article class="dc">
+                <div class="dh"><span class="dn">Rating</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Rating'}" /></div>
+                @if (mode('Rating')==='code') { <pre class="dco">{{ code('Rating') }}</pre> } @else { <div class="dp"><signng-rating [(value)]="stars" [max]="5" label="Calificación" /><span class="text-sm text-muted-foreground">{{ stars() }}/5</span></div> }
+              </article> }
+
+              @if (match('ColorPicker')) { <article class="dc">
+                <div class="dh"><span class="dn">ColorPicker</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'ColorPicker'}" /></div>
+                @if (mode('ColorPicker')==='code') { <pre class="dco">{{ code('ColorPicker') }}</pre> } @else { <div class="dp"><signng-color-picker [(value)]="brand" /><span class="size-6 rounded border border-border" [style.background]="brand()"></span></div> }
+              </article> }
+            }
+
             <!-- ============ FORMULARIOS ============ -->
             @if (cat === 'Formularios') {
               @if (match('Button')) { <article class="dc">

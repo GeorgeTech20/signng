@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "kanban",
+  "type": "registry:ui",
+  "description": "Drag-and-drop Kanban board on @angular/cdk/drag-drop (reorder + cross-column transfer).",
+  "dependencies": [
+    "@angular/cdk"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/ui/kanban.ts",
+      "target": "src/components/ui/kanban.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, input, model, output } from '@angular/core';\nimport {\n  CdkDrag,\n  CdkDragDrop,\n  CdkDropList,\n  CdkDropListGroup,\n  moveItemInArray,\n  transferArrayItem,\n} from '@angular/cdk/drag-drop';\n\nexport interface KanbanCard {\n  id: string;\n  title: string;\n  tag?: string;\n}\nexport interface KanbanColumn {\n  id: string;\n  title: string;\n  items: KanbanCard[];\n}\n\n/**\n * Kanban (helm) — a drag-and-drop board built on @angular/cdk/drag-drop. Cards reorder within a column\n * and transfer across columns (connected drop-lists via cdkDropListGroup); CDK provides keyboard dragging\n * + a11y out of the box. `columns` is a two-way model; `moved` fires after every drop. Signals-only, OnPush.\n */\n@Component({\n  selector: 'signng-kanban',\n  imports: [CdkDropListGroup, CdkDropList, CdkDrag],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'block' },\n  template: `\n    <div cdkDropListGroup class=\"flex gap-4 overflow-x-auto pb-2\">\n      @for (col of columns(); track col.id) {\n        <div class=\"flex w-64 shrink-0 flex-col rounded-lg border border-border bg-muted/40\">\n          <div class=\"flex items-center justify-between px-3 py-2\">\n            <span class=\"text-sm font-semibold\">{{ col.title }}</span>\n            <span class=\"rounded-full bg-background px-2 text-xs text-muted-foreground\">{{ col.items.length }}</span>\n          </div>\n          <div\n            cdkDropList\n            [cdkDropListData]=\"col.items\"\n            (cdkDropListDropped)=\"drop($event)\"\n            class=\"flex min-h-16 flex-1 flex-col gap-2 p-2\"\n          >\n            @for (card of col.items; track card.id) {\n              <div\n                cdkDrag\n                class=\"cursor-grab rounded-md border border-border bg-card p-2.5 text-sm shadow-sm active:cursor-grabbing\"\n              >\n                <div class=\"font-medium\">{{ card.title }}</div>\n                @if (card.tag) { <span class=\"mt-1 inline-block rounded bg-secondary px-1.5 py-0.5 text-xs text-secondary-foreground\">{{ card.tag }}</span> }\n              </div>\n            }\n          </div>\n        </div>\n      }\n    </div>\n  `,\n})\nexport class Kanban {\n  readonly columns = model<KanbanColumn[]>([]);\n  readonly moved = output<KanbanColumn[]>();\n\n  protected drop(event: CdkDragDrop<KanbanCard[]>): void {\n    if (event.previousContainer === event.container) {\n      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);\n    } else {\n      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);\n    }\n    this.columns.set([...this.columns()]); // new top-level ref → OnPush picks it up\n    this.moved.emit(this.columns());\n  }\n}\n",
+      "integrity": "sha256-TYH3qwksf5uvzxk5/al+CKrurXvY3mojMeSTB+zUZLw="
+    }
+  ],
+  "integrity": "sha256-TpKjrjznCw6Xem2su/Qi2EQrmfL8wnBxaoVx727e82U="
+}

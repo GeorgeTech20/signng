@@ -88,6 +88,30 @@
       "integrity": "sha256-kVfN3uxMzOwkllY6Fslznc+o7RaIRNLEqTI88575wec="
     },
     {
+      "name": "rating",
+      "type": "registry:ui",
+      "description": "Star rating control (hover preview, keyboard, role=slider).",
+      "integrity": "sha256-MfkE2/iCxoOP45rOT8reGENkQATueODuKvIN/qmKR6M="
+    },
+    {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "description": "Color picker: preset swatches + native picker + hex field, popover.",
+      "integrity": "sha256-06G8jGvytQSdH9Bi1AvZ19+qJqmNPsG4ue8V4YdYDpA="
+    },
+    {
+      "name": "kanban",
+      "type": "registry:ui",
+      "description": "Drag-and-drop Kanban board on @angular/cdk/drag-drop (reorder + cross-column transfer).",
+      "integrity": "sha256-TpKjrjznCw6Xem2su/Qi2EQrmfL8wnBxaoVx727e82U="
+    },
+    {
+      "name": "notification-center",
+      "type": "registry:ui",
+      "description": "Bell trigger + unread badge + dropdown inbox (mark read / mark all).",
+      "integrity": "sha256-Pe/US9O8hyIqIJd8AUf10hnUS4YmbQV8rCAhph18Lqw="
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "description": "cn() class-merge helper.",
@@ -395,6 +419,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "+dsqh1Q45fFmturypV4Y0hPaZpZBfMhv2uJAnL41QpmxVRZWUlMUvQwMfXQLEzS/MvliB1GhSfadVGugODhDBg==",
+  "signature": "KPDbUsr+BA36QcPCqBZ8R2aqhjMLI9vq+QFaVACtLDTzyQWg3uMO36ofzHmkiY/3waerUZ0nbLdbFi+ifQpABQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

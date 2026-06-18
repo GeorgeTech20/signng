@@ -60,6 +60,10 @@ import { MultiSelect } from '@/components/ui/multi-select';
 import { TagInput } from '@/components/ui/tag-input';
 import { TreeView } from '@/components/ui/tree-view';
 import { DateRangePicker } from '@/components/ui/date-range-picker';
+import { Rating } from '@/components/ui/rating';
+import { ColorPicker } from '@/components/ui/color-picker';
+import { Kanban, type KanbanColumn } from '@/components/ui/kanban';
+import { NotificationCenter } from '@/components/ui/notification-center';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 interface Demo { name: string; cat: string; code: string }
@@ -81,6 +85,7 @@ interface Demo { name: string; cat: string; code: string }
     ...SIGNNG_BREADCRUMB, ...SIGNNG_TOGGLE_GROUP, ...SIGNNG_CAROUSEL, ...SIGNNG_NAVIGATION_MENU, ...SIGNNG_TABS,
     DataTable, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_FILE_UPLOAD, LoginForm,
     StatCard, EmptyState, Timeline, Stepper, NumberInput, MultiSelect, TagInput, TreeView, DateRangePicker,
+    Rating, ColorPicker, Kanban, NotificationCenter,
   ],
   templateUrl: './showcase.html',
 })
@@ -235,7 +240,21 @@ export class Showcase {
     { title: 'Ticket abierto', time: 'ayer', description: 'Bug en exportación.', icon: 'alert' as const, variant: 'destructive' as const },
   ];
 
-  protected readonly CATS = ['Enterprise', 'Avanzados', 'Formularios', 'Overlays', 'Navegación', 'Datos', 'Display', 'Gráficos'];
+  // tier-3 demo state
+  protected readonly stars = signal(4);
+  protected readonly brand = signal('#6d4aff');
+  protected readonly board = signal<KanbanColumn[]>([
+    { id: 'todo', title: 'Por hacer', items: [{ id: 'a', title: 'Diseñar landing', tag: 'design' }, { id: 'b', title: 'Setup CI', tag: 'infra' }] },
+    { id: 'doing', title: 'En curso', items: [{ id: 'c', title: 'API de pagos', tag: 'backend' }] },
+    { id: 'done', title: 'Hecho', items: [{ id: 'd', title: 'Auth', tag: 'backend' }] },
+  ]);
+  protected readonly notifs = signal([
+    { id: '1', title: 'Nuevo usuario', description: 'Ana se unió al equipo', time: 'hace 2h', icon: 'user' as const },
+    { id: '2', title: 'Pago recibido', description: '$290 — plan Pro', time: 'hace 5h', icon: 'check' as const },
+    { id: '3', title: 'Backup completo', time: 'ayer', read: true, icon: 'check-circle' as const },
+  ]);
+
+  protected readonly CATS = ['Enterprise', 'Avanzados', 'Pro', 'Formularios', 'Overlays', 'Navegación', 'Datos', 'Display', 'Gráficos'];
   protected readonly DEMOS: Demo[] = [
     { name: 'DataTable', cat: 'Enterprise', code: `<signng-data-table [data]="rows" [columns]="cols" [selectable]="true" groupBy="dept" />` },
     { name: 'MultiLineChart', cat: 'Enterprise', code: `<signng-multi-line-chart [series]="series" [labels]="labels" />` },
@@ -256,6 +275,11 @@ export class Showcase {
     { name: 'TreeView', cat: 'Avanzados', code: `<signng-tree-view [nodes]="tree" [defaultOpen]="true" />` },
     { name: 'Timeline', cat: 'Avanzados', code: `<signng-timeline [items]="feed" />` },
     { name: 'EmptyState', cat: 'Avanzados', code: `<signng-empty-state title="Sin datos" icon="search">…</signng-empty-state>` },
+
+    { name: 'Kanban', cat: 'Pro', code: `<signng-kanban [(columns)]="board" (moved)="onMove($event)" />` },
+    { name: 'NotificationCenter', cat: 'Pro', code: `<signng-notification-center [(items)]="notifs" />` },
+    { name: 'Rating', cat: 'Pro', code: `<signng-rating [(value)]="stars" [max]="5" />` },
+    { name: 'ColorPicker', cat: 'Pro', code: `<signng-color-picker [(value)]="brand" />` },
 
     { name: 'Button', cat: 'Formularios', code: `<button signngButton variant="default">Botón</button>` },
     { name: 'Input', cat: 'Formularios', code: `<input signngInput placeholder="email@ejemplo.com" />` },
