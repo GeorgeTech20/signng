@@ -76,6 +76,29 @@
       }
     </div>
 
+    <!-- Charts (always visible) -->
+    <div class="grid gap-4 lg:grid-cols-3">
+      <div signngCard class="lg:col-span-2">
+        <div signngCardHeader class="pb-2">
+          <span signngCardTitle class="flex items-center gap-2"><signng-icon name="bar" [size]="16" /> Ingresos por mes</span>
+          <span signngCardDescription>Últimos 6 meses</span>
+        </div>
+        <div signngCardContent><signng-bar-chart [data]="chartBars" /></div>
+      </div>
+      <div signngCard>
+        <div signngCardHeader class="pb-2">
+          <span signngCardTitle class="flex items-center gap-2"><signng-icon name="trending" [size]="16" /> Planes</span>
+        </div>
+        <div signngCardContent><signng-donut-chart [data]="donutData" /></div>
+      </div>
+      <div signngCard class="lg:col-span-3">
+        <div signngCardHeader class="pb-2">
+          <span signngCardTitle class="flex items-center gap-2"><signng-icon name="trending" [size]="16" /> Actividad semanal</span>
+        </div>
+        <div signngCardContent><signng-line-chart [data]="lineData" /></div>
+      </div>
+    </div>
+
     <!-- Tabs -->
     <div ngTabs class="rounded-lg border border-border">
       <ul ngTabList [(selectedTab)]="tab" class="flex gap-1 border-b border-border p-1">
