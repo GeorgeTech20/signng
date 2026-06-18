@@ -44,7 +44,7 @@ const tipWidth = (text: string) => Math.max(12, text.length * 2.1 + 4);
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block' },
   template: `
-    <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="block max-h-52 w-full overflow-visible" role="img" [attr.aria-label]="summary()">
+    <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="block w-full overflow-visible" [style.max-height.px]="height()" role="img" [attr.aria-label]="summary()">
       <title>{{ summary() }}</title>
       <defs>
         <linearGradient [attr.id]="gid" x1="0" y1="0" x2="0" y2="1">
@@ -77,6 +77,7 @@ const tipWidth = (text: string) => Math.max(12, text.length * 2.1 + 4);
 })
 export class BarChart {
   readonly data = input<ChartDatum[]>([]);
+  readonly height = input(210);
   protected readonly W = W;
   protected readonly H = H;
   protected readonly ML = ML;
@@ -114,7 +115,7 @@ export class BarChart {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block' },
   template: `
-    <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="block max-h-52 w-full overflow-visible" role="img" [attr.aria-label]="summary()">
+    <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="block w-full overflow-visible" [style.max-height.px]="height()" role="img" [attr.aria-label]="summary()">
       <title>{{ summary() }}</title>
       <defs>
         <linearGradient [attr.id]="gid" x1="0" y1="0" x2="0" y2="1">
@@ -148,6 +149,7 @@ export class BarChart {
 export class LineChart {
   readonly data = input<ChartDatum[]>([]);
   readonly area = input(true);
+  readonly height = input(210);
   protected readonly W = W;
   protected readonly H = H;
   protected readonly ML = ML;
@@ -281,4 +283,167 @@ export class Sparkline {
   });
 }
 
-export const SIGNNG_CHART = [BarChart, LineChart, DonutChart, Sparkline] as const;
+/** Area chart — smooth filled area, gradient, transparent hover targets + tooltip. */
+@Component({
+  selector: 'signng-area-chart',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'block' },
+  template: `
+    <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="block w-full overflow-visible" [style.max-height.px]="height()" role="img" [attr.aria-label]="summary()">
+      <title>{{ summary() }}</title>
+      <defs>
+        <linearGradient [attr.id]="gid" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--color-primary)" stop-opacity="0.45" />
+          <stop offset="100%" stop-color="var(--color-primary)" stop-opacity="0.03" />
+        </linearGradient>
+      </defs>
+      @for (g of grid(); track g.y) {
+        <line [attr.x1]="ML" [attr.x2]="W - MR" [attr.y1]="g.y" [attr.y2]="g.y" stroke="var(--color-border)" stroke-width="0.4" />
+        <text [attr.x]="ML - 2" [attr.y]="g.y + 1.2" text-anchor="end" font-size="3.2" fill="var(--color-muted-foreground)">{{ g.v }}</text>
+      }
+      <path [attr.d]="areaPath()" [attr.fill]="'url(#' + gid + ')'" />
+      <path [attr.d]="linePath()" fill="none" stroke="var(--color-primary)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      @for (p of points(); track p.i) {
+        @if (hover() === p.i) { <circle [attr.cx]="p.x" [attr.cy]="p.y" r="2.2" fill="var(--color-background)" stroke="var(--color-primary)" stroke-width="1.4" /> }
+        <circle [attr.cx]="p.x" [attr.cy]="p.y" r="4" fill="transparent" (pointerenter)="hover.set(p.i)" (pointerleave)="hover.set(null)" />
+        <text [attr.x]="p.x" [attr.y]="H - 4" text-anchor="middle" font-size="3.2" fill="var(--color-muted-foreground)">{{ p.label }}</text>
+      }
+      @if (tip(); as t) {
+        <g [attr.transform]="'translate(' + t.x + ' ' + t.y + ')'" style="pointer-events:none">
+          <rect [attr.x]="-t.w / 2" y="-9" [attr.width]="t.w" height="7.5" rx="1.5" fill="var(--color-foreground)" />
+          <text x="0" y="-3.8" text-anchor="middle" font-size="3.4" font-weight="600" fill="var(--color-background)">{{ t.text }}</text>
+        </g>
+      }
+    </svg>
+  `,
+})
+export class AreaChart {
+  readonly data = input<ChartDatum[]>([]);
+  readonly height = input(210);
+  protected readonly W = W;
+  protected readonly H = H;
+  protected readonly ML = ML;
+  protected readonly MR = MR;
+  protected readonly gid = inject(_IdGenerator).getId('signng-areagrad-');
+  protected readonly hover = signal<number | null>(null);
+  protected readonly summary = computed(() => summarize('Gráfico de área', this.data()));
+  protected readonly max = computed(() => niceMax(Math.max(1, ...this.data().map((x) => x.value))));
+  protected readonly grid = computed(() => gridlines(this.max()));
+  protected readonly points = computed(() => {
+    const d = this.data(), max = this.max(), n = Math.max(1, d.length);
+    return d.map((x, i) => ({ i, label: x.label, value: x.value, x: ML + (n === 1 ? CW / 2 : (i / (n - 1)) * CW), y: MT + (1 - x.value / max) * CH }));
+  });
+  protected readonly linePath = computed(() => {
+    const p = this.points();
+    if (!p.length) return '';
+    let d = `M ${fmt(p[0].x)} ${fmt(p[0].y)}`;
+    for (let i = 1; i < p.length; i++) { const mx = (p[i - 1].x + p[i].x) / 2; d += ` C ${fmt(mx)} ${fmt(p[i - 1].y)} ${fmt(mx)} ${fmt(p[i].y)} ${fmt(p[i].x)} ${fmt(p[i].y)}`; }
+    return d;
+  });
+  protected readonly areaPath = computed(() => {
+    const p = this.points();
+    if (!p.length) return '';
+    const base = MT + CH;
+    return `${this.linePath()} L ${fmt(p[p.length - 1].x)} ${base} L ${fmt(p[0].x)} ${base} Z`;
+  });
+  protected readonly tip = computed(() => {
+    const i = this.hover();
+    if (i === null) return null;
+    const p = this.points()[i];
+    if (!p) return null;
+    const text = `${p.label}: ${fmt(p.value)}`;
+    return { x: p.x, y: p.y, text, w: tipWidth(text) };
+  });
+}
+
+function polar(cx: number, cy: number, r: number, deg: number) {
+  const a = ((deg - 90) * Math.PI) / 180;
+  return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+}
+
+/** Pie chart — full wedges (arc paths), hover highlight + legend. */
+@Component({
+  selector: 'signng-pie-chart',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'block' },
+  template: `
+    <div class="flex items-center gap-4">
+      <svg viewBox="0 0 42 42" class="h-28 w-28" role="img" [attr.aria-label]="summary()">
+        <title>{{ summary() }}</title>
+        @for (s of slices(); track s.i) {
+          <path
+            [attr.d]="s.d" [attr.fill]="s.color"
+            [attr.opacity]="hover() === null || hover() === s.i ? 1 : 0.5"
+            stroke="var(--color-background)" stroke-width="0.5"
+            (pointerenter)="hover.set(s.i)" (pointerleave)="hover.set(null)"
+            style="transition:opacity .12s"
+          />
+        }
+      </svg>
+      <ul class="space-y-1 text-sm">
+        @for (s of slices(); track s.i) {
+          <li class="flex items-center gap-2" (pointerenter)="hover.set(s.i)" (pointerleave)="hover.set(null)">
+            <span class="size-2.5 rounded-full" [style.background]="s.color"></span>
+            <span [class.font-medium]="hover() === s.i">{{ s.label }}</span>
+            <span class="text-muted-foreground">{{ s.pct }}%</span>
+          </li>
+        }
+      </ul>
+    </div>
+  `,
+})
+export class PieChart {
+  readonly data = input<ChartDatum[]>([]);
+  protected readonly hover = signal<number | null>(null);
+  protected readonly summary = computed(() => summarize('Gráfico circular', this.data()));
+  protected readonly slices = computed(() => {
+    const d = this.data();
+    const total = Math.max(1, d.reduce((a, x) => a + x.value, 0));
+    const cx = 21, cy = 21, r = 20;
+    let acc = 0;
+    return d.map((x, i) => {
+      const start = (acc / total) * 360;
+      acc += x.value;
+      const end = (acc / total) * 360;
+      const s = polar(cx, cy, r, start), e = polar(cx, cy, r, end);
+      const large = end - start > 180 ? 1 : 0;
+      return {
+        i, label: x.label, color: x.color ?? PALETTE[i % PALETTE.length],
+        d: `M ${fmt(cx)} ${fmt(cy)} L ${fmt(s.x)} ${fmt(s.y)} A ${r} ${r} 0 ${large} 1 ${fmt(e.x)} ${fmt(e.y)} Z`,
+        pct: Math.round((x.value / total) * 100),
+      };
+    });
+  });
+}
+
+/** Radial gauge — a single KPI as a progress ring with a centered value. */
+@Component({
+  selector: 'signng-radial-chart',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'inline-block' },
+  template: `
+    <svg viewBox="0 0 42 42" class="h-28 w-28" role="img" [attr.aria-label]="(label() || 'Progreso') + ': ' + display()">
+      <g transform="rotate(-90 21 21)">
+        <circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--color-muted)" stroke-width="4" />
+        <circle
+          cx="21" cy="21" r="15.915" fill="none"
+          stroke="var(--color-primary)" stroke-width="4" stroke-linecap="round"
+          [attr.stroke-dasharray]="dash()" stroke-dashoffset="0"
+        />
+      </g>
+      <text x="21" y="20.5" text-anchor="middle" font-size="8" font-weight="700" fill="var(--color-foreground)">{{ display() }}</text>
+      @if (label()) { <text x="21" y="26" text-anchor="middle" font-size="3" fill="var(--color-muted-foreground)">{{ label() }}</text> }
+    </svg>
+  `,
+})
+export class RadialChart {
+  readonly value = input(0);
+  readonly max = input(100);
+  readonly unit = input('%');
+  readonly label = input('');
+  protected readonly pct = computed(() => Math.min(1, Math.max(0, this.value() / (this.max() || 1))));
+  protected readonly display = computed(() => `${Math.round(this.pct() * 100)}${this.unit()}`);
+  protected readonly dash = computed(() => `${fmt(this.pct() * 100)} 100`);
+}
+
+export const SIGNNG_CHART = [BarChart, LineChart, AreaChart, DonutChart, PieChart, RadialChart, Sparkline] as const;

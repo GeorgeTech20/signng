@@ -118,6 +118,20 @@
       </div>
     </div>
 
+    <!-- Area + radial gauge -->
+    <div class="grid gap-4 lg:grid-cols-3">
+      <div signngCard class="lg:col-span-2">
+        <div signngCardHeader class="pb-2"><span signngCardTitle class="text-sm">Tendencia (área)</span></div>
+        <div signngCardContent class="pt-0"><signng-area-chart [data]="lineData" [height]="170" /></div>
+      </div>
+      <div signngCard>
+        <div signngCardHeader class="pb-2"><span signngCardTitle class="text-sm">Meta mensual</span></div>
+        <div signngCardContent class="flex items-center justify-center pt-0">
+          <signng-radial-chart [value]="72" label="meta" />
+        </div>
+      </div>
+    </div>
+
     <!-- Tabs -->
     <div ngTabs class="rounded-lg border border-border">
       <ul ngTabList [(selectedTab)]="tab" class="flex gap-1 border-b border-border p-1">
@@ -215,8 +229,8 @@
               <div signngCardContent><signng-line-chart [data]="lineData" /></div>
             </div>
             <div signngCard>
-              <div signngCardHeader class="pb-2"><span signngCardTitle>Distribución de planes</span></div>
-              <div signngCardContent><signng-donut-chart [data]="donutData" /></div>
+              <div signngCardHeader class="pb-2"><span signngCardTitle>Distribución (pie)</span></div>
+              <div signngCardContent><signng-pie-chart [data]="donutData" /></div>
             </div>
             <div signngCard>
               <div signngCardHeader class="pb-2"><span signngCardTitle>Destacados</span></div>

@@ -223,7 +223,7 @@
       "name": "chart",
       "type": "registry:ui",
       "description": "Minimal pure-SVG charts (bar, line, donut, sparkline) — signals, role=img, no deps.",
-      "integrity": "sha256-LnlQsy/IfitTgEQIG9LKo0WDHyHFM0PFbiK4igXvQ1E="
+      "integrity": "sha256-BN6lJvE/He32acESkA3Clo+YzjEPukBQ/4RlDxcYxqU="
     },
     {
       "name": "icon",
@@ -311,6 +311,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "Ci6hSBMPKIBYlznjTWDPDAr8dOd1yQkSL7H8qFhFWRyHPnoNgrjTpVnZAw9YGYYWA+H2NQ5rziFZ9OgbUJbeBQ==",
+  "signature": "F3ZxTVsM8/H/ZI6/1eym3ucCR/2dJITNRvbxmKKcVSSGC7KbCWeunHSzBnDzFoYt+O1dYNmmcliszRd51ql9AQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
