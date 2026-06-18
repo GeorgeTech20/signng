@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { _IdGenerator } from '@angular/cdk/a11y';
 import { cn } from '@/lib/utils';
+import { SIGNNG_I18N } from '@/components/ui/i18n';
 
 // --- date helpers (ISO 'yyyy-MM-dd', local time, no external dep) ---
 function iso(d: Date): string {
@@ -68,7 +69,7 @@ interface Day {
         <button
           type="button"
           (click)="cursor.set(addMonths(cursor(), -1))"
-          aria-label="Mes anterior"
+          [attr.aria-label]="i18n.calendarPrevMonth"
           class="inline-flex size-7 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true">
@@ -79,7 +80,7 @@ interface Day {
         <button
           type="button"
           (click)="cursor.set(addMonths(cursor(), 1))"
-          aria-label="Mes siguiente"
+          [attr.aria-label]="i18n.calendarNextMonth"
           class="inline-flex size-7 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true">
@@ -94,7 +95,7 @@ interface Day {
       <div
         role="grid"
         tabindex="0"
-        [attr.aria-label]="label() || 'Calendario'"
+        [attr.aria-label]="label() || i18n.calendarLabel"
         [attr.aria-describedby]="monthLabelId"
         [attr.aria-activedescendant]="dayId(cursor())"
         (focus)="focused.set(true)"
@@ -154,6 +155,7 @@ export class Calendar {
   protected readonly cn = cn;
   protected readonly addMonths = addMonths;
   protected readonly monthLabelId = inject(_IdGenerator).getId('signng-cal-month-');
+  protected readonly i18n = inject(SIGNNG_I18N);
   private readonly gridId = inject(_IdGenerator).getId('signng-cal-');
   private readonly initialMonth = iso(new Date()); // deterministic-enough month seed for SSR
 

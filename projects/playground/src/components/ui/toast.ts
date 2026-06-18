@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Injectable, computed, inject, signal } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { cn } from '@/lib/utils';
+import { SIGNNG_I18N } from '@/components/ui/i18n';
 
 export type ToastVariant = 'default' | 'success' | 'destructive';
 
@@ -33,6 +34,7 @@ interface Timer {
  */
 @Injectable({ providedIn: 'root' })
 export class ToastService {
+  protected readonly i18n = inject(SIGNNG_I18N);
   private seq = 0;
   readonly toasts = signal<ToastItem[]>([]);
   private readonly timers = new Map<number, Timer>();
@@ -111,7 +113,7 @@ export class ToastService {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'region',
-    'aria-label': 'Notificaciones',
+    '[attr.aria-label]': 'i18n.toastRegion',
     '(mouseenter)': 'service.pauseAll()',
     '(mouseleave)': 'service.resumeAll()',
     '(focusin)': 'service.pauseAll()',
@@ -142,7 +144,7 @@ export class ToastService {
         <button
           type="button"
           (click)="dismiss(toast.id)"
-          aria-label="Cerrar"
+          [attr.aria-label]="i18n.toastClose"
           class="shrink-0 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true">
@@ -154,6 +156,7 @@ export class ToastService {
   `,
 })
 export class Toaster {
+  protected readonly i18n = inject(SIGNNG_I18N);
   protected readonly service = inject(ToastService);
   protected readonly toasts = this.service.toasts;
   protected readonly politeToasts = computed(() => this.toasts().filter((t) => t.variant !== 'destructive'));

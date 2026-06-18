@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, inject} from '@angular/core';
 import { cn } from '@/lib/utils';
+import { SIGNNG_I18N } from '@/components/ui/i18n';
 
 /**
  * Styled Pagination (helm). nav landmark with prev/next + numbered pages; the current page carries
@@ -10,12 +11,12 @@ import { cn } from '@/lib/utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block' },
   template: `
-    <nav [attr.aria-label]="label()" class="flex items-center gap-1">
+    <nav [attr.aria-label]="label() || i18n.paginationLabel" class="flex items-center gap-1">
       <button
         type="button"
         [disabled]="page() <= 1"
         (click)="go(page() - 1)"
-        aria-label="Página anterior"
+        [attr.aria-label]="i18n.paginationPrev"
         [class]="btn"
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true">
@@ -30,7 +31,7 @@ import { cn } from '@/lib/utils';
             type="button"
             (click)="go(item)"
             [attr.aria-current]="item === page() ? 'page' : null"
-            [attr.aria-label]="'Página ' + item"
+            [attr.aria-label]="i18n.paginationPage(item)"
             [class]="cn(btn, item === page() ? 'border-input bg-accent text-accent-foreground' : '')"
           >
             {{ item }}
@@ -41,7 +42,7 @@ import { cn } from '@/lib/utils';
         type="button"
         [disabled]="page() >= total()"
         (click)="go(page() + 1)"
-        aria-label="Página siguiente"
+        [attr.aria-label]="i18n.paginationNext"
         [class]="btn"
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true">
@@ -52,9 +53,10 @@ import { cn } from '@/lib/utils';
   `,
 })
 export class Pagination {
+  protected readonly i18n = inject(SIGNNG_I18N);
   readonly page = model(1);
   readonly total = input(1);
-  readonly label = input('Paginación');
+  readonly label = input('');
 
   protected readonly cn = cn;
   protected readonly btn =

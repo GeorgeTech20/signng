@@ -5,7 +5,8 @@
   "description": "Resizable two-panel split (pointer drag + keyboard, role=separator).",
   "dependencies": [],
   "registryDependencies": [
-    "utils"
+    "utils",
+    "i18n"
   ],
   "files": [
     {

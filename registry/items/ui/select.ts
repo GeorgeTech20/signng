@@ -3,6 +3,7 @@ import { CdkTrapFocus, _IdGenerator } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin, type ConnectedPosition } from '@angular/cdk/overlay';
 import { Listbox, Option } from '@angular/aria/listbox';
 import { cn } from '@/lib/utils';
+import { SIGNNG_I18N } from '@/components/ui/i18n';
 
 export interface SelectOption {
   value: string;
@@ -64,7 +65,7 @@ export interface SelectOption {
         selectionMode="explicit"
         [value]="listboxValue()"
         (valueChange)="onChange($event)"
-        [attr.aria-label]="label() || 'Options'"
+        [attr.aria-label]="label() || i18n.options"
         class="z-50 max-h-60 min-w-48 overflow-auto rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md outline-none"
       >
         @for (opt of options(); track opt.value) {
@@ -81,9 +82,10 @@ export interface SelectOption {
   `,
 })
 export class Select {
+  protected readonly i18n = inject(SIGNNG_I18N);
   readonly options = input<SelectOption[]>([]);
   readonly value = model<string | null>(null);
-  readonly placeholder = input('Seleccionar…');
+  readonly placeholder = input('');
   readonly label = input('');
   readonly class = input('');
   readonly open = signal(false);
@@ -91,7 +93,7 @@ export class Select {
   protected readonly cn = cn;
   protected readonly listboxId = inject(_IdGenerator).getId('signng-select-listbox-');
   protected readonly selectedLabel = computed(
-    () => this.options().find((o) => o.value === this.value())?.label ?? this.placeholder(),
+    () => this.options().find((o) => o.value === this.value())?.label ?? (this.placeholder() || this.i18n.selectPlaceholder),
   );
   protected readonly listboxValue = computed(() => (this.value() !== null ? [this.value()!] : []));
 

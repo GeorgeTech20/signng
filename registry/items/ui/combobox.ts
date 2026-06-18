@@ -13,6 +13,7 @@ import {
 import { _IdGenerator } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin, type ConnectedPosition } from '@angular/cdk/overlay';
 import { cn } from '@/lib/utils';
+import { SIGNNG_I18N } from '@/components/ui/i18n';
 
 export interface ComboboxOption {
   value: string;
@@ -43,7 +44,7 @@ export interface ComboboxOption {
         [attr.aria-activedescendant]="activeId()"
         [attr.aria-label]="label() || null"
         [value]="query()"
-        [placeholder]="placeholder()"
+        [placeholder]="placeholder() || i18n.searchPlaceholder"
         (input)="onInput($event)"
         (focus)="open()"
         (click)="open()"
@@ -58,7 +59,7 @@ export interface ComboboxOption {
       <!-- Persistent polite live region: announces empty-results to screen readers. -->
       <div class="sr-only" aria-live="polite">
         @if (expanded() && !filtered().length) {
-          {{ emptyLabel() }}
+          {{ emptyLabel() || i18n.empty }}
         }
       </div>
     </div>
@@ -97,18 +98,19 @@ export interface ComboboxOption {
             {{ opt.label }}
           </li>
         } @empty {
-          <li class="px-2 py-1.5 text-sm text-muted-foreground">{{ emptyLabel() }}</li>
+          <li class="px-2 py-1.5 text-sm text-muted-foreground">{{ emptyLabel() || i18n.empty }}</li>
         }
       </ul>
     </ng-template>
   `,
 })
 export class Combobox {
+  protected readonly i18n = inject(SIGNNG_I18N);
   readonly options = input<ComboboxOption[]>([]);
   readonly value = model<string | null>(null);
   readonly label = input('');
-  readonly placeholder = input('Buscar…');
-  readonly emptyLabel = input('Sin resultados');
+  readonly placeholder = input('');
+  readonly emptyLabel = input('');
   readonly class = input('');
 
   protected readonly cn = cn;

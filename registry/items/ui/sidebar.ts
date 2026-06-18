@@ -9,6 +9,7 @@ import {
   model,
 } from '@angular/core';
 import { cn } from '@/lib/utils';
+import { SIGNNG_I18N } from '@/components/ui/i18n';
 import { Icon, type IconName } from '@/components/ui/icon';
 
 /**
@@ -23,14 +24,15 @@ import { Icon, type IconName } from '@/components/ui/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'navigation',
-    '[attr.aria-label]': 'label()',
+    '[attr.aria-label]': 'label() || i18n.sidebarNav',
     '[class]': 'cls()',
   },
   template: `<ng-content />`,
 })
 export class SignngSidebar {
+  protected readonly i18n = inject(SIGNNG_I18N);
   readonly collapsed = model(false);
-  readonly label = input('Navegación principal');
+  readonly label = input('');
   readonly class = input('');
   protected readonly cls = computed(() =>
     cn(
@@ -105,7 +107,7 @@ export class SignngSidebarItem {
       type="button"
       (click)="sidebar.collapsed.update((v) => !v)"
       [attr.aria-expanded]="!sidebar.collapsed()"
-      aria-label="Alternar barra lateral"
+      [attr.aria-label]="i18n.sidebarToggle"
       class="inline-flex size-8 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <signng-icon name="menu" [size]="18" />
@@ -113,6 +115,7 @@ export class SignngSidebarItem {
   `,
 })
 export class SignngSidebarTrigger {
+  protected readonly i18n = inject(SIGNNG_I18N);
   protected readonly sidebar = inject<SignngSidebar>(forwardRef(() => SignngSidebar));
 }
 

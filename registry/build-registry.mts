@@ -25,6 +25,12 @@ interface ItemDef {
 
 const ITEMS: ItemDef[] = [
   {
+    name: 'i18n',
+    type: 'registry:lib',
+    description: 'SIGNNG_I18N token + provideSignngI18n() — translate all built-in UI strings from one place.',
+    files: [{ src: 'ui/i18n.ts', target: 'src/components/ui/i18n.ts', type: 'registry:lib' }],
+  },
+  {
     name: 'utils',
     type: 'registry:lib',
     description: 'cn() class-merge helper.',
@@ -135,7 +141,7 @@ const ITEMS: ItemDef[] = [
     type: 'registry:ui',
     description: 'Select: trigger + CDK overlay hosting @angular/aria Listbox (single-select).',
     dependencies: ['@signng/core', '@angular/cdk', '@angular/aria'],
-    registryDependencies: ['utils', 'overlay'],
+    registryDependencies: ['utils', 'overlay', 'i18n'],
     files: [{ src: 'ui/select.ts', target: 'src/components/ui/select.ts', type: 'registry:ui' }],
   },
   {
@@ -188,7 +194,7 @@ const ITEMS: ItemDef[] = [
     type: 'registry:ui',
     description: 'Date-grid calendar (controlled APG grid: arrows/Home/End/PageUp-Down, Intl labels).',
     dependencies: ['@angular/cdk'],
-    registryDependencies: ['utils'],
+    registryDependencies: ['utils', 'i18n'],
     files: [{ src: 'ui/calendar.ts', target: 'src/components/ui/calendar.ts', type: 'registry:ui' }],
   },
   {
@@ -204,7 +210,7 @@ const ITEMS: ItemDef[] = [
     type: 'registry:ui',
     description: 'Searchable single-select (controlled APG combobox: input + CDK overlay listbox).',
     dependencies: ['@angular/cdk'],
-    registryDependencies: ['utils', 'overlay'],
+    registryDependencies: ['utils', 'overlay', 'i18n'],
     files: [{ src: 'ui/combobox.ts', target: 'src/components/ui/combobox.ts', type: 'registry:ui' }],
   },
   {
@@ -219,7 +225,7 @@ const ITEMS: ItemDef[] = [
     name: 'toast',
     type: 'registry:ui',
     description: 'Toast service + viewport (signal queue, auto-dismiss, aria-live status/alert).',
-    registryDependencies: ['utils'],
+    registryDependencies: ['utils', 'i18n'],
     files: [{ src: 'ui/toast.ts', target: 'src/components/ui/toast.ts', type: 'registry:ui' }],
   },
   {
@@ -294,7 +300,7 @@ const ITEMS: ItemDef[] = [
     name: 'sidebar',
     type: 'registry:ui',
     description: 'Collapsible app-shell sidebar (header/content/footer + items + trigger).',
-    registryDependencies: ['utils', 'icon'],
+    registryDependencies: ['utils', 'icon', 'i18n'],
     files: [{ src: 'ui/sidebar.ts', target: 'src/components/ui/sidebar.ts', type: 'registry:ui' }],
   },
   {
@@ -342,7 +348,7 @@ const ITEMS: ItemDef[] = [
     name: 'resizable',
     type: 'registry:ui',
     description: 'Resizable two-panel split (pointer drag + keyboard, role=separator).',
-    registryDependencies: ['utils'],
+    registryDependencies: ['utils', 'i18n'],
     files: [{ src: 'ui/resizable.ts', target: 'src/components/ui/resizable.ts', type: 'registry:ui' }],
   },
   {
@@ -384,7 +390,7 @@ const ITEMS: ItemDef[] = [
     name: 'pagination',
     type: 'registry:ui',
     description: 'Pagination nav (prev/next + windowed page numbers, aria-current page).',
-    registryDependencies: ['utils'],
+    registryDependencies: ['utils', 'i18n'],
     files: [{ src: 'ui/pagination.ts', target: 'src/components/ui/pagination.ts', type: 'registry:ui' }],
   },
   {
@@ -392,7 +398,7 @@ const ITEMS: ItemDef[] = [
     type: 'registry:ui',
     description: 'Command palette: modal (@signng/core/dialog) + filtered command listbox.',
     dependencies: ['@signng/core', '@angular/cdk'],
-    registryDependencies: ['utils', 'button', 'overlay'],
+    registryDependencies: ['utils', 'button', 'overlay', 'i18n'],
     files: [{ src: 'ui/command.ts', target: 'src/components/ui/command.ts', type: 'registry:ui' }],
   },
   {

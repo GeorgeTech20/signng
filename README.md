@@ -136,6 +136,29 @@ curva smooth, gradientes y **tooltip on hover**.
 
 ---
 
+## Internacionalización (i18n)
+
+El texto por-instancia (`label`/`title`/`placeholder`/`triggerLabel`/`items`) se pasa como input → ya
+traducible. Las fechas son locale-aware vía `Intl` (Calendar/DatePicker: `locale` + `weekStartsOn`).
+El resto — aria-labels de botones-icono y defaults ("Cerrar", "Página siguiente", "Sin resultados"…) —
+sale de un **único token** `SIGNNG_I18N` (defaults en inglés). Traduces toda la librería desde un sitio:
+
+```ts
+import { provideSignngI18n } from '@/components/ui/i18n';
+
+bootstrapApplication(App, {
+  providers: [
+    provideSignngI18n({
+      close: 'Cerrar',
+      calendarPrevMonth: 'Mes anterior',
+      paginationNext: 'Página siguiente',
+      paginationPage: (n) => `Página ${n}`,
+      // … sobreescribe solo lo que necesites; el resto cae a los defaults en inglés
+    }),
+  ],
+});
+```
+
 ## Modelo de seguridad — la cuña enterprise
 
 El problema de "copia-pega del registry": ¿cómo sabes que el código que escribes en tu repo no fue

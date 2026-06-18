@@ -13,6 +13,7 @@ import { CdkTrapFocus, _IdGenerator } from '@angular/cdk/a11y';
 import { SignngDialogTrigger } from '@signng/core/dialog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { SIGNNG_I18N } from '@/components/ui/i18n';
 
 export interface CommandOption {
   value: string;
@@ -50,14 +51,14 @@ export interface CommandOption {
           [attr.aria-activedescendant]="activeId()"
           [attr.aria-label]="label() || 'Buscar comando'"
           [value]="query()"
-          [placeholder]="placeholder()"
+          [placeholder]="placeholder() || i18n.searchPlaceholder"
           (input)="onInput($event)"
           (keydown)="onKeydown($event, ctx)"
           class="w-full border-b border-border bg-transparent px-4 py-3 text-sm outline-none placeholder:text-muted-foreground"
         />
         <div class="sr-only" aria-live="polite">
           @if (!filtered().length) {
-            {{ emptyLabel() }}
+            {{ emptyLabel() || i18n.empty }}
           }
         </div>
         <ul [id]="listId" role="listbox" [attr.aria-label]="label() || 'Comandos'" class="max-h-72 overflow-auto p-1">
@@ -78,7 +79,7 @@ export interface CommandOption {
               {{ cmd.label }}
             </li>
           } @empty {
-            <li class="px-3 py-6 text-center text-sm text-muted-foreground">{{ emptyLabel() }}</li>
+            <li class="px-3 py-6 text-center text-sm text-muted-foreground">{{ emptyLabel() || i18n.empty }}</li>
           }
         </ul>
       </div>
@@ -86,10 +87,11 @@ export interface CommandOption {
   `,
 })
 export class Command {
+  protected readonly i18n = inject(SIGNNG_I18N);
   readonly commands = input<CommandOption[]>([]);
   readonly triggerLabel = input('Buscar comando…');
-  readonly placeholder = input('Escribe un comando o busca…');
-  readonly emptyLabel = input('Sin resultados.');
+  readonly placeholder = input('');
+  readonly emptyLabel = input('');
   readonly label = input('');
   readonly selected = output<string>();
 

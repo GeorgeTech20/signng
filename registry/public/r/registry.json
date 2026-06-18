@@ -4,6 +4,12 @@
   "homepage": "https://signng.dev",
   "items": [
     {
+      "name": "i18n",
+      "type": "registry:lib",
+      "description": "SIGNNG_I18N token + provideSignngI18n() — translate all built-in UI strings from one place.",
+      "integrity": "sha256-cNaLHB1kO2ar5TasgHTqQ7X1+ol5owO272hNpdk4wrw="
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "description": "cn() class-merge helper.",
@@ -91,7 +97,7 @@
       "name": "select",
       "type": "registry:ui",
       "description": "Select: trigger + CDK overlay hosting @angular/aria Listbox (single-select).",
-      "integrity": "sha256-DzYSPtKRtzmPSYPFgegup/QftrIPeg93zycFaEtfW4I="
+      "integrity": "sha256-H3wR24E43Yg4U6tkBZii8o3HZhZhbd+ptmubbrtRWNA="
     },
     {
       "name": "card",
@@ -133,7 +139,7 @@
       "name": "calendar",
       "type": "registry:ui",
       "description": "Date-grid calendar (controlled APG grid: arrows/Home/End/PageUp-Down, Intl labels).",
-      "integrity": "sha256-b5hQbO2vxQBRVbdCtU/biIURWiFEJKjZaFJfe5v060Y="
+      "integrity": "sha256-vFEAfltVpnqdt5CPFoXJTfBq3AAQ+L15O/BCYYd7WGE="
     },
     {
       "name": "date-picker",
@@ -145,7 +151,7 @@
       "name": "combobox",
       "type": "registry:ui",
       "description": "Searchable single-select (controlled APG combobox: input + CDK overlay listbox).",
-      "integrity": "sha256-418vjKj8pcklRnAt6icl7enYlOD8aCtvDnDBexAJOUs="
+      "integrity": "sha256-4qx+sUNb+qXWuHZtgcwGFQ7G1Gj0HBUKcN9HQLTbvlo="
     },
     {
       "name": "sheet",
@@ -157,7 +163,7 @@
       "name": "toast",
       "type": "registry:ui",
       "description": "Toast service + viewport (signal queue, auto-dismiss, aria-live status/alert).",
-      "integrity": "sha256-pnU/eoyWjrx6qPAUCdFYZu5uopev/3JqaMcG2fFAwjI="
+      "integrity": "sha256-ElECqBqJbQvzp1Wcrd/TmBM8S4houscD+AFzEFVMGE0="
     },
     {
       "name": "alert",
@@ -217,7 +223,7 @@
       "name": "sidebar",
       "type": "registry:ui",
       "description": "Collapsible app-shell sidebar (header/content/footer + items + trigger).",
-      "integrity": "sha256-sqy1bdjKTuMbz2jfcSlS+heivrTW7MP5Hlfuedwm7p4="
+      "integrity": "sha256-rFjCJGF/pCpJ9iw5FooVZHiWrMw6IA1IIs0Mi4iv5k0="
     },
     {
       "name": "chart",
@@ -253,7 +259,7 @@
       "name": "carousel",
       "type": "registry:ui",
       "description": "Carousel region (prev/next + arrow keys, aria-roledescription, live region).",
-      "integrity": "sha256-BQUIhQM3SdO906yl5GhnXpNotTKGvMpSuRWHKfMmkiI="
+      "integrity": "sha256-XEvOgyG2cLg5M/8eUu6m9U2K9GgQuiM69fgMKeWQx9w="
     },
     {
       "name": "resizable",
@@ -295,13 +301,13 @@
       "name": "pagination",
       "type": "registry:ui",
       "description": "Pagination nav (prev/next + windowed page numbers, aria-current page).",
-      "integrity": "sha256-SRuu1W2OzPXo0KdVsq1gfYzvqefxwh0GRbxJzH2v6lU="
+      "integrity": "sha256-f0+rO6Gw91KKuutcF5hI1FC5hEkgsqYJKTACCKKG8HU="
     },
     {
       "name": "command",
       "type": "registry:ui",
       "description": "Command palette: modal (@signng/core/dialog) + filtered command listbox.",
-      "integrity": "sha256-HSPXpuEUgBZh8VzAENKK9PHQGN7Vxa+7js5sDi5bJgE="
+      "integrity": "sha256-CVOm8JXowBMKynqfUTlYqo+iUz94n2fU4lCr8BdSOmM="
     },
     {
       "name": "theme",
@@ -311,6 +317,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "F3ZxTVsM8/H/ZI6/1eym3ucCR/2dJITNRvbxmKKcVSSGC7KbCWeunHSzBnDzFoYt+O1dYNmmcliszRd51ql9AQ==",
+  "signature": "Nbf1gFoSeOuwRXjfmv0nPh+19Fsi346r7g6ZW3zEHrqgsnM06p9JrPrZBM+JElxwPugP5mszK7JFWMF8ErmxDQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
