@@ -25,15 +25,31 @@ const items = index.items
   .map((i) => JSON.parse(readFileSync(resolve(R, `${i.name}.json`), 'utf8')));
 
 const CATEGORIES = [
-  ['Formularios', ['button', 'input', 'label', 'textarea', 'checkbox', 'switch', 'radio-group', 'select', 'slider', 'combobox', 'input-otp']],
-  ['Overlays', ['dialog', 'alert-dialog', 'sheet', 'popover', 'tooltip', 'hover-card', 'toast', 'command']],
-  ['Navegación', ['tabs', 'accordion', 'dropdown-menu', 'context-menu', 'menubar', 'navigation-menu', 'breadcrumb', 'pagination']],
+  ['Formularios', ['button', 'input', 'label', 'textarea', 'checkbox', 'switch', 'radio-group', 'select', 'slider', 'combobox', 'input-otp', 'form-field']],
+  ['Overlays', ['dialog', 'alert-dialog', 'sheet', 'drawer', 'popover', 'tooltip', 'hover-card', 'toast', 'command']],
+  ['Navegación', ['tabs', 'accordion', 'dropdown-menu', 'context-menu', 'menubar', 'navigation-menu', 'breadcrumb', 'pagination', 'sidebar']],
   ['Fecha', ['calendar', 'date-picker']],
   ['Display', ['card', 'badge', 'avatar', 'separator', 'alert', 'skeleton', 'progress', 'table']],
   ['Interacción', ['toggle', 'toggle-group', 'collapsible', 'scroll-area', 'aspect-ratio', 'carousel', 'resizable']],
+  ['Gráficos', ['chart']],
 ];
 const byName = new Map(items.map((i) => [i.name, i]));
 const used = new Set();
+
+// Icon gallery — parse the ICONS map from the icon component (pure SVG path data).
+const iconSrc = readFileSync(resolve(R, '..', '..', 'items', 'ui', 'icon.ts'), 'utf8');
+const ICON_ENTRIES = [...iconSrc.matchAll(/['"]?([a-z][\w-]*)['"]?:\s*\[([^\]]*)\]/gi)]
+  .map(([, name, body]) => ({ name, paths: [...body.matchAll(/'([^']*)'/g)].map((m) => m[1]) }))
+  .filter((e) => e.paths.length && e.paths.every((p) => /^[Mm]/.test(p.trim())));
+const iconCard = (e) =>
+  `<button class="icon-card" data-name="${esc(e.name)}" title="Copiar &lt;signng-icon name=&quot;${esc(e.name)}&quot; /&gt;">` +
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">` +
+  e.paths.map((d) => `<path d="${esc(d)}"/>`).join('') +
+  `</svg><span>${esc(e.name)}</span></button>`;
+const iconsHtml =
+  `<h2 id="iconos">Iconos <span class="badge">${ICON_ENTRIES.length}</span></h2>` +
+  `<p class="desc">Set de iconos propio (stroke, grilla 24px, sin dependencia). Click un icono para copiar su uso.</p>` +
+  `<div class="icon-grid">${ICON_ENTRIES.map(iconCard).join('')}</div>`;
 
 const badge = (t) => `<span class="badge">${esc(t)}</span>`;
 const depBadges = (item) => {
@@ -113,6 +129,12 @@ details summary { cursor: pointer; font-size: 13px; color: var(--color-muted-for
 .patterns { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin: 1rem 0; }
 .patterns div { border: 1px solid var(--color-border); border-radius: var(--radius); padding: .75rem 1rem; font-size: 13px; }
 .toggle { position: fixed; top: 1rem; right: 1rem; z-index: 10; border: 1px solid var(--color-border); background: var(--color-card); color: var(--color-foreground); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 13px; }
+.icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px; margin: 1rem 0; }
+.icon-card { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 14px 6px; border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-card); color: var(--color-foreground); cursor: pointer; font: inherit; font-size: 11px; transition: background .12s, border-color .12s; }
+.icon-card:hover { background: var(--color-accent); color: var(--color-accent-foreground); }
+.icon-card.copied { border-color: var(--color-primary); color: var(--color-primary); }
+.icon-card span { color: var(--color-muted-foreground); }
+.icon-card.copied span { color: var(--color-primary); }
 @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } aside { display: none; } .patterns { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -123,6 +145,7 @@ details summary { cursor: pointer; font-size: 13px; color: var(--color-muted-for
 <li><a href="#hero">Introducción</a></li>
 <li><a href="#install">Instalación</a></li>
 <li><a href="#security">Distribución firmada</a></li>
+<li><a href="#iconos">Iconos</a></li>
 ${nav}
 </ul></aside>
 <main>
@@ -150,6 +173,8 @@ pnpm signng add button dialog calendar   # verifica firma + SRI, luego escribe</
     <p class="integrity">signature: ${esc(sig)}…</p>
   </section>
 
+  <section>${iconsHtml}</section>
+
   ${sections}
 
   <footer style="margin:3rem 0 2rem;color:var(--color-muted-foreground);font-size:13px;border-top:1px solid var(--color-border);padding-top:1rem">
@@ -157,6 +182,15 @@ pnpm signng add button dialog calendar   # verifica firma + SRI, luego escribe</
   </footer>
 </main>
 </div>
+<script>
+document.querySelectorAll('.icon-card').forEach(function (b) {
+  b.addEventListener('click', function () {
+    navigator.clipboard.writeText('<signng-icon name="' + b.dataset.name + '" />');
+    b.classList.add('copied');
+    setTimeout(function () { b.classList.remove('copied'); }, 900);
+  });
+});
+</script>
 </body>
 </html>`;
 
