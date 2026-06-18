@@ -32,6 +32,7 @@ import { SignngResizable } from '@/components/ui/resizable';
 import { Menubar } from '@/components/ui/menubar';
 import { SIGNNG_NAVIGATION_MENU } from '@/components/ui/navigation-menu';
 import { Dashboard } from './dashboard';
+import { Showcase } from './showcase';
 import { SIGNNG_CARD } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -54,7 +55,7 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
     Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster,
     Skeleton, Progress, Combobox, Calendar, DatePicker, Pagination, Command,
     Toggle, Collapsible, HoverCard, ContextMenu, ScrollArea, AspectRatio,
-    InputOtp, SignngResizable, Menubar, Dashboard,
+    InputOtp, SignngResizable, Menubar, Dashboard, Showcase,
     ...SIGNNG_NAVIGATION_MENU, ...SIGNNG_CAROUSEL, ...SIGNNG_TOGGLE_GROUP, ...SIGNNG_BREADCRUMB, ...SIGNNG_ALERT,
     ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
@@ -70,7 +71,7 @@ export class App {
   protected readonly tech = signal<string | null>(null);
   protected readonly date = signal<string | null>('2026-06-15');
   protected readonly dob = signal<string | null>(null);
-  protected readonly view = signal<'demo' | 'dashboard'>('demo');
+  protected readonly view = signal<'demo' | 'dashboard' | 'showcase'>('demo');
   protected readonly bold = signal(false);
   protected readonly otp = signal('');
   protected readonly barAction = signal('');

@@ -1,11 +1,12 @@
-<button
-  class="fixed right-4 top-4 z-50 rounded-md border border-border bg-background px-3 py-1.5 text-sm shadow"
-  (click)="view.set(view() === 'demo' ? 'dashboard' : 'demo')"
->
-  {{ view() === 'demo' ? 'Ver dashboard →' : '← Ver demo' }}
-</button>
+<div class="fixed right-4 top-4 z-50 flex gap-1 rounded-md border border-border bg-background p-1 text-sm shadow">
+  <button class="rounded px-2.5 py-1" [class.bg-accent]="view() === 'showcase'" [class.text-accent-foreground]="view() === 'showcase'" (click)="view.set('showcase')">Showcase</button>
+  <button class="rounded px-2.5 py-1" [class.bg-accent]="view() === 'demo'" [class.text-accent-foreground]="view() === 'demo'" (click)="view.set('demo')">Demo</button>
+  <button class="rounded px-2.5 py-1" [class.bg-accent]="view() === 'dashboard'" [class.text-accent-foreground]="view() === 'dashboard'" (click)="view.set('dashboard')">Dashboard</button>
+</div>
 @if (view() === 'dashboard') {
   <signng-dashboard />
+} @else if (view() === 'showcase') {
+  <signng-showcase />
 } @else {
 <main class="min-h-screen bg-background text-foreground p-8" data-testid="app-root">
   <div class="mx-auto max-w-2xl space-y-10">

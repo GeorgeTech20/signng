@@ -1,3 +1,10 @@
 @import './signng-overlay.css';
 @import './signng-theme.css';
 /* You can add global styles to this file, and also import other style files */
+
+/* showcase demo-card chrome */
+.dc { border: 1px solid var(--color-border); border-radius: 0.75rem; background: var(--color-card); overflow: hidden; }
+.dh { display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--color-border); padding: 0.5rem 1rem; }
+.dn { font-size: 0.875rem; font-weight: 500; }
+.dp { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 1.5rem; min-height: 124px; }
+.dco { margin: 0; padding: 1rem; font: 12px/1.6 ui-monospace, monospace; background: var(--color-foreground); color: var(--color-background); overflow: auto; white-space: pre-wrap; }
