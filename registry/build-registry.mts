@@ -31,6 +31,33 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/i18n.ts', target: 'src/components/ui/i18n.ts', type: 'registry:lib' }],
   },
   {
+    name: 'data-table',
+    type: 'registry:ui',
+    description: 'Smart DataTable: sort, global search, row selection, inline edit, grouping, pagination, CSV export.',
+    registryDependencies: ['utils', 'icon', 'i18n'],
+    files: [{ src: 'ui/data-table.ts', target: 'src/components/ui/data-table.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'chart-analytics',
+    type: 'registry:ui',
+    description: 'Multi-series analytics charts: multi-line, stacked/grouped bars, scatter, heatmap, legend, hover crosshair.',
+    files: [{ src: 'ui/chart-analytics.ts', target: 'src/components/ui/chart-analytics.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'file-upload',
+    type: 'registry:ui',
+    description: 'Drag-and-drop FileUpload + ImageUpload (thumbnail preview), type/size validation.',
+    registryDependencies: ['icon'],
+    files: [{ src: 'ui/file-upload.ts', target: 'src/components/ui/file-upload.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'login-form',
+    type: 'registry:ui',
+    description: 'Composed auth block (login / signup / forgot) with optional social providers.',
+    registryDependencies: ['utils', 'button', 'input', 'label', 'card'],
+    files: [{ src: 'ui/login-form.ts', target: 'src/components/ui/login-form.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'utils',
     type: 'registry:lib',
     description: 'cn() class-merge helper.',

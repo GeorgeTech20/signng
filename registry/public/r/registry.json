@@ -10,6 +10,30 @@
       "integrity": "sha256-cNaLHB1kO2ar5TasgHTqQ7X1+ol5owO272hNpdk4wrw="
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "description": "Smart DataTable: sort, global search, row selection, inline edit, grouping, pagination, CSV export.",
+      "integrity": "sha256-YFf5nnubW2CYiRAHyR44p4l6PM+TDFYzSRTgRZSVhC8="
+    },
+    {
+      "name": "chart-analytics",
+      "type": "registry:ui",
+      "description": "Multi-series analytics charts: multi-line, stacked/grouped bars, scatter, heatmap, legend, hover crosshair.",
+      "integrity": "sha256-8jmBiCmpYfjxVjQ7whUAiW+NEVRab6kJjVB3/WmQqgM="
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "description": "Drag-and-drop FileUpload + ImageUpload (thumbnail preview), type/size validation.",
+      "integrity": "sha256-cMFQEk+tBvWxebaC4MAZYA1wZqhheMTOVKXvFuZAjys="
+    },
+    {
+      "name": "login-form",
+      "type": "registry:ui",
+      "description": "Composed auth block (login / signup / forgot) with optional social providers.",
+      "integrity": "sha256-C8nAI1FObG3evEn199MlLBX105Ms/vapc6hjflvAWpw="
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "description": "cn() class-merge helper.",
@@ -317,6 +341,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "Nbf1gFoSeOuwRXjfmv0nPh+19Fsi346r7g6ZW3zEHrqgsnM06p9JrPrZBM+JElxwPugP5mszK7JFWMF8ErmxDQ==",
+  "signature": "3znrTsELB3AuCCugavb83Yo/SUikmoVBJa5Y6gyHLPGuijiJvwl7oYSmHlnghEXnJ0v5ETt43huJ75dy0SHnDA==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

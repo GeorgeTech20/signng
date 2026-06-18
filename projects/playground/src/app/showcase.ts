@@ -47,6 +47,10 @@ import { SIGNNG_NAVIGATION_MENU } from '@/components/ui/navigation-menu';
 import { SIGNNG_SIDEBAR } from '@/components/ui/sidebar';
 import { Icon } from '@/components/ui/icon';
 import { SIGNNG_CHART } from '@/components/ui/chart';
+import { DataTable, type DataColumn, type Row } from '@/components/ui/data-table';
+import { SIGNNG_ANALYTICS_CHARTS } from '@/components/ui/chart-analytics';
+import { SIGNNG_FILE_UPLOAD } from '@/components/ui/file-upload';
+import { LoginForm } from '@/components/ui/login-form';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 interface Demo { name: string; cat: string; code: string }
@@ -66,6 +70,7 @@ interface Demo { name: string; cat: string; code: string }
     Avatar, Badge, Separator, Skeleton, Progress, Toggle, Collapsible, ScrollArea, AspectRatio,
     Icon, ...SIGNNG_CHART, ...SIGNNG_SIDEBAR, ...SIGNNG_CARD, ...SIGNNG_ALERT, ...SIGNNG_TABLE,
     ...SIGNNG_BREADCRUMB, ...SIGNNG_TOGGLE_GROUP, ...SIGNNG_CAROUSEL, ...SIGNNG_NAVIGATION_MENU, ...SIGNNG_TABS,
+    DataTable, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_FILE_UPLOAD, LoginForm,
   ],
   templateUrl: './showcase.html',
 })
@@ -156,8 +161,52 @@ export class Showcase {
     { value: 'b', title: '¿Lo puedo editar?', content: 'Es tuyo — el código vive en tu repo.' },
   ];
 
-  protected readonly CATS = ['Formularios', 'Overlays', 'Navegación', 'Datos', 'Display', 'Gráficos'];
+  // enterprise demo data
+  protected readonly tableData = signal<Row[]>([
+    { id: 1, name: 'Ana Torres', dept: 'Ventas', sales: 4200, status: 'activo' },
+    { id: 2, name: 'Luis Méndez', dept: 'Ventas', sales: 3100, status: 'activo' },
+    { id: 3, name: 'Sofía Ruiz', dept: 'Marketing', sales: 2800, status: 'invitado' },
+    { id: 4, name: 'Diego Soto', dept: 'Marketing', sales: 5200, status: 'activo' },
+    { id: 5, name: 'Elena Vega', dept: 'Soporte', sales: 1900, status: 'suspendido' },
+    { id: 6, name: 'Marco Díaz', dept: 'Ventas', sales: 6100, status: 'activo' },
+  ]);
+  protected readonly tableCols: DataColumn[] = [
+    { key: 'name', header: 'Nombre', sortable: true },
+    { key: 'dept', header: 'Departamento', sortable: true },
+    { key: 'sales', header: 'Ventas', sortable: true, editable: true, align: 'right', format: (v) => '$' + Number(v).toLocaleString() },
+    { key: 'status', header: 'Estado' },
+  ];
+  protected readonly mlSeries = [
+    { name: '2025', values: [30, 42, 38, 55, 60, 72] },
+    { name: '2026', values: [40, 48, 52, 50, 68, 80] },
+  ];
+  protected readonly mlLabels = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
+  protected readonly stackSeries = [
+    { name: 'Free', values: [20, 25, 22, 30] },
+    { name: 'Pro', values: [14, 18, 20, 24] },
+    { name: 'Team', values: [6, 8, 10, 12] },
+  ];
+  protected readonly stackLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
+  protected readonly scatter = [
+    { x: 10, y: 20 }, { x: 25, y: 35 }, { x: 40, y: 28 }, { x: 55, y: 60 }, { x: 70, y: 52 }, { x: 85, y: 78 }, { x: 30, y: 45 }, { x: 60, y: 30 },
+  ];
+  protected readonly heat = [[2, 5, 8, 3], [6, 9, 4, 7], [1, 3, 9, 5], [8, 6, 2, 4]];
+  protected login(e: unknown): void {
+    this.notify('Login: ' + JSON.stringify(e));
+  }
+
+  protected readonly CATS = ['Enterprise', 'Formularios', 'Overlays', 'Navegación', 'Datos', 'Display', 'Gráficos'];
   protected readonly DEMOS: Demo[] = [
+    { name: 'DataTable', cat: 'Enterprise', code: `<signng-data-table [data]="rows" [columns]="cols" [selectable]="true" groupBy="dept" />` },
+    { name: 'MultiLineChart', cat: 'Enterprise', code: `<signng-multi-line-chart [series]="series" [labels]="labels" />` },
+    { name: 'StackedBarChart', cat: 'Enterprise', code: `<signng-stacked-bar-chart [series]="series" [labels]="labels" />` },
+    { name: 'GroupedBarChart', cat: 'Enterprise', code: `<signng-grouped-bar-chart [series]="series" [labels]="labels" />` },
+    { name: 'ScatterChart', cat: 'Enterprise', code: `<signng-scatter-chart [data]="points" />` },
+    { name: 'Heatmap', cat: 'Enterprise', code: `<signng-heatmap [matrix]="matrix" />` },
+    { name: 'FileUpload', cat: 'Enterprise', code: `<signng-file-upload accept="image/*,.pdf" [maxSize]="5242880" (filesChange)="f=$event" />` },
+    { name: 'ImageUpload', cat: 'Enterprise', code: `<signng-image-upload [multiple]="true" (filesChange)="imgs=$event" />` },
+    { name: 'LoginForm', cat: 'Enterprise', code: `<signng-login-form mode="login" [social]="true" (submitted)="onLogin($event)" />` },
+
     { name: 'Button', cat: 'Formularios', code: `<button signngButton variant="default">Botón</button>` },
     { name: 'Input', cat: 'Formularios', code: `<input signngInput placeholder="email@ejemplo.com" />` },
     { name: 'Textarea', cat: 'Formularios', code: `<textarea signngTextarea placeholder="Mensaje…"></textarea>` },

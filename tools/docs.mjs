@@ -32,6 +32,7 @@ const CATEGORIES = [
   ['Display', ['card', 'badge', 'avatar', 'separator', 'alert', 'skeleton', 'progress', 'table']],
   ['Interacción', ['toggle', 'toggle-group', 'collapsible', 'scroll-area', 'aspect-ratio', 'carousel', 'resizable']],
   ['Gráficos', ['chart']],
+  ['Enterprise', ['data-table', 'chart-analytics', 'file-upload', 'login-form']],
 ];
 const byName = new Map(items.map((i) => [i.name, i]));
 const used = new Set();
@@ -115,6 +116,10 @@ const PREVIEWS = {
   carousel: `<div style="display:flex;align-items:center;gap:8px"><span class="pv-chip">‹</span><div class="pv-card" style="width:160px;height:80px;display:flex;align-items:center;justify-content:center;font-weight:600">Slide 1</div><span class="pv-chip">›</span></div>`,
   resizable: `<div style="display:flex;border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden;width:300px;height:80px"><div style="flex:1;display:flex;align-items:center;justify-content:center" class="pv-muted">Panel A</div><div style="width:2px;background:var(--color-border)"></div><div style="flex:1;display:flex;align-items:center;justify-content:center" class="pv-muted">Panel B</div></div>`,
   chart: `<div class="pv-bars">${[40, 55, 48, 70, 62, 80].map((h) => `<i style="height:${h}%"></i>`).join('')}</div>`,
+  'data-table': `<div style="width:100%"><div style="display:flex;gap:8px;margin-bottom:8px"><span class="pv-input" style="min-width:140px"><span class="pv-muted">Buscar…</span></span><span class="pv-chip" style="margin-left:auto">⬇ Export CSV</span></div><table class="pv-table" style="width:100%"><thead><tr><th>☐</th><th>Nombre ⌄</th><th>Depto ⌄</th><th style="text-align:right">Ventas ⌄</th></tr></thead><tbody><tr><td>☑</td><td>Ana Torres</td><td>Ventas</td><td style="text-align:right">$4,200</td></tr><tr><td>☐</td><td>Diego Soto</td><td>Marketing</td><td style="text-align:right">$5,200</td></tr></tbody></table></div>`,
+  'chart-analytics': `<div style="width:100%"><div class="pv-bars" style="height:72px;gap:14px">${[[30, 14, 6], [38, 20, 10], [48, 24, 12]].map((g) => `<span style="display:flex;align-items:flex-end;gap:3px;height:100%">${g.map((h, i) => `<i style="height:${h}%;width:9px;background:${['#6d4aff', '#22c55e', '#f59e0b'][i]}"></i>`).join('')}</span>`).join('')}</div><div style="display:flex;gap:14px;justify-content:center;margin-top:8px;font-size:11px">${['Free', 'Pro', 'Team'].map((n, i) => `<span style="display:inline-flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:2px;background:${['#6d4aff', '#22c55e', '#f59e0b'][i]}"></span><span class="pv-muted">${n}</span></span>`).join('')}</div></div>`,
+  'file-upload': `<div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:6px;border:2px dashed var(--color-border);border-radius:10px;padding:20px;text-align:center">${g('<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/>')}<div style="font-size:14px"><b>Click para subir</b> <span class="pv-muted">o arrastra aquí</span></div></div>`,
+  'login-form': `<div class="pv-card" style="max-width:280px;text-align:center"><div style="font-weight:600;margin-bottom:2px">Iniciar sesión</div><div class="pv-muted" style="margin-bottom:12px">Bienvenido de vuelta.</div><div style="text-align:left;display:flex;flex-direction:column;gap:8px"><input class="pv-input" placeholder="email@ejemplo.com" /><input class="pv-input" value="••••••••" /><span class="pv-btn" style="justify-content:center">Entrar</span></div></div>`,
 };
 
 function componentHtml(item) {

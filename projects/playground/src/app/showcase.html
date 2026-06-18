@@ -46,7 +46,58 @@
       @if (catHasMatch(cat)) {
         <section class="mb-10">
           <h2 class="mb-4 border-b border-border pb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">{{ cat }}</h2>
-          <div class="grid gap-5 lg:grid-cols-2">
+          <div class="grid gap-5" [class.lg:grid-cols-2]="cat !== 'Enterprise'">
+
+            <!-- ============ ENTERPRISE ============ -->
+            @if (cat === 'Enterprise') {
+              @if (match('DataTable')) { <article class="dc">
+                <div class="dh"><span class="dn">DataTable</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">ENTERPRISE</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'DataTable'}" /></div>
+                @if (mode('DataTable')==='code') { <pre class="dco">{{ code('DataTable') }}</pre> } @else { <div class="p-4">
+                  <signng-data-table [(data)]="tableData" [columns]="tableCols" [selectable]="true" [pageSize]="5" caption="empleados" />
+                  <p class="mt-2 text-xs text-muted-foreground">Orden · búsqueda · selección · <b>edita la columna Ventas</b> (click) · export CSV.</p>
+                </div> }
+              </article> }
+
+              @if (match('MultiLineChart')) { <article class="dc">
+                <div class="dh"><span class="dn">MultiLineChart</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">ENTERPRISE</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'MultiLineChart'}" /></div>
+                @if (mode('MultiLineChart')==='code') { <pre class="dco">{{ code('MultiLineChart') }}</pre> } @else { <div class="p-5"><signng-multi-line-chart [series]="mlSeries" [labels]="mlLabels" label="Ingresos por año" /></div> }
+              </article> }
+
+              @if (match('StackedBarChart')) { <article class="dc">
+                <div class="dh"><span class="dn">StackedBarChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'StackedBarChart'}" /></div>
+                @if (mode('StackedBarChart')==='code') { <pre class="dco">{{ code('StackedBarChart') }}</pre> } @else { <div class="p-5"><signng-stacked-bar-chart [series]="stackSeries" [labels]="stackLabels" /></div> }
+              </article> }
+
+              @if (match('GroupedBarChart')) { <article class="dc">
+                <div class="dh"><span class="dn">GroupedBarChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'GroupedBarChart'}" /></div>
+                @if (mode('GroupedBarChart')==='code') { <pre class="dco">{{ code('GroupedBarChart') }}</pre> } @else { <div class="p-5"><signng-grouped-bar-chart [series]="stackSeries" [labels]="stackLabels" /></div> }
+              </article> }
+
+              @if (match('ScatterChart')) { <article class="dc">
+                <div class="dh"><span class="dn">ScatterChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'ScatterChart'}" /></div>
+                @if (mode('ScatterChart')==='code') { <pre class="dco">{{ code('ScatterChart') }}</pre> } @else { <div class="p-5"><signng-scatter-chart [data]="scatter" /></div> }
+              </article> }
+
+              @if (match('Heatmap')) { <article class="dc">
+                <div class="dh"><span class="dn">Heatmap</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Heatmap'}" /></div>
+                @if (mode('Heatmap')==='code') { <pre class="dco">{{ code('Heatmap') }}</pre> } @else { <div class="flex justify-center p-5"><signng-heatmap [matrix]="heat" [height]="120" /></div> }
+              </article> }
+
+              @if (match('FileUpload')) { <article class="dc">
+                <div class="dh"><span class="dn">FileUpload</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">ENTERPRISE</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'FileUpload'}" /></div>
+                @if (mode('FileUpload')==='code') { <pre class="dco">{{ code('FileUpload') }}</pre> } @else { <div class="p-4"><signng-file-upload accept="image/*,.pdf" [maxSize]="5242880" [multiple]="true" /></div> }
+              </article> }
+
+              @if (match('ImageUpload')) { <article class="dc">
+                <div class="dh"><span class="dn">ImageUpload</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'ImageUpload'}" /></div>
+                @if (mode('ImageUpload')==='code') { <pre class="dco">{{ code('ImageUpload') }}</pre> } @else { <div class="p-4"><signng-image-upload [multiple]="true" /></div> }
+              </article> }
+
+              @if (match('LoginForm')) { <article class="dc">
+                <div class="dh"><span class="dn">LoginForm</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">BLOCK</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'LoginForm'}" /></div>
+                @if (mode('LoginForm')==='code') { <pre class="dco">{{ code('LoginForm') }}</pre> } @else { <div class="bg-muted/30 p-6"><signng-login-form mode="login" [social]="true" (submitted)="login($event)" /></div> }
+              </article> }
+            }
 
             <!-- ============ FORMULARIOS ============ -->
             @if (cat === 'Formularios') {
