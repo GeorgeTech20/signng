@@ -34,6 +34,60 @@
       "integrity": "sha256-C8nAI1FObG3evEn199MlLBX105Ms/vapc6hjflvAWpw="
     },
     {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "description": "KPI tile: label, value, colored delta chip, optional icon.",
+      "integrity": "sha256-d2jt3rSNWplmKubTVWPJugn2QhXgWJPVj8mJyGulGSE="
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "description": "Centered empty/zero-results placeholder with icon, title, action slot.",
+      "integrity": "sha256-zUHGEbQ78gBIUfi3V7PjQ36knTYAePaxRHIVCyeBlLc="
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "description": "Vertical activity feed with colored nodes, title, time, description.",
+      "integrity": "sha256-SZivKFOokyCuwv4tR1NcpFTPMpqYSJ5+SaXXYyJhQoU="
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "description": "Multi-step wizard progress indicator (numbered nodes, connectors, aria-current).",
+      "integrity": "sha256-/efKWhV5L8CQqTm8WixvkUFklpySmiah+XHR406QiqI="
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "description": "Numeric spinner: clamp, step, prefix/suffix, arrow keys, role=spinbutton.",
+      "integrity": "sha256-lLh8crJ6CpJEsU3d6ME9NJlWoEnWocHCLTqu+Feqri0="
+    },
+    {
+      "name": "multi-select",
+      "type": "registry:ui",
+      "description": "Multi-select with removable chips + toggle checklist panel (aria-multiselectable).",
+      "integrity": "sha256-/9I+5JeBtdvGsb4ds4r5DPVjSUk9TSEj1EFlssEnDdc="
+    },
+    {
+      "name": "tag-input",
+      "type": "registry:ui",
+      "description": "Free-text tag entry: Enter/comma adds, Backspace removes, dedup.",
+      "integrity": "sha256-NVy48hltKiUkxTjHFf3oV91sMBR5EQka40utC9JR7bk="
+    },
+    {
+      "name": "tree-view",
+      "type": "registry:ui",
+      "description": "Collapsible hierarchy (file-explorer), recursive ng-template, role=tree.",
+      "integrity": "sha256-5kOGS7iXlIzktWdveOrXJLnzV3+Xljm3oCk0Mz+AHF4="
+    },
+    {
+      "name": "date-range-picker",
+      "type": "registry:ui",
+      "description": "Popover month grid selecting a start-end date range with tinted in-range days.",
+      "integrity": "sha256-kVfN3uxMzOwkllY6Fslznc+o7RaIRNLEqTI88575wec="
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "description": "cn() class-merge helper.",
@@ -341,6 +395,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "3znrTsELB3AuCCugavb83Yo/SUikmoVBJa5Y6gyHLPGuijiJvwl7oYSmHlnghEXnJ0v5ETt43huJ75dy0SHnDA==",
+  "signature": "+dsqh1Q45fFmturypV4Y0hPaZpZBfMhv2uJAnL41QpmxVRZWUlMUvQwMfXQLEzS/MvliB1GhSfadVGugODhDBg==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

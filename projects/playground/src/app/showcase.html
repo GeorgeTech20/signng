@@ -99,6 +99,60 @@
               </article> }
             }
 
+            <!-- ============ AVANZADOS ============ -->
+            @if (cat === 'Avanzados') {
+              @if (match('StatCard')) { <article class="dc">
+                <div class="dh"><span class="dn">StatCard</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'StatCard'}" /></div>
+                @if (mode('StatCard')==='code') { <pre class="dco">{{ code('StatCard') }}</pre> } @else { <div class="dp w-full">
+                  <signng-stat-card label="MRR" [value]="'$48.2k'" delta="+12%" [up]="true" icon="trending" hint="vs mes anterior" class="w-full max-w-[220px]" />
+                  <signng-stat-card label="Churn" [value]="'2.1%'" delta="-0.3%" [up]="false" icon="users" class="w-full max-w-[220px]" />
+                </div> }
+              </article> }
+
+              @if (match('Stepper')) { <article class="dc">
+                <div class="dh"><span class="dn">Stepper</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Stepper'}" /></div>
+                @if (mode('Stepper')==='code') { <pre class="dco">{{ code('Stepper') }}</pre> } @else { <div class="dp w-full"><signng-stepper [steps]="steps" [(current)]="stepIdx" [clickable]="true" class="w-full" /></div> }
+              </article> }
+
+              @if (match('NumberInput')) { <article class="dc">
+                <div class="dh"><span class="dn">NumberInput</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'NumberInput'}" /></div>
+                @if (mode('NumberInput')==='code') { <pre class="dco">{{ code('NumberInput') }}</pre> } @else { <div class="dp">
+                  <signng-number-input [(value)]="qty" [min]="0" [max]="99" label="Cantidad" />
+                  <signng-number-input [(value)]="price" [min]="0" [stepBy]="0.5" prefix="$" label="Precio" />
+                </div> }
+              </article> }
+
+              @if (match('MultiSelect')) { <article class="dc">
+                <div class="dh"><span class="dn">MultiSelect</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'MultiSelect'}" /></div>
+                @if (mode('MultiSelect')==='code') { <pre class="dco">{{ code('MultiSelect') }}</pre> } @else { <div class="dp w-full"><signng-multi-select [options]="skillOpts" [(value)]="skills" placeholder="Elegir skills…" class="w-full max-w-xs" /></div> }
+              </article> }
+
+              @if (match('TagInput')) { <article class="dc">
+                <div class="dh"><span class="dn">TagInput</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'TagInput'}" /></div>
+                @if (mode('TagInput')==='code') { <pre class="dco">{{ code('TagInput') }}</pre> } @else { <div class="dp w-full"><signng-tag-input [(tags)]="tags" placeholder="Añadir etiqueta…" class="w-full max-w-xs" /></div> }
+              </article> }
+
+              @if (match('DateRangePicker')) { <article class="dc">
+                <div class="dh"><span class="dn">DateRangePicker</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'DateRangePicker'}" /></div>
+                @if (mode('DateRangePicker')==='code') { <pre class="dco">{{ code('DateRangePicker') }}</pre> } @else { <div class="dp"><signng-date-range-picker [(start)]="rangeStart" [(end)]="rangeEnd" /></div> }
+              </article> }
+
+              @if (match('TreeView')) { <article class="dc">
+                <div class="dh"><span class="dn">TreeView</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'TreeView'}" /></div>
+                @if (mode('TreeView')==='code') { <pre class="dco">{{ code('TreeView') }}</pre> } @else { <div class="dp w-full"><signng-tree-view [nodes]="tree" [defaultOpen]="true" class="w-full" /></div> }
+              </article> }
+
+              @if (match('Timeline')) { <article class="dc">
+                <div class="dh"><span class="dn">Timeline</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Timeline'}" /></div>
+                @if (mode('Timeline')==='code') { <pre class="dco">{{ code('Timeline') }}</pre> } @else { <div class="dp w-full"><signng-timeline [items]="feed" class="w-full" /></div> }
+              </article> }
+
+              @if (match('EmptyState')) { <article class="dc">
+                <div class="dh"><span class="dn">EmptyState</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'EmptyState'}" /></div>
+                @if (mode('EmptyState')==='code') { <pre class="dco">{{ code('EmptyState') }}</pre> } @else { <div class="dp w-full"><signng-empty-state title="Sin proyectos" description="Crea tu primer proyecto para empezar." icon="search" class="w-full"><button signngButton size="sm">Nuevo proyecto</button></signng-empty-state></div> }
+              </article> }
+            }
+
             <!-- ============ FORMULARIOS ============ -->
             @if (cat === 'Formularios') {
               @if (match('Button')) { <article class="dc">

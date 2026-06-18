@@ -51,6 +51,15 @@ import { DataTable, type DataColumn, type Row } from '@/components/ui/data-table
 import { SIGNNG_ANALYTICS_CHARTS } from '@/components/ui/chart-analytics';
 import { SIGNNG_FILE_UPLOAD } from '@/components/ui/file-upload';
 import { LoginForm } from '@/components/ui/login-form';
+import { StatCard } from '@/components/ui/stat-card';
+import { EmptyState } from '@/components/ui/empty-state';
+import { Timeline } from '@/components/ui/timeline';
+import { Stepper } from '@/components/ui/stepper';
+import { NumberInput } from '@/components/ui/number-input';
+import { MultiSelect } from '@/components/ui/multi-select';
+import { TagInput } from '@/components/ui/tag-input';
+import { TreeView } from '@/components/ui/tree-view';
+import { DateRangePicker } from '@/components/ui/date-range-picker';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 interface Demo { name: string; cat: string; code: string }
@@ -71,6 +80,7 @@ interface Demo { name: string; cat: string; code: string }
     Icon, ...SIGNNG_CHART, ...SIGNNG_SIDEBAR, ...SIGNNG_CARD, ...SIGNNG_ALERT, ...SIGNNG_TABLE,
     ...SIGNNG_BREADCRUMB, ...SIGNNG_TOGGLE_GROUP, ...SIGNNG_CAROUSEL, ...SIGNNG_NAVIGATION_MENU, ...SIGNNG_TABS,
     DataTable, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_FILE_UPLOAD, LoginForm,
+    StatCard, EmptyState, Timeline, Stepper, NumberInput, MultiSelect, TagInput, TreeView, DateRangePicker,
   ],
   templateUrl: './showcase.html',
 })
@@ -195,7 +205,37 @@ export class Showcase {
     this.notify('Login: ' + JSON.stringify(e));
   }
 
-  protected readonly CATS = ['Enterprise', 'Formularios', 'Overlays', 'Navegación', 'Datos', 'Display', 'Gráficos'];
+  // tier-2 demo state
+  protected readonly stepIdx = signal(1);
+  protected readonly qty = signal<number | null>(3);
+  protected readonly price = signal<number | null>(49.9);
+  protected readonly skills = signal<string[]>(['ng', 'ts']);
+  protected readonly tags = signal<string[]>(['saas', 'b2b']);
+  protected readonly rangeStart = signal<string | null>('2026-06-10');
+  protected readonly rangeEnd = signal<string | null>('2026-06-18');
+  protected readonly steps = [
+    { label: 'Cuenta', description: 'Tus datos' },
+    { label: 'Plan', description: 'Elige plan' },
+    { label: 'Pago', description: 'Confirmar' },
+  ];
+  protected readonly skillOpts = [
+    { value: 'ng', label: 'Angular' }, { value: 'ts', label: 'TypeScript' },
+    { value: 'rx', label: 'RxJS' }, { value: 'css', label: 'Tailwind' }, { value: 'node', label: 'Node' },
+  ];
+  protected readonly tree = [
+    { label: 'src', icon: 'home' as const, children: [
+      { label: 'components', children: [{ label: 'button.ts' }, { label: 'dialog.ts' }] },
+      { label: 'lib', children: [{ label: 'utils.ts' }] },
+    ] },
+    { label: 'README.md' },
+  ];
+  protected readonly feed = [
+    { title: 'Usuario creado', time: 'hace 2h', description: 'Ana Torres se unió al equipo.', icon: 'user' as const, variant: 'primary' as const },
+    { title: 'Pago recibido', time: 'hace 5h', description: '$290 — plan Pro.', icon: 'check' as const, variant: 'success' as const },
+    { title: 'Ticket abierto', time: 'ayer', description: 'Bug en exportación.', icon: 'alert' as const, variant: 'destructive' as const },
+  ];
+
+  protected readonly CATS = ['Enterprise', 'Avanzados', 'Formularios', 'Overlays', 'Navegación', 'Datos', 'Display', 'Gráficos'];
   protected readonly DEMOS: Demo[] = [
     { name: 'DataTable', cat: 'Enterprise', code: `<signng-data-table [data]="rows" [columns]="cols" [selectable]="true" groupBy="dept" />` },
     { name: 'MultiLineChart', cat: 'Enterprise', code: `<signng-multi-line-chart [series]="series" [labels]="labels" />` },
@@ -206,6 +246,16 @@ export class Showcase {
     { name: 'FileUpload', cat: 'Enterprise', code: `<signng-file-upload accept="image/*,.pdf" [maxSize]="5242880" (filesChange)="f=$event" />` },
     { name: 'ImageUpload', cat: 'Enterprise', code: `<signng-image-upload [multiple]="true" (filesChange)="imgs=$event" />` },
     { name: 'LoginForm', cat: 'Enterprise', code: `<signng-login-form mode="login" [social]="true" (submitted)="onLogin($event)" />` },
+
+    { name: 'StatCard', cat: 'Avanzados', code: `<signng-stat-card label="MRR" [value]="'$48.2k'" delta="+12%" [up]="true" icon="trending" />` },
+    { name: 'Stepper', cat: 'Avanzados', code: `<signng-stepper [steps]="steps" [(current)]="step" [clickable]="true" />` },
+    { name: 'NumberInput', cat: 'Avanzados', code: `<signng-number-input [(value)]="qty" [min]="0" prefix="$" />` },
+    { name: 'MultiSelect', cat: 'Avanzados', code: `<signng-multi-select [options]="opts" [(value)]="selected" />` },
+    { name: 'TagInput', cat: 'Avanzados', code: `<signng-tag-input [(tags)]="tags" />` },
+    { name: 'DateRangePicker', cat: 'Avanzados', code: `<signng-date-range-picker [(start)]="from" [(end)]="to" />` },
+    { name: 'TreeView', cat: 'Avanzados', code: `<signng-tree-view [nodes]="tree" [defaultOpen]="true" />` },
+    { name: 'Timeline', cat: 'Avanzados', code: `<signng-timeline [items]="feed" />` },
+    { name: 'EmptyState', cat: 'Avanzados', code: `<signng-empty-state title="Sin datos" icon="search">…</signng-empty-state>` },
 
     { name: 'Button', cat: 'Formularios', code: `<button signngButton variant="default">Botón</button>` },
     { name: 'Input', cat: 'Formularios', code: `<input signngInput placeholder="email@ejemplo.com" />` },

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "empty-state",
+  "type": "registry:ui",
+  "description": "Centered empty/zero-results placeholder with icon, title, action slot.",
+  "dependencies": [],
+  "registryDependencies": [
+    "icon"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/empty-state.ts",
+      "target": "src/components/ui/empty-state.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { Icon, type IconName } from '@/components/ui/icon';\n\n/**\n * EmptyState (helm) — a centered placeholder for empty lists / zero-results / first-run: an icon in a\n * soft circle, a title, a description, and a projected action slot (`<button signngButton>` etc).\n * Presentational, OnPush.\n */\n@Component({\n  selector: 'signng-empty-state',\n  imports: [Icon],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'block' },\n  template: `\n    <div class=\"flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-border px-6 py-12 text-center\">\n      <span class=\"flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground\">\n        <signng-icon [name]=\"icon()\" [size]=\"22\" />\n      </span>\n      <div class=\"space-y-1\">\n        <h3 class=\"text-sm font-semibold\">{{ title() }}</h3>\n        @if (description()) { <p class=\"mx-auto max-w-sm text-sm text-muted-foreground\">{{ description() }}</p> }\n      </div>\n      <div class=\"mt-1\"><ng-content /></div>\n    </div>\n  `,\n})\nexport class EmptyState {\n  readonly icon = input<IconName>('search');\n  readonly title = input('Sin resultados');\n  readonly description = input('');\n}\n",
+      "integrity": "sha256-sl+IqdI3ebmJ4zqwt+KVytrJMOYbHpoCkJTdO8kzBtY="
+    }
+  ],
+  "integrity": "sha256-zUHGEbQ78gBIUfi3V7PjQ36knTYAePaxRHIVCyeBlLc="
+}

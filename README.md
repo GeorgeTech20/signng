@@ -12,7 +12,7 @@ Signals-native · zoneless · SSR · WCAG 2.2 AA · cero dependencias pesadas.
 
 ![Angular](https://img.shields.io/badge/Angular-22-dd0031)
 ![WCAG](https://img.shields.io/badge/WCAG%202.2-AA%20(axe%200)-22c55e)
-![componentes](https://img.shields.io/badge/componentes-52-6d4aff)
+![componentes](https://img.shields.io/badge/componentes-61-6d4aff)
 ![registry](https://img.shields.io/badge/registry-ed25519%20firmado-0ea5e9)
 ![tests](https://img.shields.io/badge/Playwright-32%20passing-2ea44f)
 ![license](https://img.shields.io/badge/license-MIT-black)
@@ -85,7 +85,7 @@ pnpm signng add button card dialog form-field input select
 
 ---
 
-## Componentes (52)
+## Componentes (61)
 
 <details open>
 <summary><b>Formularios</b> (12)</summary>
@@ -141,6 +141,13 @@ curva smooth, gradientes y **tooltip on hover**.
 - **`chart-analytics`** — multi-serie: multi-line (crosshair), barras apiladas/agrupadas, scatter, heatmap, leyenda
 - **`file-upload`** — drag-drop FileUpload + ImageUpload (preview), validación tipo/tamaño
 - **`login-form`** — bloque auth (login/signup/forgot) + proveedores sociales
+</details>
+
+<details open>
+<summary><b>Avanzados</b> — formularios y datos de negocio (9)</summary>
+
+`stepper` (wizard) · `date-range-picker` · `multi-select` (chips) · `tag-input` · `number-input`
+(spinner/moneda) · `tree-view` · `timeline` · `stat-card` (KPI) · `empty-state`
 </details>
 
 ---
@@ -245,7 +252,7 @@ pnpm exec ng build playground && PORT=4000 node e2e/static-server.mjs
 
 ## Estado
 
-- **52 componentes** · **51 items firmados** · **7 tipos de chart** · icon set propio (~30)
+- **61 componentes** · **51 items firmados** · **7 tipos de chart** · icon set propio (~30)
 - **32/32 Playwright** verde · **axe 0 violaciones WCAG 2.2 AA** · `security:lint` limpio (132 archivos)
 - 3 patrones arquitectónicos cubiertos · distribución firmada · CI/SAST + SBOM + docs site
 
