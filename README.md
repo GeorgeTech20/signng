@@ -12,7 +12,7 @@ Signals-native · zoneless · SSR · WCAG 2.2 AA · cero dependencias pesadas.
 
 ![Angular](https://img.shields.io/badge/Angular-22-dd0031)
 ![WCAG](https://img.shields.io/badge/WCAG%202.2-AA%20(axe%200)-22c55e)
-![componentes](https://img.shields.io/badge/componentes-68-6d4aff)
+![componentes](https://img.shields.io/badge/componentes-70-6d4aff)
 ![registry](https://img.shields.io/badge/registry-ed25519%20firmado-0ea5e9)
 ![tests](https://img.shields.io/badge/Playwright-32%20passing-2ea44f)
 ![license](https://img.shields.io/badge/license-MIT-black)
@@ -85,7 +85,7 @@ pnpm signng add button card dialog form-field input select
 
 ---
 
-## Componentes (68)
+## Componentes (70)
 
 <details open>
 <summary><b>Formularios</b> (14)</summary>
@@ -109,15 +109,15 @@ pnpm signng add button card dialog form-field input select
 </details>
 
 <details>
-<summary><b>Fecha</b> (2)</summary>
+<summary><b>Fecha</b> (3)</summary>
 
-`calendar` (grid APG: arrows/Home/End/PageUp-Down, Intl, min/max) · `date-picker`
+`calendar` (grid APG + **dropdown mes/año**, Intl, min/max) · `date-picker` · `time-picker` (HH:mm)
 </details>
 
 <details>
-<summary><b>Display</b> (9)</summary>
+<summary><b>Display</b> (10)</summary>
 
-`card` · `badge` · `avatar` · `separator` · `alert` · `skeleton` · `progress` · `table` · `icon`
+`card` · `badge` · `avatar` · `separator` · `alert` · `skeleton` · `progress` · `spinner` · `table` · `icon`
 (~30 iconos stroke propios)
 </details>
 
@@ -259,7 +259,7 @@ pnpm exec ng build playground && PORT=4000 node e2e/static-server.mjs
 
 ## Estado
 
-- **68 componentes** · **51 items firmados** · **7 tipos de chart** · icon set propio (~30)
+- **70 componentes** · **51 items firmados** · **7 tipos de chart** · icon set propio (~30)
 - **32/32 Playwright** verde · **axe 0 violaciones WCAG 2.2 AA** · `security:lint` limpio (132 archivos)
 - 3 patrones arquitectónicos cubiertos · distribución firmada · CI/SAST + SBOM + docs site
 

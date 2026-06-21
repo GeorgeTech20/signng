@@ -167,6 +167,18 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/toolbar.ts', target: 'src/components/ui/toolbar.ts', type: 'registry:ui' }],
   },
   {
+    name: 'spinner',
+    type: 'registry:ui',
+    description: 'Loading spinner (role=status, accessible label, animate-spin, reduced-motion safe).',
+    files: [{ src: 'ui/spinner.ts', target: 'src/components/ui/spinner.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'time-picker',
+    type: 'registry:ui',
+    description: 'Hour + minute picker via native selects (HH:mm, configurable minute step), zero deps.',
+    files: [{ src: 'ui/time-picker.ts', target: 'src/components/ui/time-picker.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'utils',
     type: 'registry:lib',
     description: 'cn() class-merge helper.',

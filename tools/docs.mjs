@@ -28,8 +28,8 @@ const CATEGORIES = [
   ['Formularios', ['button', 'input', 'label', 'textarea', 'checkbox', 'switch', 'radio-group', 'select', 'slider', 'range-slider', 'combobox', 'input-otp', 'form-field', 'form']],
   ['Overlays', ['dialog', 'alert-dialog', 'sheet', 'drawer', 'popover', 'tooltip', 'hover-card', 'toast', 'command']],
   ['Navegación', ['tabs', 'accordion', 'dropdown-menu', 'context-menu', 'menubar', 'navigation-menu', 'breadcrumb', 'pagination', 'sidebar']],
-  ['Fecha', ['calendar', 'date-picker']],
-  ['Display', ['card', 'badge', 'avatar', 'separator', 'alert', 'skeleton', 'progress', 'table']],
+  ['Fecha', ['calendar', 'date-picker', 'time-picker']],
+  ['Display', ['card', 'badge', 'avatar', 'separator', 'alert', 'skeleton', 'progress', 'spinner', 'table']],
   ['Interacción', ['toggle', 'toggle-group', 'collapsible', 'scroll-area', 'aspect-ratio', 'carousel', 'resizable']],
   ['Gráficos', ['chart']],
   ['Enterprise', ['data-table', 'chart-analytics', 'file-upload', 'login-form']],
@@ -138,6 +138,8 @@ const PREVIEWS = {
   'form': `<div style="width:100%;max-width:280px;text-align:left"><div style="font-size:14px;font-weight:500;margin-bottom:5px">Email <span style="color:var(--color-destructive)">*</span></div><input class="pv-input" style="width:100%;border-color:var(--color-destructive)" value="no-es-email" /><div style="color:var(--color-destructive);font-size:13px;font-weight:500;margin-top:5px">Correo no válido.</div></div>`,
   'range-slider': `<span class="pv-slider" style="width:240px"><span style="position:absolute;left:25%;right:25%;top:0;height:100%;background:var(--color-primary);border-radius:9999px"></span><b style="left:25%"></b><b style="left:75%"></b></span>`,
   'toolbar': `<div style="display:inline-flex;align-items:center;gap:4px;border:1px solid var(--color-border);border-radius:8px;padding:4px;background:var(--color-background)"><span class="pv-btn outline" style="height:30px;width:32px;justify-content:center;padding:0;font-weight:700">B</span><span class="pv-btn outline" style="height:30px;width:32px;justify-content:center;padding:0;font-style:italic">I</span><span style="width:1px;height:20px;background:var(--color-border);margin:0 2px"></span><span class="pv-btn outline" style="height:30px">Exportar</span></div>`,
+  'spinner': `<span style="color:var(--color-primary)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" style="opacity:.2"/><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>`,
+  'time-picker': `<span class="pv-input" style="gap:6px;min-width:0">${g('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>')} <span style="font-variant-numeric:tabular-nums">09</span><span class="pv-muted">:</span><span style="font-variant-numeric:tabular-nums">30</span></span>`,
 };
 
 function componentHtml(item) {

@@ -520,6 +520,13 @@
                 </div> }
               </article> }
 
+              @if (match('TimePicker')) { <article class="dc">
+                <div class="dh"><span class="dn">TimePicker</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'TimePicker'}" /></div>
+                @if (mode('TimePicker')==='code') { <pre class="dco">{{ code('TimePicker') }}</pre> } @else { <div class="dp">
+                  <signng-time-picker [(value)]="time" [minuteStep]="5" label="Hora" /><span class="text-sm text-muted-foreground">{{ time() }}</span>
+                </div> }
+              </article> }
+
               @if (match('Table')) { <article class="dc">
                 <div class="dh"><span class="dn">Table</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Table'}" /></div>
                 @if (mode('Table')==='code') { <pre class="dco">{{ code('Table') }}</pre> } @else { <div class="dp w-full">
@@ -582,6 +589,13 @@
                 <div class="dh"><span class="dn">Progress</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Progress'}" /></div>
                 @if (mode('Progress')==='code') { <pre class="dco">{{ code('Progress') }}</pre> } @else { <div class="dp w-full">
                   <signng-progress [value]="62" label="Progreso" class="w-full max-w-xs" />
+                </div> }
+              </article> }
+
+              @if (match('Spinner')) { <article class="dc">
+                <div class="dh"><span class="dn">Spinner</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Spinner'}" /></div>
+                @if (mode('Spinner')==='code') { <pre class="dco">{{ code('Spinner') }}</pre> } @else { <div class="dp text-primary">
+                  <signng-spinner [size]="18" /><signng-spinner [size]="28" /><signng-spinner [size]="22" label="Cargando…" />
                 </div> }
               </article> }
 

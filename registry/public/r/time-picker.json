@@ -1,0 +1,18 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "time-picker",
+  "type": "registry:ui",
+  "description": "Hour + minute picker via native selects (HH:mm, configurable minute step), zero deps.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/ui/time-picker.ts",
+      "target": "src/components/ui/time-picker.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';\n\nconst pad = (n: number) => String(n).padStart(2, '0');\n\n/**\n * TimePicker (helm) — pick an hour + minute via two native selects (accessible, keyboard-typeable, zero\n * deps). `value` is a two-way 'HH:mm' (24h) model; minutes step by `minuteStep`. Native <select> keeps it\n * minimal and screen-reader friendly. Signals-only, OnPush. No innerHTML/bypass.\n */\n@Component({\n  selector: 'signng-time-picker',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'inline-block' },\n  template: `\n    <div class=\"inline-flex h-9 items-center gap-1 rounded-md border border-input bg-background px-2.5 focus-within:ring-2 focus-within:ring-ring\">\n      <svg viewBox=\"0 0 24 24\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" class=\"text-muted-foreground\" aria-hidden=\"true\">\n        <circle cx=\"12\" cy=\"12\" r=\"9\" /><path d=\"M12 7v5l3 2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n      </svg>\n      <select [value]=\"h()\" (change)=\"onHour($any($event.target).value)\" [attr.aria-label]=\"(label() || 'Hora') + ' — horas'\" class=\"cursor-pointer bg-transparent text-sm tabular-nums outline-none\">\n        @for (hr of hours; track hr) { <option [value]=\"hr\">{{ pad(hr) }}</option> }\n      </select>\n      <span class=\"text-muted-foreground\">:</span>\n      <select [value]=\"m()\" (change)=\"onMinute($any($event.target).value)\" [attr.aria-label]=\"(label() || 'Hora') + ' — minutos'\" class=\"cursor-pointer bg-transparent text-sm tabular-nums outline-none\">\n        @for (mn of minutes(); track mn) { <option [value]=\"mn\">{{ pad(mn) }}</option> }\n      </select>\n    </div>\n  `,\n})\nexport class TimePicker {\n  readonly value = model<string | null>(null);\n  readonly minuteStep = input(5);\n  readonly label = input('');\n\n  protected readonly pad = pad;\n  protected readonly hours = Array.from({ length: 24 }, (_, i) => i);\n  protected readonly minutes = computed(() => {\n    const step = Math.max(1, this.minuteStep());\n    return Array.from({ length: Math.ceil(60 / step) }, (_, i) => i * step);\n  });\n\n  protected readonly h = computed(() => {\n    const v = this.value();\n    return v ? Number(v.split(':')[0]) || 0 : 0;\n  });\n  protected readonly m = computed(() => {\n    const v = this.value();\n    return v ? Number(v.split(':')[1]) || 0 : 0;\n  });\n\n  protected onHour(v: string): void {\n    this.set(Number(v), this.m());\n  }\n  protected onMinute(v: string): void {\n    this.set(this.h(), Number(v));\n  }\n  private set(h: number, m: number): void {\n    this.value.set(`${pad(h)}:${pad(m)}`);\n  }\n}\n",
+      "integrity": "sha256-LMKeymrn5RcqpU+MT5joTFKPIaUSUxMs1O67o0V9keo="
+    }
+  ],
+  "integrity": "sha256-s5UiZxHoyLku4pKQJfHqdVET85Ceu08EgeQIHeNyi2k="
+}

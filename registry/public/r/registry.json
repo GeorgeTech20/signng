@@ -130,6 +130,18 @@
       "integrity": "sha256-N5t03HzzCP1xXnF2Tmn8MQB+NE4NVylacQX5q1o8y/s="
     },
     {
+      "name": "spinner",
+      "type": "registry:ui",
+      "description": "Loading spinner (role=status, accessible label, animate-spin, reduced-motion safe).",
+      "integrity": "sha256-z41rzZebichUsoUsBAWLiT3FbSCRC345JtnIs3KTZms="
+    },
+    {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "description": "Hour + minute picker via native selects (HH:mm, configurable minute step), zero deps.",
+      "integrity": "sha256-s5UiZxHoyLku4pKQJfHqdVET85Ceu08EgeQIHeNyi2k="
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "description": "cn() class-merge helper.",
@@ -259,7 +271,7 @@
       "name": "calendar",
       "type": "registry:ui",
       "description": "Date-grid calendar (controlled APG grid: arrows/Home/End/PageUp-Down, Intl labels).",
-      "integrity": "sha256-vFEAfltVpnqdt5CPFoXJTfBq3AAQ+L15O/BCYYd7WGE="
+      "integrity": "sha256-KyAG+OPHwT/1m5BmCdYir5mBk/0cHPT5viAr3bHPJlA="
     },
     {
       "name": "date-picker",
@@ -437,6 +449,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "GtYhSQo+ByqZhdSIPCB58ko8XFH0i2nEhBc9iQQnG9GIZYeBXy1RfKx7kerggBASEfxGXL60lRQIby/Yo6n3AA==",
+  "signature": "BzXjE22xg4Z6HQvMCUVfif7B5iV1SRlqhKeag3Xq3kTjb3jIXKLpK8v5Yp6AmAa+Dh1iD1AYl+fyCtPyvAhQBg==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

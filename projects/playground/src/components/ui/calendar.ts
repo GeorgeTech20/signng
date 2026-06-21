@@ -65,29 +65,46 @@ interface Day {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="cn('inline-block rounded-lg border border-border bg-background p-3', class())">
-      <div class="mb-2 flex items-center justify-between">
+      <div class="mb-2 flex items-center gap-1">
         <button
           type="button"
           (click)="cursor.set(addMonths(cursor(), -1))"
           [attr.aria-label]="i18n.calendarPrevMonth"
-          class="inline-flex size-7 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          class="inline-flex size-7 shrink-0 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true">
             <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
-        <div [id]="monthLabelId" class="text-sm font-medium capitalize">{{ monthLabel() }}</div>
+        <!-- jump straight to any month / year (no clicking through) -->
+        <select
+          [value]="cursorMonth()"
+          (change)="onMonth($any($event.target).value)"
+          aria-label="Mes"
+          class="h-7 flex-1 cursor-pointer rounded-md border border-input bg-background px-1.5 text-sm font-medium capitalize outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          @for (m of months(); track m.i) { <option [value]="m.i">{{ m.name }}</option> }
+        </select>
+        <select
+          [value]="cursorYear()"
+          (change)="onYear($any($event.target).value)"
+          aria-label="Año"
+          class="h-7 cursor-pointer rounded-md border border-input bg-background px-1.5 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          @for (y of years(); track y) { <option [value]="y">{{ y }}</option> }
+        </select>
         <button
           type="button"
           (click)="cursor.set(addMonths(cursor(), 1))"
           [attr.aria-label]="i18n.calendarNextMonth"
-          class="inline-flex size-7 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          class="inline-flex size-7 shrink-0 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true">
             <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
       </div>
+      <span [id]="monthLabelId" class="sr-only">{{ monthLabel() }}</span>
 
       <!-- polite boundary announcement (month changes) without making the visible label a live region -->
       <div aria-live="polite" class="sr-only">{{ monthLabel() }}</div>
@@ -185,6 +202,30 @@ export class Calendar {
   protected readonly monthLabel = computed(() =>
     new Intl.DateTimeFormat(this.locale(), { month: 'long', year: 'numeric' }).format(parse(this.cursor())),
   );
+
+  // month/year jump dropdowns — pick any month/year directly instead of stepping the arrows
+  protected readonly cursorMonth = computed(() => parse(this.cursor()).getMonth());
+  protected readonly cursorYear = computed(() => parse(this.cursor()).getFullYear());
+  protected readonly months = computed(() => {
+    const fmt = new Intl.DateTimeFormat(this.locale(), { month: 'long' });
+    return Array.from({ length: 12 }, (_, i) => ({ i, name: fmt.format(new Date(2024, i, 1)) }));
+  });
+  protected readonly years = computed(() => {
+    const cy = this.cursorYear();
+    const min = this.min();
+    const max = this.max();
+    const lo = min ? parse(min).getFullYear() : cy - 100;
+    const hi = max ? parse(max).getFullYear() : cy + 10;
+    const out: number[] = [];
+    for (let y = hi; y >= lo; y--) out.push(y); // recent-first (good for birthdays)
+    return out;
+  });
+  protected onMonth(v: string): void {
+    this.cursor.set(iso(new Date(this.cursorYear(), Number(v), 1)));
+  }
+  protected onYear(v: string): void {
+    this.cursor.set(iso(new Date(Number(v), this.cursorMonth(), 1)));
+  }
 
   protected readonly weeks = computed<Day[][]>(() => {
     const c = parse(this.cursor());

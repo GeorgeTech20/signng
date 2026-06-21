@@ -67,6 +67,8 @@ import { NotificationCenter } from '@/components/ui/notification-center';
 import { SignngField } from '@/components/ui/form';
 import { RangeSlider } from '@/components/ui/range-slider';
 import { SIGNNG_TOOLBAR } from '@/components/ui/toolbar';
+import { Spinner } from '@/components/ui/spinner';
+import { TimePicker } from '@/components/ui/time-picker';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
@@ -90,7 +92,7 @@ interface Demo { name: string; cat: string; code: string }
     DataTable, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_FILE_UPLOAD, LoginForm,
     StatCard, EmptyState, Timeline, Stepper, NumberInput, MultiSelect, TagInput, TreeView, DateRangePicker,
     Rating, ColorPicker, Kanban, NotificationCenter,
-    SignngField, RangeSlider, ...SIGNNG_TOOLBAR, ReactiveFormsModule,
+    SignngField, RangeSlider, ...SIGNNG_TOOLBAR, Spinner, TimePicker, ReactiveFormsModule,
   ],
   templateUrl: './showcase.html',
 })
@@ -316,6 +318,7 @@ export class Showcase {
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
   });
   protected readonly range = signal<[number, number]>([25, 75]);
+  protected readonly time = signal<string | null>('09:30');
   protected readonly notifs = signal([
     { id: '1', title: 'Nuevo usuario', description: 'Ana se unió al equipo', time: 'hace 2h', icon: 'user' as const },
     { id: '2', title: 'Pago recibido', description: '$290 — plan Pro', time: 'hace 5h', icon: 'check' as const },
@@ -388,6 +391,7 @@ export class Showcase {
 
     { name: 'Calendar', cat: 'Datos', code: `<signng-calendar [(value)]="date" />` },
     { name: 'DatePicker', cat: 'Datos', code: `<signng-date-picker [(value)]="date" />` },
+    { name: 'TimePicker', cat: 'Datos', code: `<signng-time-picker [(value)]="time" [minuteStep]="5" />` },
     { name: 'Table', cat: 'Datos', code: `<table signngTable>…</table>` },
 
     { name: 'Card', cat: 'Display', code: `<div signngCard>…</div>` },
@@ -397,6 +401,7 @@ export class Showcase {
     { name: 'Separator', cat: 'Display', code: `<div signngSeparator></div>` },
     { name: 'Skeleton', cat: 'Display', code: `<signng-skeleton class="h-4 w-40" />` },
     { name: 'Progress', cat: 'Display', code: `<signng-progress [value]="62" />` },
+    { name: 'Spinner', cat: 'Display', code: `<signng-spinner [size]="24" label="Cargando" />` },
     { name: 'Collapsible', cat: 'Display', code: `<signng-collapsible triggerLabel="Ver más">…</signng-collapsible>` },
     { name: 'ScrollArea', cat: 'Display', code: `<signng-scroll-area>…</signng-scroll-area>` },
     { name: 'AspectRatio', cat: 'Display', code: `<signng-aspect-ratio [ratio]="16/9">…</signng-aspect-ratio>` },
