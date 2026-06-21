@@ -139,13 +139,99 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
             </div>
           </div>
         }
+
+        <!-- ============ MAIL ============ -->
+        @case ('Mail') {
+          <div class="grid h-[calc(100vh-49px)] grid-cols-1 md:grid-cols-[320px_1fr]">
+            <div class="overflow-auto border-r border-border">
+              <div class="border-b border-border px-4 py-3 font-semibold">Bandeja de entrada</div>
+              @for (m of inbox; track m.id) {
+                <button (click)="openMail.set(m.id)" [class]="'flex w-full gap-3 border-b border-border px-4 py-3 text-left hover:bg-accent ' + (openMail() === m.id ? 'bg-accent' : '')">
+                  <signng-avatar [fallback]="m.fallback" [alt]="m.from" />
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-center justify-between">
+                      <span class="truncate text-sm font-medium">{{ m.from }}</span>
+                      <span class="shrink-0 text-xs text-muted-foreground">{{ m.time }}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      @if (m.unread) { <span class="size-1.5 shrink-0 rounded-full bg-primary"></span> }
+                      <span class="truncate text-sm">{{ m.subject }}</span>
+                    </div>
+                    <p class="truncate text-xs text-muted-foreground">{{ m.preview }}</p>
+                  </div>
+                </button>
+              }
+            </div>
+            <div class="overflow-auto p-8">
+              @for (m of inbox; track m.id) {
+                @if (openMail() === m.id) {
+                  <div class="mx-auto max-w-2xl">
+                    <div class="flex items-center gap-3">
+                      <signng-avatar [fallback]="m.fallback" [alt]="m.from" class="size-12 text-base" />
+                      <div><div class="font-semibold">{{ m.from }}</div><div class="text-sm text-muted-foreground">para mí · {{ m.time }}</div></div>
+                      <span signngBadge variant="secondary" class="ml-auto">Bandeja</span>
+                    </div>
+                    <h2 class="mt-5 text-xl font-bold">{{ m.subject }}</h2>
+                    <p class="mt-3 leading-relaxed text-muted-foreground">{{ m.preview }} Lorem ipsum dolor sit amet, consectetur adipiscing elit. El contenido completo del correo iría aquí, renderizado de forma segura como texto.</p>
+                    <hr signngSeparator class="my-6" />
+                    <div class="flex gap-2"><button signngButton>Responder</button><button signngButton variant="outline">Archivar</button></div>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        }
+
+        <!-- ============ CARDS ============ -->
+        @case ('Cards') {
+          <div class="mx-auto max-w-5xl px-6 py-10">
+            <h1 class="text-2xl font-bold tracking-tight">Cards</h1>
+            <p class="text-muted-foreground">Patrones de tarjeta compuestos.</p>
+            <div class="mt-6 grid gap-5 md:grid-cols-3">
+              <signng-stat-card label="Ingresos" [value]="'$48.2k'" delta="+12%" [up]="true" icon="trending" hint="vs mes anterior" />
+              <div signngCard>
+                <div signngCardHeader><span signngCardTitle>Crear proyecto</span><span signngCardDescription>Despliega en un click.</span></div>
+                <div signngCardContent class="space-y-2">
+                  <label signngLabel for="c-name">Nombre</label>
+                  <input signngInput id="c-name" placeholder="mi-proyecto" />
+                </div>
+                <div signngCardFooter class="justify-between"><button signngButton variant="outline" size="sm">Cancelar</button><button signngButton size="sm">Crear</button></div>
+              </div>
+              <div signngCard>
+                <div signngCardHeader class="flex-row items-center gap-3">
+                  <signng-avatar fallback="GF" alt="Giorgi" />
+                  <div><div signngCardTitle class="text-base">Giorgi Franck</div><div signngCardDescription>Owner</div></div>
+                  <span signngBadge class="ml-auto">Pro</span>
+                </div>
+                <div signngCardContent class="text-sm text-muted-foreground">Construye MLM Suite + signng. 3 repos activos.</div>
+              </div>
+              <div signngCard class="md:col-span-2">
+                <div signngCardHeader class="pb-2"><span signngCardTitle class="text-sm">Actividad semanal</span></div>
+                <div signngCardContent class="pt-0"><signng-line-chart [data]="bars" /></div>
+              </div>
+              <div signngCard>
+                <div signngCardHeader><span signngCardTitle>Notificaciones</span></div>
+                <div signngCardContent class="space-y-3 text-sm">
+                  <div class="flex items-center justify-between"><span>Email</span><signng-switch ariaLabel="Email" [(checked)]="pub" /></div>
+                  <div class="flex items-center justify-between"><span>Push</span><signng-switch ariaLabel="Push" [(checked)]="mails" /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
       }
     </div>
   `,
 })
 export class Blocks {
-  protected readonly BLOCKS = ['Auth', 'Pricing', 'Settings', 'Stats'] as const;
-  protected readonly block = signal<'Auth' | 'Pricing' | 'Settings' | 'Stats'>('Auth');
+  protected readonly BLOCKS = ['Auth', 'Pricing', 'Settings', 'Stats', 'Mail', 'Cards'] as const;
+  protected readonly block = signal<'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards'>('Auth');
+  protected readonly openMail = signal('1');
+  protected readonly inbox = [
+    { id: '1', from: 'Ana Torres', subject: 'Propuesta Q3 lista', preview: 'Adjunto el plan trimestral con métricas…', time: '10:24', unread: true, fallback: 'AT' },
+    { id: '2', from: 'Soporte', subject: 'Tu ticket #4821 fue resuelto', preview: 'Hemos cerrado tu incidencia de export…', time: '09:02', unread: true, fallback: 'SP' },
+    { id: '3', from: 'Diego Soto', subject: 'Re: Demo del viernes', preview: 'Perfecto, confirmo asistencia a las 3pm.', time: 'ayer', unread: false, fallback: 'DS' },
+  ];
   protected readonly pub = signal(true);
   protected readonly mails = signal(false);
 
