@@ -248,13 +248,24 @@ export class Showcase {
   }
   protected applyRadius(r: string): void {
     this.radiusKey.set(r);
-    this.style()?.setProperty('--radius', r + 'rem');
+    const s = this.style();
+    if (!s) return;
+    // Tailwind v4 `rounded-*` utilities resolve --radius-{sm,md,lg,xl}; override the whole scale so the
+    // control actually changes component corners (plain --radius is read by nothing). 0.5 == TW defaults.
+    s.setProperty('--radius', `${r}rem`);
+    s.setProperty('--radius-sm', `calc(${r}rem - 4px)`);
+    s.setProperty('--radius-md', `calc(${r}rem - 2px)`);
+    s.setProperty('--radius-lg', `${r}rem`);
+    s.setProperty('--radius-xl', `calc(${r}rem + 4px)`);
   }
   protected resetTheme(): void {
     const s = this.style();
-    if (s) ['--color-primary', '--color-primary-foreground', '--color-ring', '--radius'].forEach((k) => s.removeProperty(k));
+    if (s) {
+      ['--color-primary', '--color-primary-foreground', '--color-ring',
+        '--radius', '--radius-sm', '--radius-md', '--radius-lg', '--radius-xl'].forEach((k) => s.removeProperty(k));
+    }
     this.themeKey.set('violet');
-    this.radiusKey.set('0.5');
+    this.radiusKey.set('0.5'); // TW-default corners ≈ 0.5rem mapping, so the highlighted chip matches reality
   }
 
   // tier-2 demo state

@@ -652,9 +652,9 @@
           <button (click)="applyRadius(r)" [class]="'rounded-md border py-1 text-xs ' + (radiusKey() === r ? 'border-primary bg-accent font-medium' : 'border-border')">{{ r }}</button>
         }
       </div>
-      <div class="mb-3 flex items-center gap-2">
-        <button (click)="dark.set(!dark())" [class]="'flex-1 rounded-md border py-1.5 text-xs ' + (!dark() ? 'border-primary bg-accent font-medium' : 'border-border')">☀ Claro</button>
-        <button (click)="dark.set(!dark())" [class]="'flex-1 rounded-md border py-1.5 text-xs ' + (dark() ? 'border-primary bg-accent font-medium' : 'border-border')">🌙 Oscuro</button>
+      <div role="radiogroup" aria-label="Modo de color" class="mb-3 flex items-center gap-2">
+        <button role="radio" [attr.aria-checked]="!dark()" (click)="dark.set(false)" [class]="'flex-1 rounded-md border py-1.5 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ' + (!dark() ? 'border-primary bg-accent font-medium' : 'border-border')">☀ Claro</button>
+        <button role="radio" [attr.aria-checked]="dark()" (click)="dark.set(true)" [class]="'flex-1 rounded-md border py-1.5 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ' + (dark() ? 'border-primary bg-accent font-medium' : 'border-border')">🌙 Oscuro</button>
       </div>
       <button signngButton variant="outline" class="w-full" (click)="resetTheme()">Restablecer</button>
     </div>
