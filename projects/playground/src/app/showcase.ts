@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -92,6 +92,17 @@ interface Demo { name: string; cat: string; code: string }
 export class Showcase {
   private readonly toast = inject(ToastService);
   protected readonly search = viewChild<ElementRef<HTMLInputElement>>('search');
+
+  protected readonly dark = signal(false);
+  constructor() {
+    // theme toggle lives on <html> so CDK overlays (dropdowns, popovers) inherit it too
+    effect(() => {
+      if (typeof document !== 'undefined') document.documentElement.classList.toggle('dark', this.dark());
+    });
+    inject(DestroyRef).onDestroy(() => {
+      if (typeof document !== 'undefined') document.documentElement.classList.remove('dark');
+    });
+  }
 
   protected readonly q = signal('');
   // per-card Preview|Code tab state

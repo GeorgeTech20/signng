@@ -1,4 +1,4 @@
-<div class="fixed right-4 top-4 z-50 flex gap-1 rounded-md border border-border bg-background p-1 text-sm shadow">
+<div class="fixed bottom-4 right-4 z-50 flex gap-1 rounded-md border border-border bg-background p-1 text-sm shadow-lg">
   <button class="rounded px-2.5 py-1" [class.bg-accent]="view() === 'showcase'" [class.text-accent-foreground]="view() === 'showcase'" (click)="view.set('showcase')">Showcase</button>
   <button class="rounded px-2.5 py-1" [class.bg-accent]="view() === 'demo'" [class.text-accent-foreground]="view() === 'demo'" (click)="view.set('demo')">Demo</button>
   <button class="rounded px-2.5 py-1" [class.bg-accent]="view() === 'dashboard'" [class.text-accent-foreground]="view() === 'dashboard'" (click)="view.set('dashboard')">Dashboard</button>
