@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneless)', () => {
   test('no WCAG 2.0/2.1/2.2 A+AA axe violations', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await page.waitForSelector('[data-testid="app-root"]');
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
@@ -15,7 +15,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('slider: role=slider, aria wiring, keyboard (non-drag alternative)', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const thumb = page.getByRole('slider', { name: 'Volumen' });
     await expect(thumb).toHaveAttribute('aria-valuenow', '40');
     await expect(thumb).toHaveAttribute('aria-valuemin', '0');
@@ -33,7 +33,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('tabs: aria roles + selection (inherited from @angular/aria)', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await expect(page.getByRole('tablist')).toBeVisible();
     const tabs = page.getByRole('tab');
     await expect(tabs).toHaveCount(2);
@@ -43,7 +43,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('switch: role=switch, aria-checked, Space/Enter toggle', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const sw = page.getByRole('switch');
     await expect(sw).toHaveAttribute('aria-checked', 'true');
     await sw.focus();
@@ -54,7 +54,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('checkbox: role=checkbox, aria-checked, Space toggle', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const cb = page.getByRole('checkbox');
     await expect(cb).toHaveAttribute('aria-checked', 'false');
     await cb.focus();
@@ -65,7 +65,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   test('dialog: modal opens, focus trapped, Esc closes + restores focus, axe clean when open', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const trigger = page.getByRole('button', { name: 'Abrir dialog' });
     await trigger.click();
 
@@ -88,7 +88,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   test('tooltip: role=tooltip on focus, aria-describedby association, Esc dismisses', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await page.getByRole('button', { name: 'Hover / focus me' }).focus();
     const tip = page.getByRole('tooltip');
     await expect(tip).toBeVisible();
@@ -111,7 +111,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('radiogroup: roving tabindex + arrow selection follows focus', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const radios = page.getByRole('radio');
     await expect(radios).toHaveCount(3);
     await expect(radios.nth(0)).toHaveAttribute('aria-checked', 'true'); // 'free' initial
@@ -127,7 +127,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('dropdown-menu: role=menu/menuitem, select emits value + closes', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await page.getByRole('button', { name: 'Acciones' }).click();
     await expect(page.getByRole('menu')).toBeVisible();
     await page.getByRole('menuitem', { name: 'Compartir' }).click();
@@ -136,7 +136,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('toast: appears in a persistent polite live region, close removes it', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await page.getByRole('button', { name: 'Mostrar toast' }).click();
     const polite = page.locator('[aria-live="polite"]');
     await expect(polite.getByText('Guardado', { exact: true })).toBeVisible();
@@ -147,7 +147,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   test('dropdown-menu: keyboard (arrow + Enter) activates an item (B1 regression)', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await page.getByRole('button', { name: 'Acciones' }).click();
     await expect(page.getByRole('menu')).toBeVisible();
     await page.keyboard.press('ArrowDown');
@@ -157,7 +157,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('alert-dialog: role=alertdialog modal, confirm emits + closes', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await page.getByRole('button', { name: 'Eliminar' }).click();
     const dlg = page.getByRole('alertdialog');
     await expect(dlg).toBeVisible();
@@ -168,7 +168,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('combobox: type filters, keyboard activedescendant, Enter selects', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const input = page.getByRole('combobox', { name: 'Framework' });
     await input.click();
     await expect(page.getByRole('listbox')).toBeVisible();
@@ -191,7 +191,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('calendar: grid keyboard (activedescendant) + Enter/click select', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const grid = page.getByRole('grid', { name: /Fecha/ });
     await expect(grid).toBeVisible();
     await expect(grid.getByRole('columnheader').first()).toHaveAttribute('aria-label', 'lunes'); // Monday-first
@@ -213,7 +213,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('navigation-menu: trigger reveals projected panel on click', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const trigger = page.getByRole('button', { name: 'Productos' });
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await trigger.click();
@@ -222,7 +222,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('menubar: role=menubar, open menu + select emits {menu,value}', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const menubar = page.getByRole('menubar');
     await menubar.getByRole('menuitem', { name: 'Archivo' }).click();
     await expect(page.getByRole('menu', { name: 'Archivo' })).toBeVisible();
@@ -232,7 +232,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('input-otp: sequential entry advances focus + builds value', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const boxes = page.getByRole('group', { name: 'Código 2FA' }).getByRole('textbox');
     await expect(boxes).toHaveCount(6);
     await boxes.nth(0).click();
@@ -242,7 +242,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('carousel: region roledescription, next advances slide', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const carousel = page.getByRole('region', { name: 'Galería' });
     await expect(carousel).toHaveAttribute('aria-roledescription', 'carrusel');
     const prev = carousel.getByRole('button', { name: 'Diapositiva anterior' });
@@ -252,7 +252,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('resizable: separator aria-valuenow changes with arrow key', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const sep = page.getByRole('separator', { name: 'Editor y vista previa' });
     await expect(sep).toHaveAttribute('aria-valuenow', '40');
     await sep.focus();
@@ -261,7 +261,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('toggle-group: single-select roving — selecting one clears the other', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const group = page.getByRole('group', { name: 'Alineación de texto' });
     const left = group.getByRole('button', { name: 'Izq' });
     const center = group.getByRole('button', { name: 'Centro' });
@@ -272,7 +272,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('context-menu: right-click opens menu at pointer, select emits', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await page.getByText('Click derecho aquí').click({ button: 'right' });
     await expect(page.getByRole('menu')).toBeVisible();
     await page.getByRole('menuitem', { name: 'Copiar' }).click();
@@ -281,7 +281,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('toggle: aria-pressed flips on click', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const toggle = page.getByRole('button', { name: 'Negrita' });
     await expect(toggle).toHaveAttribute('aria-pressed', 'false');
     await toggle.click();
@@ -289,7 +289,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('collapsible: aria-expanded + lazy region', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const trigger = page.getByRole('button', { name: 'Ver detalles del plan' });
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await expect(page.getByText('usuarios ilimitados')).toHaveCount(0);
@@ -299,7 +299,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('hover-card: card shows on focus, hides on Escape', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await page.getByRole('link', { name: '@georgetech' }).focus();
     await expect(page.getByRole('dialog', { name: 'Perfil de usuario' })).toBeVisible();
     await page.keyboard.press('Escape');
@@ -307,7 +307,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('pagination: aria-current page, navigation updates page', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const nav = page.getByRole('navigation', { name: 'Paginación' });
     await expect(nav.getByRole('button', { name: 'Página 3' })).toHaveAttribute('aria-current', 'page');
     await nav.getByRole('button', { name: 'Página siguiente' }).click();
@@ -315,7 +315,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('command: modal palette filters by query, Enter runs + closes', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     await page.getByRole('button', { name: /Buscar comando/ }).click();
     const dialog = page.getByRole('dialog', { name: 'Paleta de comandos' });
     await expect(dialog).toBeVisible();
@@ -332,7 +332,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   test('date-picker: opens calendar dialog, picking a day commits + closes + restores focus', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const trigger = page.getByRole('button', { name: 'Fecha de nacimiento' });
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await trigger.click();
@@ -346,7 +346,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('progress: role=progressbar with aria-valuenow/min/max', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const bar = page.getByRole('progressbar', { name: 'Carga' });
     await expect(bar).toHaveAttribute('aria-valuenow', '66');
     await expect(bar).toHaveAttribute('aria-valuemin', '0');
@@ -354,7 +354,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('sheet: edge drawer opens modal, Esc closes + restores focus', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const trigger = page.getByRole('button', { name: 'Abrir sheet' });
     await trigger.click();
     const sheet = page.getByRole('dialog', { name: 'Panel lateral' });
@@ -368,7 +368,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   test('accordion: aria-expanded toggles + lazy content (inherited from @angular/aria)', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const trigger = page.getByRole('button', { name: '¿Qué es signng?' });
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await trigger.click();
@@ -377,7 +377,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   });
 
   test('select: combobox opens listbox, selecting an option updates + closes', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const trigger = page.getByRole('combobox', { name: 'País' });
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await trigger.click();
@@ -395,7 +395,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
   test('popover: opens, focus moves in, axe clean open, Esc closes + restores focus', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto('/demo');
     const trigger = page.getByRole('button', { name: 'Abrir popover' });
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await trigger.click();

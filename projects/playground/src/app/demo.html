@@ -1,0 +1,320 @@
+<main class="min-h-screen bg-background text-foreground p-8" data-testid="app-root">
+  <div class="mx-auto max-w-2xl space-y-10">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-semibold tracking-tight">signng — Fase 0</h1>
+      <p class="text-muted-foreground text-sm">
+        Slider net-new (a11y autorada) · Tabs sobre @angular/aria · Button helm · tema oklch ·
+        instalado por CLI SRI-verificado
+      </p>
+    </header>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium">Button (helm · CVA)</h2>
+      <div class="flex flex-wrap gap-3">
+        <button signngButton>Default</button>
+        <button signngButton variant="secondary">Secondary</button>
+        <button signngButton variant="outline">Outline</button>
+        <button signngButton variant="destructive">Destructive</button>
+        <button signngButton variant="ghost">Ghost</button>
+        <button signngButton variant="secondary" (click)="notify()">Mostrar toast</button>
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">Form (Input · Switch · Checkbox · Label)</h2>
+      <div class="max-w-sm space-y-2">
+        <label signngLabel for="email">Email</label>
+        <input signngInput id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+      </div>
+      <div class="flex items-center gap-3">
+        <signng-switch ariaLabelledby="notif-label" [(checked)]="notifications" />
+        <span id="notif-label" class="text-sm">Notificaciones {{ notifications() ? 'on' : 'off' }}</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <signng-checkbox ariaLabelledby="terms-label" [(checked)]="terms" />
+        <span id="terms-label" class="text-sm">Acepto los términos</span>
+      </div>
+
+      <div class="space-y-2">
+        <span id="plan-label" class="text-sm font-medium">Plan ({{ plan() }})</span>
+        <signng-radio-group [(value)]="plan" aria-labelledby="plan-label">
+          <signng-radio value="free">Free</signng-radio>
+          <signng-radio value="pro">Pro</signng-radio>
+          <signng-radio value="team">Team</signng-radio>
+        </signng-radio-group>
+      </div>
+
+      <div class="max-w-sm space-y-2">
+        <label signngLabel for="bio">Bio</label>
+        <textarea signngTextarea id="bio" placeholder="Cuéntanos algo…"></textarea>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium">Slider (primitivo net-new)</h2>
+      <p class="text-muted-foreground text-sm">Volumen: {{ volume() }}</p>
+      <signng-slider
+        class="max-w-sm"
+        ariaLabel="Volumen"
+        [min]="0"
+        [max]="100"
+        [step]="1"
+        [(value)]="volume"
+      />
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium">Overlays (CDK · Dialog modal + Tooltip)</h2>
+      <div class="flex flex-wrap items-center gap-4">
+        <signng-dialog
+          title="Confirmar acción"
+          description="Overlay modal con focus trap, backdrop, Esc y restauración de foco."
+          triggerLabel="Abrir dialog"
+        >
+          <p>Tab queda atrapado dentro del dialog; Esc cierra; el foco vuelve al trigger.</p>
+        </signng-dialog>
+        <signng-tooltip text="Soy un tooltip (hover o focus)">
+          <button signngButton variant="outline">Hover / focus me</button>
+        </signng-tooltip>
+        <signng-popover triggerLabel="Abrir popover" label="Opciones">
+          <p class="text-sm">Contenido del popover. Click afuera o Esc cierra.</p>
+          <button signngButton variant="ghost" class="mt-3">Entendido</button>
+        </signng-popover>
+        <signng-sheet
+          side="right"
+          triggerLabel="Abrir sheet"
+          title="Panel lateral"
+          description="Drawer modal desde la derecha."
+        >
+          <p>Contenido del sheet. Focus trap, Esc y restauración de foco igual que Dialog.</p>
+        </signng-sheet>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium">Card · Badge · Avatar · Separator · Menu · AlertDialog</h2>
+      <div signngCard class="max-w-sm">
+        <div signngCardHeader>
+          <div class="flex items-center gap-3">
+            <signng-avatar src="https://i.pravatar.cc/80" alt="Avatar de usuario" fallback="GT" />
+            <div class="flex flex-col gap-1">
+              <div signngCardTitle class="flex items-center gap-2">
+                Giorgi <span signngBadge variant="secondary">Pro</span>
+              </div>
+              <div signngCardDescription>giorgi&#64;example.com</div>
+            </div>
+          </div>
+        </div>
+        <div signngSeparator></div>
+        <div signngCardContent class="pt-6">
+          <p class="text-sm text-muted-foreground">Card con badge, avatar y separator.</p>
+        </div>
+        <div signngCardFooter class="gap-2">
+          <signng-dropdown-menu
+            triggerLabel="Acciones"
+            label="Acciones"
+            [items]="menuItems"
+            (selected)="lastAction.set($event)"
+          />
+          <signng-alert-dialog
+            triggerLabel="Eliminar"
+            title="¿Eliminar cuenta?"
+            description="Esta acción no se puede deshacer."
+            (confirmed)="lastAction.set('deleted')"
+          />
+        </div>
+      </div>
+      @if (lastAction()) {
+        <p class="text-sm" data-testid="last-action">Última acción: {{ lastAction() }}</p>
+      }
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">Alert · Progress · Skeleton · Table</h2>
+      <div signngAlert variant="destructive">
+        <div signngAlertTitle>Atención</div>
+        <div signngAlertDescription>Algo requiere tu atención.</div>
+      </div>
+      <signng-progress [value]="66" label="Carga" class="max-w-sm" />
+      <div class="flex items-center gap-3">
+        <div signngSkeleton class="size-10 rounded-full"></div>
+        <div class="space-y-2">
+          <div signngSkeleton class="h-4 w-32"></div>
+          <div signngSkeleton class="h-4 w-24"></div>
+        </div>
+      </div>
+      <table signngTable class="max-w-md">
+        <thead signngTableHeader>
+          <tr signngTableRow>
+            <th signngTableHead>Plan</th>
+            <th signngTableHead>Precio</th>
+          </tr>
+        </thead>
+        <tbody signngTableBody>
+          <tr signngTableRow>
+            <td signngTableCell>Free</td>
+            <td signngTableCell>$0</td>
+          </tr>
+          <tr signngTableRow>
+            <td signngTableCell>Pro</td>
+            <td signngTableCell>$12</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium">Accordion + Select (@angular/aria · a11y heredada)</h2>
+      <signng-accordion [items]="faq" />
+      <div class="max-w-xs space-y-2">
+        <span class="text-sm font-medium">País ({{ country() ?? '—' }})</span>
+        <signng-select label="País" placeholder="Elige país" [options]="countries" [(value)]="country" />
+      </div>
+      <div class="max-w-xs space-y-2">
+        <span class="text-sm font-medium">Framework ({{ tech() ?? '—' }})</span>
+        <signng-combobox label="Framework" placeholder="Buscar framework…" [options]="frameworks" [(value)]="tech" />
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">Menubar · NavigationMenu</h2>
+      <signng-menubar [menus]="barMenus" (selected)="barAction.set($event.menu + ':' + $event.value)" />
+      @if (barAction()) {
+        <p class="text-sm" data-testid="bar-value">Menubar: {{ barAction() }}</p>
+      }
+      <signng-nav-menu>
+        <signng-nav-item label="Productos">
+          <div class="grid gap-2">
+            <a href="#" class="block rounded px-2 py-1 hover:bg-accent">Analytics</a>
+            <a href="#" class="block rounded px-2 py-1 hover:bg-accent">Compliance</a>
+          </div>
+        </signng-nav-item>
+        <signng-nav-item label="Recursos">
+          <a href="#" class="block rounded px-2 py-1 hover:bg-accent">Documentación</a>
+        </signng-nav-item>
+      </signng-nav-menu>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">InputOTP · Carousel · Resizable</h2>
+      <signng-input-otp [(value)]="otp" [length]="6" label="Código 2FA" />
+      <p class="text-sm" data-testid="otp-value">OTP: {{ otp() || '—' }}</p>
+
+      <signng-carousel label="Galería" [(index)]="slide" class="max-w-sm">
+        <div signngCarouselItem class="flex h-32 items-center justify-center bg-muted text-base font-medium text-foreground">Slide 1</div>
+        <div signngCarouselItem class="flex h-32 items-center justify-center bg-accent text-base font-medium text-accent-foreground">Slide 2</div>
+        <div signngCarouselItem class="flex h-32 items-center justify-center bg-primary text-base font-medium text-primary-foreground">Slide 3</div>
+      </signng-carousel>
+
+      <signng-resizable label="Editor y vista previa" [(split)]="splitPct" class="h-32 max-w-md overflow-hidden rounded-md border border-border">
+        <div resizableStart class="h-full bg-muted p-3 text-sm text-foreground">Panel A</div>
+        <div resizableEnd class="h-full p-3 text-sm">Panel B</div>
+      </signng-resizable>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">ToggleGroup · ContextMenu · ScrollArea · AspectRatio</h2>
+      <div signngToggleGroup [(value)]="align" type="single" aria-label="Alineación de texto">
+        <button signngToggleItem value="left">Izq</button>
+        <button signngToggleItem value="center">Centro</button>
+        <button signngToggleItem value="right">Der</button>
+      </div>
+      <span class="text-sm">Align: {{ align().join(',') || '—' }}</span>
+
+      <signng-context-menu [items]="ctxItems" (selected)="ctxAction.set($event)">
+        <div class="rounded-md border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
+          Click derecho aquí
+        </div>
+      </signng-context-menu>
+      @if (ctxAction()) {
+        <p class="text-sm" data-testid="ctx-value">Acción: {{ ctxAction() }}</p>
+      }
+
+      <div signngScrollArea class="h-24 max-w-sm border border-border p-2">
+        <p class="text-sm">
+          Línea 1<br />Línea 2<br />Línea 3<br />Línea 4<br />Línea 5<br />Línea 6<br />Línea 7<br />Línea 8
+        </p>
+      </div>
+
+      <div signngAspectRatio ratio="16/9" class="max-w-sm rounded-md bg-muted">
+        <div class="flex h-full items-center justify-center text-sm font-medium text-foreground">16 / 9</div>
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">Toggle · Collapsible · HoverCard</h2>
+      <div class="flex items-center gap-3">
+        <button signngToggle variant="outline" [(pressed)]="bold" aria-label="Negrita">B</button>
+        <span class="text-sm">Negrita {{ bold() ? 'on' : 'off' }}</span>
+      </div>
+      <signng-collapsible triggerLabel="Ver detalles del plan" class="max-w-sm">
+        <p class="text-muted-foreground">Plan Pro: usuarios ilimitados, soporte prioritario, export GDPR.</p>
+      </signng-collapsible>
+      <signng-hover-card label="Perfil de usuario">
+        <a hoverCardTrigger href="#" signngBreadcrumbLink class="underline">&commat;georgetech</a>
+        <div hoverCardContent>
+          <div class="font-medium">GeorgeTech20</div>
+          <p class="mt-1 text-muted-foreground">Construye MLM Suite + signng.</p>
+        </div>
+      </signng-hover-card>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">Breadcrumb · Pagination · Command</h2>
+      <nav signngBreadcrumb>
+        <ol signngBreadcrumbList>
+          <li signngBreadcrumbItem><a signngBreadcrumbLink href="#">Inicio</a></li>
+          <li signngBreadcrumbSeparator></li>
+          <li signngBreadcrumbItem><a signngBreadcrumbLink href="#">Componentes</a></li>
+          <li signngBreadcrumbSeparator></li>
+          <li signngBreadcrumbItem><span signngBreadcrumbPage>Command</span></li>
+        </ol>
+      </nav>
+      <signng-pagination [(page)]="currentPage" [total]="10" />
+      <p class="text-sm">Página: {{ currentPage() }}</p>
+      <signng-command triggerLabel="Buscar comando… (⌘K)" [commands]="cmds" (selected)="lastCmd.set($event)" />
+      @if (lastCmd()) {
+        <p class="text-sm" data-testid="cmd-value">Comando: {{ lastCmd() }}</p>
+      }
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium">Calendar (grid de fechas · APG controlado)</h2>
+      <signng-calendar label="Fecha" [(value)]="date" min="2026-06-01" max="2026-06-25" />
+      <p class="text-sm" data-testid="cal-value">Seleccionado: {{ date() ?? '—' }}</p>
+      <div class="max-w-xs">
+        <signng-date-picker label="Fecha de nacimiento" [(value)]="dob" />
+      </div>
+      <p class="text-sm" data-testid="dob-value">DOB: {{ dob() ?? '—' }}</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-sm font-medium">Tabs (@angular/aria · a11y heredada)</h2>
+      <div ngTabs class="rounded-lg border border-border">
+        <ul ngTabList [(selectedTab)]="selectedTab" class="flex gap-1 border-b border-border p-1">
+          @for (tab of ['overview', 'security']; track tab) {
+            <li
+              ngTab
+              [value]="tab"
+              class="cursor-pointer rounded px-3 py-2 text-sm capitalize aria-selected:bg-accent aria-selected:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {{ tab }}
+            </li>
+          }
+        </ul>
+        <div ngTabPanel value="overview" class="p-4 text-sm">
+          <ng-template ngTabContent>
+            Panel Overview — la navegación por teclado (flechas/Home/End), el roving focus y
+            <code>aria-selected</code> los aporta @angular/aria. signng solo estiliza encima.
+          </ng-template>
+        </div>
+        <div ngTabPanel value="security" class="p-4 text-sm">
+          <ng-template ngTabContent>
+            Panel Security — esta fuente se instaló por CLI con verificación SRI + sandbox de escritura.
+          </ng-template>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<signng-toaster />

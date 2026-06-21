@@ -1,7 +1,7 @@
 // Minimal static server for the prerendered browser build (serves hydration bundle too).
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import { extname, join, normalize } from 'node:path';
 
 const ROOT = join(process.cwd(), process.env.ROOT || 'dist/playground/browser');
@@ -26,6 +26,8 @@ http
         res.writeHead(403);
         return res.end();
       }
+      // prerendered route dirs (e.g. /demo -> /demo/index.html); SPA fallback to root index.html
+      if (existsSync(file) && statSync(file).isDirectory()) file = join(file, 'index.html');
       if (path === '/' || !existsSync(file)) file = join(ROOT, 'index.html');
       const body = await readFile(file);
       res.writeHead(200, { 'content-type': TYPES[extname(file)] || 'application/octet-stream' });
