@@ -197,6 +197,12 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/descriptions.ts', target: 'src/components/ui/descriptions.ts', type: 'registry:ui' }],
   },
   {
+    name: 'code',
+    type: 'registry:ui',
+    description: 'Syntax-highlighted code block (always-dark like shadcn) + copy button; safe tokenizer, no deps.',
+    files: [{ src: 'ui/code-block.ts', target: 'src/components/ui/code-block.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'utils',
     type: 'registry:lib',
     description: 'cn() class-merge helper.',

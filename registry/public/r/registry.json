@@ -160,6 +160,12 @@
       "integrity": "sha256-EmvihhyT5PfGtwBlRpNfGV9OpxJXWQTqN+pO84ew3bo="
     },
     {
+      "name": "code",
+      "type": "registry:ui",
+      "description": "Syntax-highlighted code block (always-dark like shadcn) + copy button; safe tokenizer, no deps.",
+      "integrity": "sha256-meKWmki0fwKTbiMlDJdzIMM7OOOx/ZDPFPWTzZXoKCI="
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "description": "cn() class-merge helper.",
@@ -467,6 +473,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "TQzzjYTUfVBX9mS9mwJA1w+XdWKav1QTzKXjyfQLgdPX/E9spjtEOua1jhLSv4p8zywn1T7ZpAvXjZigp1ekDw==",
+  "signature": "dWaIDm1ZiNgpAewwcolSsnH5mA2Gbz3Rtg/Dec4DRiWu7ER/KeEoA8/VeacBBqaJ2YFUggB7Lh7l9bhjwWt/DQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

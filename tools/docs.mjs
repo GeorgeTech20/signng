@@ -208,8 +208,9 @@ h3 { font-size: 1rem; margin: 1.75rem 0 .25rem; display: flex; align-items: cent
 .badge-reg { background: transparent; color: var(--color-muted-foreground); }
 .deps { margin: .25rem 0; }
 .desc { color: var(--color-muted-foreground); margin: .25rem 0; }
-pre { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius); padding: .75rem 1rem; overflow: auto; font: 13px/1.5 ui-monospace, monospace; }
-pre.cmd { background: var(--color-foreground); color: var(--color-background); }
+pre { background: #18181b; color: #e4e4e7; border: 1px solid #27272a; border-radius: var(--radius); padding: .75rem 1rem; overflow: auto; font: 13px/1.5 ui-monospace, monospace; }
+pre.cmd { background: #18181b; color: #e4e4e7; }
+pre.cmd::before { content: '$ '; color: #6a9955; }
 .src { max-height: 420px; }
 .integrity { font: 11px/1.4 ui-monospace, monospace; color: var(--color-muted-foreground); word-break: break-all; }
 details summary { cursor: pointer; font-size: 13px; color: var(--color-muted-foreground); margin: .25rem 0; }

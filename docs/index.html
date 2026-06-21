@@ -74,8 +74,9 @@ h3 { font-size: 1rem; margin: 1.75rem 0 .25rem; display: flex; align-items: cent
 .badge-reg { background: transparent; color: var(--color-muted-foreground); }
 .deps { margin: .25rem 0; }
 .desc { color: var(--color-muted-foreground); margin: .25rem 0; }
-pre { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius); padding: .75rem 1rem; overflow: auto; font: 13px/1.5 ui-monospace, monospace; }
-pre.cmd { background: var(--color-foreground); color: var(--color-background); }
+pre { background: #18181b; color: #e4e4e7; border: 1px solid #27272a; border-radius: var(--radius); padding: .75rem 1rem; overflow: auto; font: 13px/1.5 ui-monospace, monospace; }
+pre.cmd { background: #18181b; color: #e4e4e7; }
+pre.cmd::before { content: '$ '; color: #6a9955; }
 .src { max-height: 420px; }
 .integrity { font: 11px/1.4 ui-monospace, monospace; color: var(--color-muted-foreground); word-break: break-all; }
 details summary { cursor: pointer; font-size: 13px; color: var(--color-muted-foreground); margin: .25rem 0; }
@@ -152,7 +153,7 @@ details summary { cursor: pointer; font-size: 13px; color: var(--color-muted-for
 <li><a href="#security">Distribución firmada</a></li>
 <li><a href="#faq">FAQ</a></li>
 <li><a href="#iconos">Iconos</a></li>
-<li class="nav-cat">Formularios</li><li><a href="#c-button">button</a></li><li><a href="#c-input">input</a></li><li><a href="#c-label">label</a></li><li><a href="#c-textarea">textarea</a></li><li><a href="#c-checkbox">checkbox</a></li><li><a href="#c-switch">switch</a></li><li><a href="#c-radio-group">radio-group</a></li><li><a href="#c-select">select</a></li><li><a href="#c-slider">slider</a></li><li><a href="#c-range-slider">range-slider</a></li><li><a href="#c-combobox">combobox</a></li><li><a href="#c-input-otp">input-otp</a></li><li><a href="#c-form-field">form-field</a></li><li><a href="#c-form">form</a></li><li><a href="#c-segmented">segmented</a></li><li class="nav-cat">Overlays</li><li><a href="#c-dialog">dialog</a></li><li><a href="#c-alert-dialog">alert-dialog</a></li><li><a href="#c-sheet">sheet</a></li><li><a href="#c-drawer">drawer</a></li><li><a href="#c-popover">popover</a></li><li><a href="#c-tooltip">tooltip</a></li><li><a href="#c-hover-card">hover-card</a></li><li><a href="#c-toast">toast</a></li><li><a href="#c-command">command</a></li><li class="nav-cat">Navegación</li><li><a href="#c-accordion">accordion</a></li><li><a href="#c-dropdown-menu">dropdown-menu</a></li><li><a href="#c-context-menu">context-menu</a></li><li><a href="#c-menubar">menubar</a></li><li><a href="#c-navigation-menu">navigation-menu</a></li><li><a href="#c-breadcrumb">breadcrumb</a></li><li><a href="#c-pagination">pagination</a></li><li><a href="#c-sidebar">sidebar</a></li><li class="nav-cat">Fecha</li><li><a href="#c-calendar">calendar</a></li><li><a href="#c-date-picker">date-picker</a></li><li><a href="#c-time-picker">time-picker</a></li><li class="nav-cat">Display</li><li><a href="#c-card">card</a></li><li><a href="#c-badge">badge</a></li><li><a href="#c-avatar">avatar</a></li><li><a href="#c-separator">separator</a></li><li><a href="#c-alert">alert</a></li><li><a href="#c-skeleton">skeleton</a></li><li><a href="#c-progress">progress</a></li><li><a href="#c-spinner">spinner</a></li><li><a href="#c-table">table</a></li><li class="nav-cat">Interacción</li><li><a href="#c-toggle">toggle</a></li><li><a href="#c-toggle-group">toggle-group</a></li><li><a href="#c-collapsible">collapsible</a></li><li><a href="#c-scroll-area">scroll-area</a></li><li><a href="#c-aspect-ratio">aspect-ratio</a></li><li><a href="#c-carousel">carousel</a></li><li><a href="#c-resizable">resizable</a></li><li class="nav-cat">Gráficos</li><li><a href="#c-chart">chart</a></li><li class="nav-cat">Enterprise</li><li><a href="#c-data-table">data-table</a></li><li><a href="#c-chart-analytics">chart-analytics</a></li><li><a href="#c-file-upload">file-upload</a></li><li><a href="#c-login-form">login-form</a></li><li class="nav-cat">Avanzados</li><li><a href="#c-stepper">stepper</a></li><li><a href="#c-date-range-picker">date-range-picker</a></li><li><a href="#c-multi-select">multi-select</a></li><li><a href="#c-tag-input">tag-input</a></li><li><a href="#c-number-input">number-input</a></li><li><a href="#c-tree-view">tree-view</a></li><li><a href="#c-timeline">timeline</a></li><li><a href="#c-stat-card">stat-card</a></li><li><a href="#c-empty-state">empty-state</a></li><li><a href="#c-toolbar">toolbar</a></li><li><a href="#c-transfer">transfer</a></li><li><a href="#c-descriptions">descriptions</a></li><li class="nav-cat">Pro</li><li><a href="#c-kanban">kanban</a></li><li><a href="#c-notification-center">notification-center</a></li><li><a href="#c-rating">rating</a></li><li><a href="#c-color-picker">color-picker</a></li><li class="nav-cat">Otros</li><li><a href="#c-icon">icon</a></li>
+<li class="nav-cat">Formularios</li><li><a href="#c-button">button</a></li><li><a href="#c-input">input</a></li><li><a href="#c-label">label</a></li><li><a href="#c-textarea">textarea</a></li><li><a href="#c-checkbox">checkbox</a></li><li><a href="#c-switch">switch</a></li><li><a href="#c-radio-group">radio-group</a></li><li><a href="#c-select">select</a></li><li><a href="#c-slider">slider</a></li><li><a href="#c-range-slider">range-slider</a></li><li><a href="#c-combobox">combobox</a></li><li><a href="#c-input-otp">input-otp</a></li><li><a href="#c-form-field">form-field</a></li><li><a href="#c-form">form</a></li><li><a href="#c-segmented">segmented</a></li><li class="nav-cat">Overlays</li><li><a href="#c-dialog">dialog</a></li><li><a href="#c-alert-dialog">alert-dialog</a></li><li><a href="#c-sheet">sheet</a></li><li><a href="#c-drawer">drawer</a></li><li><a href="#c-popover">popover</a></li><li><a href="#c-tooltip">tooltip</a></li><li><a href="#c-hover-card">hover-card</a></li><li><a href="#c-toast">toast</a></li><li><a href="#c-command">command</a></li><li class="nav-cat">Navegación</li><li><a href="#c-accordion">accordion</a></li><li><a href="#c-dropdown-menu">dropdown-menu</a></li><li><a href="#c-context-menu">context-menu</a></li><li><a href="#c-menubar">menubar</a></li><li><a href="#c-navigation-menu">navigation-menu</a></li><li><a href="#c-breadcrumb">breadcrumb</a></li><li><a href="#c-pagination">pagination</a></li><li><a href="#c-sidebar">sidebar</a></li><li class="nav-cat">Fecha</li><li><a href="#c-calendar">calendar</a></li><li><a href="#c-date-picker">date-picker</a></li><li><a href="#c-time-picker">time-picker</a></li><li class="nav-cat">Display</li><li><a href="#c-card">card</a></li><li><a href="#c-badge">badge</a></li><li><a href="#c-avatar">avatar</a></li><li><a href="#c-separator">separator</a></li><li><a href="#c-alert">alert</a></li><li><a href="#c-skeleton">skeleton</a></li><li><a href="#c-progress">progress</a></li><li><a href="#c-spinner">spinner</a></li><li><a href="#c-table">table</a></li><li class="nav-cat">Interacción</li><li><a href="#c-toggle">toggle</a></li><li><a href="#c-toggle-group">toggle-group</a></li><li><a href="#c-collapsible">collapsible</a></li><li><a href="#c-scroll-area">scroll-area</a></li><li><a href="#c-aspect-ratio">aspect-ratio</a></li><li><a href="#c-carousel">carousel</a></li><li><a href="#c-resizable">resizable</a></li><li class="nav-cat">Gráficos</li><li><a href="#c-chart">chart</a></li><li class="nav-cat">Enterprise</li><li><a href="#c-data-table">data-table</a></li><li><a href="#c-chart-analytics">chart-analytics</a></li><li><a href="#c-file-upload">file-upload</a></li><li><a href="#c-login-form">login-form</a></li><li class="nav-cat">Avanzados</li><li><a href="#c-stepper">stepper</a></li><li><a href="#c-date-range-picker">date-range-picker</a></li><li><a href="#c-multi-select">multi-select</a></li><li><a href="#c-tag-input">tag-input</a></li><li><a href="#c-number-input">number-input</a></li><li><a href="#c-tree-view">tree-view</a></li><li><a href="#c-timeline">timeline</a></li><li><a href="#c-stat-card">stat-card</a></li><li><a href="#c-empty-state">empty-state</a></li><li><a href="#c-toolbar">toolbar</a></li><li><a href="#c-transfer">transfer</a></li><li><a href="#c-descriptions">descriptions</a></li><li class="nav-cat">Pro</li><li><a href="#c-kanban">kanban</a></li><li><a href="#c-notification-center">notification-center</a></li><li><a href="#c-rating">rating</a></li><li><a href="#c-color-picker">color-picker</a></li><li class="nav-cat">Otros</li><li><a href="#c-code">code</a></li><li><a href="#c-icon">icon</a></li>
 </ul></aside>
 <main>
   <section id="hero">
@@ -163,7 +164,7 @@ details summary { cursor: pointer; font-size: 13px; color: var(--color-muted-for
       <div><strong>Componer CDK</strong><br/>overlays con @angular/cdk (Dialog, Popover, Toast…)</div>
       <div><strong>Net-new</strong><br/>primitivos autorados (Slider, Calendar, Combobox…)</div>
     </div>
-    <p class="desc">73 componentes · 77 items firmados.</p>
+    <p class="desc">74 componentes · 78 items firmados.</p>
   </section>
 
   <section id="start">
@@ -222,7 +223,7 @@ document.documentElement.classList.toggle('dark', isDark);</code></pre>
     <h2 style="margin-top:0;border:0">Distribución firmada — la cuña enterprise</h2>
     <p class="desc">El registry se firma con <strong>ed25519</strong>. El CLI verifica la firma contra el <strong>signer pineado</strong> y el hash <strong>SRI</strong> de cada archivo <em>antes</em> de escribir — <strong>fail-closed</strong>: si algo no cuadra, no escribe nada.</p>
     <p class="integrity">signer (pubkey): MCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X…</p>
-    <p class="integrity">signature: oEI+wxYGWzHJMgNsAa9z8xRqqbkl8JEzUBTitsi+at49…</p>
+    <p class="integrity">signature: dWaIDm1ZiNgpAewwcolSsnH5mA2Gbz3Rtg/Dec4DRiWu…</p>
   </section>
 
   <section id="faq">
@@ -3343,35 +3344,30 @@ interface Day {
       &lt;div class="mb-2 flex items-center gap-1"&gt;
         &lt;button
           type="button"
-          (click)="cursor.set(addMonths(cursor(), -1))"
-          [attr.aria-label]="i18n.calendarPrevMonth"
+          (click)="onPrev()"
+          [attr.aria-label]="prevLabel()"
           class="inline-flex size-7 shrink-0 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         &gt;
           &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true"&gt;
             &lt;path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" /&gt;
           &lt;/svg&gt;
         &lt;/button&gt;
-        &lt;!-- jump straight to any month / year (no clicking through) --&gt;
-        &lt;select
-          [value]="cursorMonth()"
-          (change)="onMonth($any($event.target).value)"
-          aria-label="Mes"
-          class="h-7 flex-1 cursor-pointer rounded-md border border-input bg-background px-1.5 text-sm font-medium capitalize outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        &gt;
-          @for (m of months(); track m.i) { &lt;option [value]="m.i"&gt;{{ m.name }}&lt;/option&gt; }
-        &lt;/select&gt;
-        &lt;select
-          [value]="cursorYear()"
-          (change)="onYear($any($event.target).value)"
-          aria-label="Año"
-          class="h-7 cursor-pointer rounded-md border border-input bg-background px-1.5 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        &gt;
-          @for (y of years(); track y) { &lt;option [value]="y"&gt;{{ y }}&lt;/option&gt; }
-        &lt;/select&gt;
+        &lt;!-- click month/year to switch the grid below to a month/year picker --&gt;
+        &lt;div class="flex flex-1 items-center justify-center gap-1"&gt;
+          @if (view() === 'days') {
+            &lt;button type="button" (click)="view.set('months')" aria-label="Elegir mes" class="rounded-md px-2 py-1 text-sm font-medium capitalize hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"&gt;{{ monthName() }}&lt;/button&gt;
+          }
+          @if (view() === 'days' || view() === 'months') {
+            &lt;button type="button" (click)="view.set('years')" aria-label="Elegir año" class="rounded-md px-2 py-1 text-sm font-medium tabular-nums hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"&gt;{{ cursorYear() }}&lt;/button&gt;
+          }
+          @if (view() === 'years') {
+            &lt;button type="button" (click)="view.set('days')" class="rounded-md px-2 py-1 text-sm font-medium tabular-nums hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"&gt;{{ yearWindow()[0] }} – {{ yearWindow()[11] }}&lt;/button&gt;
+          }
+        &lt;/div&gt;
         &lt;button
           type="button"
-          (click)="cursor.set(addMonths(cursor(), 1))"
-          [attr.aria-label]="i18n.calendarNextMonth"
+          (click)="onNext()"
+          [attr.aria-label]="nextLabel()"
           class="inline-flex size-7 shrink-0 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         &gt;
           &lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true"&gt;
@@ -3384,6 +3380,7 @@ interface Day {
       &lt;!-- polite boundary announcement (month changes) without making the visible label a live region --&gt;
       &lt;div aria-live="polite" class="sr-only"&gt;{{ monthLabel() }}&lt;/div&gt;
 
+      @if (view() === 'days') {
       &lt;div
         role="grid"
         tabindex="0"
@@ -3430,6 +3427,31 @@ interface Day {
           &lt;/div&gt;
         }
       &lt;/div&gt;
+      }
+
+      @if (view() === 'months') {
+        &lt;div role="grid" aria-label="Elegir mes" class="grid grid-cols-3 gap-1.5 p-1"&gt;
+          @for (m of months(); track m.i) {
+            &lt;button
+              type="button"
+              (click)="pickMonth(m.i)"
+              [class]="cn('rounded-md py-2.5 text-sm capitalize hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', m.i === cursorMonth() ? 'bg-primary text-primary-foreground hover:bg-primary' : '')"
+            &gt;{{ m.name }}&lt;/button&gt;
+          }
+        &lt;/div&gt;
+      }
+
+      @if (view() === 'years') {
+        &lt;div role="grid" aria-label="Elegir año" class="grid grid-cols-3 gap-1.5 p-1"&gt;
+          @for (y of yearWindow(); track y) {
+            &lt;button
+              type="button"
+              (click)="pickYear(y)"
+              [class]="cn('rounded-md py-2.5 text-sm tabular-nums hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', y === cursorYear() ? 'bg-primary text-primary-foreground hover:bg-primary' : '')"
+            &gt;{{ y }}&lt;/button&gt;
+          }
+        &lt;/div&gt;
+      }
     &lt;/div&gt;
   `,
 })
@@ -3478,28 +3500,47 @@ export class Calendar {
     new Intl.DateTimeFormat(this.locale(), { month: 'long', year: 'numeric' }).format(parse(this.cursor())),
   );
 
-  // month/year jump dropdowns — pick any month/year directly instead of stepping the arrows
+  // header view switcher: click the month/year header → swap the grid below to an in-component month or
+  // year picker (no native &lt;select&gt;). days &lt;-&gt; months &lt;-&gt; years.
+  protected readonly view = signal&lt;'days' | 'months' | 'years'&gt;('days');
   protected readonly cursorMonth = computed(() =&gt; parse(this.cursor()).getMonth());
   protected readonly cursorYear = computed(() =&gt; parse(this.cursor()).getFullYear());
+  protected readonly monthName = computed(() =&gt;
+    new Intl.DateTimeFormat(this.locale(), { month: 'long' }).format(parse(this.cursor())),
+  );
   protected readonly months = computed(() =&gt; {
-    const fmt = new Intl.DateTimeFormat(this.locale(), { month: 'long' });
-    return Array.from({ length: 12 }, (_, i) =&gt; ({ i, name: fmt.format(new Date(2024, i, 1)) }));
+    const fmt = new Intl.DateTimeFormat(this.locale(), { month: 'short' });
+    return Array.from({ length: 12 }, (_, i) =&gt; ({ i, name: fmt.format(new Date(2024, i, 1)).replace('.', '') }));
   });
-  protected readonly years = computed(() =&gt; {
-    const cy = this.cursorYear();
-    const min = this.min();
-    const max = this.max();
-    const lo = min ? parse(min).getFullYear() : cy - 100;
-    const hi = max ? parse(max).getFullYear() : cy + 10;
-    const out: number[] = [];
-    for (let y = hi; y &gt;= lo; y--) out.push(y); // recent-first (good for birthdays)
-    return out;
+  protected readonly yearWindow = computed(() =&gt; {
+    const base = Math.floor(this.cursorYear() / 12) * 12;
+    return Array.from({ length: 12 }, (_, i) =&gt; base + i);
   });
-  protected onMonth(v: string): void {
-    this.cursor.set(iso(new Date(this.cursorYear(), Number(v), 1)));
+  protected readonly prevLabel = computed(() =&gt;
+    this.view() === 'days' ? this.i18n.calendarPrevMonth : this.view() === 'months' ? 'Año anterior' : 'Período anterior',
+  );
+  protected readonly nextLabel = computed(() =&gt;
+    this.view() === 'days' ? this.i18n.calendarNextMonth : this.view() === 'months' ? 'Año siguiente' : 'Período siguiente',
+  );
+  protected onPrev(): void {
+    const v = this.view();
+    if (v === 'days') this.cursor.set(addMonths(this.cursor(), -1));
+    else if (v === 'months') this.cursor.set(iso(new Date(this.cursorYear() - 1, this.cursorMonth(), 1)));
+    else this.cursor.set(iso(new Date(this.cursorYear() - 12, this.cursorMonth(), 1)));
   }
-  protected onYear(v: string): void {
-    this.cursor.set(iso(new Date(Number(v), this.cursorMonth(), 1)));
+  protected onNext(): void {
+    const v = this.view();
+    if (v === 'days') this.cursor.set(addMonths(this.cursor(), 1));
+    else if (v === 'months') this.cursor.set(iso(new Date(this.cursorYear() + 1, this.cursorMonth(), 1)));
+    else this.cursor.set(iso(new Date(this.cursorYear() + 12, this.cursorMonth(), 1)));
+  }
+  protected pickMonth(m: number): void {
+    this.cursor.set(iso(new Date(this.cursorYear(), m, 1)));
+    this.view.set('days');
+  }
+  protected pickYear(y: number): void {
+    this.cursor.set(iso(new Date(y, this.cursorMonth(), 1)));
+    this.view.set('months');
   }
 
   protected readonly weeks = computed&lt;Day[][]&gt;(() =&gt; {
@@ -3586,7 +3627,7 @@ export class Calendar {
 }
 </code></pre>
     </details>
-    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-4GaTlVkAuehuMBmNWyBpwt6B/SDS/r9UGhdb30FIJAE=</p>
+    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-jfsYFsHpLfIy5TpfES2CTQsq3F7dpHrnICN51+VyF64=</p>
   </section>
   <section id="c-date-picker" class="component">
     <h3>date-picker <span class="badge">ui</span></h3>
@@ -7633,6 +7674,128 @@ export class ColorPicker {
     </details>
     <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-tdIvMggTTLer3S/Y/yf57ABKW0NXdgAZ6d3zxdwver0=</p>
   </section><h2>Otros</h2>
+  <section id="c-code" class="component">
+    <h3>code <span class="badge">ui</span></h3>
+    <p class="desc">Syntax-highlighted code block (always-dark like shadcn) + copy button; safe tokenizer, no deps.</p>
+    
+    
+    <pre class="cmd" tabindex="0">pnpm signng add code</pre>
+    <details>
+      <summary>Ver fuente — <code>src/components/ui/code-block.ts</code></summary>
+      <pre class="src"><code>import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+
+interface Token {
+  t: string;
+  c: keyof typeof THEME;
+}
+
+// Fixed dark syntax palette (VS Code-ish) — the block stays dark in BOTH light and dark mode, like shadcn.
+const THEME = {
+  kw: '#c586c0', // keyword
+  tg: '#569cd6', // tag / type
+  at: '#9cdcfe', // attribute / binding
+  st: '#ce9178', // string
+  cm: '#6a9955', // comment
+  nu: '#b5cea8', // number
+  pn: '#808080', // punctuation
+  df: '#d4d4d4', // default text
+} as const;
+
+// Anchored, single-pass tokenizer (no backtracking-prone patterns; length-capped). Output is rendered as
+// escaped text in &lt;span&gt; per token — never innerHTML — so it can't inject markup (security:lint clean).
+const RULES: [RegExp, keyof typeof THEME][] = [
+  [/^&lt;!--[\s\S]*?--&gt;/, 'cm'],
+  [/^\/\/[^\n]*/, 'cm'],
+  [/^\/\*[\s\S]*?\*\//, 'cm'],
+  [/^"(?:[^"\\]|\\.)*"/, 'st'],
+  [/^'(?:[^'\\]|\\.)*'/, 'st'],
+  [/^`(?:[^`\\]|\\.)*`/, 'st'],
+  [/^&lt;\/?[\w-]+/, 'tg'],
+  [/^\/?&gt;/, 'pn'],
+  [/^[\w@[\]():.*-]+(?==)/, 'at'],
+  [/^\b(?:import|export|from|const|let|var|class|return|new|extends|implements|interface|type|function|async|await|if|else|for|of|in|public|private|protected|readonly|true|false|null)\b/, 'kw'],
+  [/^\b\d+(?:\.\d+)?\b/, 'nu'],
+];
+
+function tokenize(code: string): Token[] {
+  if (!code || code.length &gt; 6000) return [{ t: code, c: 'df' }];
+  const out: Token[] = [];
+  let buf = '';
+  let s = code;
+  const flush = () =&gt; {
+    if (buf) {
+      out.push({ t: buf, c: 'df' });
+      buf = '';
+    }
+  };
+  while (s.length) {
+    let hit = false;
+    for (const [re, c] of RULES) {
+      const m = re.exec(s);
+      if (m) {
+        flush();
+        out.push({ t: m[0], c });
+        s = s.slice(m[0].length);
+        hit = true;
+        break;
+      }
+    }
+    if (!hit) {
+      buf += s[0];
+      s = s.slice(1);
+    }
+  }
+  flush();
+  return out;
+}
+
+/**
+ * CodeBlock (helm) — a syntax-highlighted code box that stays dark in both light and dark themes (shadcn
+ * style). A built-in copy button reveals on hover. Highlighting comes from a small anchored tokenizer that
+ * emits escaped text spans (no innerHTML, no highlighter dep, ReDoS-safe via length cap). Signals-only, OnPush.
+ */
+@Component({
+  selector: 'signng-code',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'block' },
+  template: `
+    &lt;div class="group relative overflow-hidden rounded-lg border border-[#27272a] bg-[#18181b]"&gt;
+      @if (copyable()) {
+        &lt;button
+          type="button"
+          (click)="copy()"
+          aria-label="Copiar código"
+          class="absolute right-2 top-2 z-10 inline-flex size-7 items-center justify-center rounded-md bg-[#27272a] text-[#a1a1aa] opacity-0 transition-opacity hover:text-white focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#52525b] group-hover:opacity-100"
+        &gt;
+          @if (copied()) {
+            &lt;svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"&gt;&lt;path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" /&gt;&lt;/svg&gt;
+          } @else {
+            &lt;svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"&gt;&lt;rect x="9" y="9" width="13" height="13" rx="2" /&gt;&lt;path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /&gt;&lt;/svg&gt;
+          }
+        &lt;/button&gt;
+      }
+      &lt;pre class="overflow-x-auto p-4 text-[13px] leading-relaxed" style="tab-size:2"&gt;&lt;code&gt;@for (tk of tokens(); track $index) {&lt;span [style.color]="THEME[tk.c]"&gt;{{ tk.t }}&lt;/span&gt;}&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  `,
+})
+export class CodeBlock {
+  readonly code = input('');
+  readonly copyable = input(true);
+
+  protected readonly THEME = THEME;
+  protected readonly copied = signal(false);
+  protected readonly tokens = computed(() =&gt; tokenize(this.code()));
+
+  protected copy(): void {
+    navigator.clipboard?.writeText(this.code());
+    this.copied.set(true);
+    setTimeout(() =&gt; this.copied.set(false), 1200);
+  }
+}
+</code></pre>
+    </details>
+    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-T8WEfTqqyY04PkxttKSYAtpXTX8fx/KwwZhmVlf7tFs=</p>
+  </section>
   <section id="c-icon" class="component">
     <h3>icon <span class="badge">ui</span></h3>
     <p class="desc">Owned minimal stroke icon set (~30 feather-style) rendered as path d (no innerHTML).</p>

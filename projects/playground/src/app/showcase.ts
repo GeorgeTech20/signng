@@ -72,6 +72,7 @@ import { TimePicker } from '@/components/ui/time-picker';
 import { Segmented } from '@/components/ui/segmented';
 import { Transfer } from '@/components/ui/transfer';
 import { Descriptions } from '@/components/ui/descriptions';
+import { CodeBlock } from '@/components/ui/code-block';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
@@ -95,7 +96,7 @@ interface Demo { name: string; cat: string; code: string }
     DataTable, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_FILE_UPLOAD, LoginForm,
     StatCard, EmptyState, Timeline, Stepper, NumberInput, MultiSelect, TagInput, TreeView, DateRangePicker,
     Rating, ColorPicker, Kanban, NotificationCenter,
-    SignngField, RangeSlider, ...SIGNNG_TOOLBAR, Spinner, TimePicker, Segmented, Transfer, Descriptions, ReactiveFormsModule,
+    SignngField, RangeSlider, ...SIGNNG_TOOLBAR, Spinner, TimePicker, Segmented, Transfer, Descriptions, CodeBlock, ReactiveFormsModule,
   ],
   templateUrl: './showcase.html',
 })
@@ -322,6 +323,21 @@ export class Showcase {
   });
   protected readonly range = signal<[number, number]>([25, 75]);
   protected readonly time = signal<string | null>('09:30');
+  protected readonly codeSample = `import { DataTable } from '@/components/ui/data-table';
+
+@Component({
+  imports: [DataTable],
+  template: \`
+    <signng-data-table
+      [data]="rows"
+      [columns]="cols"
+      [selectable]="true"
+      groupBy="dept" />
+  \`,
+})
+export class Users {
+  rows = signal<Row[]>([]); // tuyo, en tu repo
+}`;
   protected readonly seg = signal('grid');
   protected readonly segOpts = [
     { value: 'list', label: 'Lista' }, { value: 'grid', label: 'Grilla' }, { value: 'board', label: 'Tablero' },
@@ -422,6 +438,7 @@ export class Showcase {
     { name: 'Skeleton', cat: 'Display', code: `<signng-skeleton class="h-4 w-40" />` },
     { name: 'Progress', cat: 'Display', code: `<signng-progress [value]="62" />` },
     { name: 'Spinner', cat: 'Display', code: `<signng-spinner [size]="24" label="Cargando" />` },
+    { name: 'Code', cat: 'Display', code: `<signng-code [code]="snippet" />  <!-- siempre oscuro, light + dark, con copiar -->` },
     { name: 'Collapsible', cat: 'Display', code: `<signng-collapsible triggerLabel="Ver más">…</signng-collapsible>` },
     { name: 'ScrollArea', cat: 'Display', code: `<signng-scroll-area>…</signng-scroll-area>` },
     { name: 'AspectRatio', cat: 'Display', code: `<signng-aspect-ratio [ratio]="16/9">…</signng-aspect-ratio>` },
