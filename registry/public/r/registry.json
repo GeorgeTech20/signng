@@ -112,6 +112,24 @@
       "integrity": "sha256-Pe/US9O8hyIqIJd8AUf10hnUS4YmbQV8rCAhph18Lqw="
     },
     {
+      "name": "form",
+      "type": "registry:ui",
+      "description": "Validation-aware field (shadcn <Form> analogue): label + control + auto error from reactive-forms validators, aria wired.",
+      "integrity": "sha256-wch160cm5ERBbMlDuI7M1XHQKQU7P89wF3dyUTCXSL0="
+    },
+    {
+      "name": "range-slider",
+      "type": "registry:ui",
+      "description": "Two-thumb range slider [low, high] (Radix-style): pointer drag + keyboard, role=slider per thumb.",
+      "integrity": "sha256-4VgB6TPLd51uBRnVVQn1obbTH2xZXYkWBmVled+xbC8="
+    },
+    {
+      "name": "toolbar",
+      "type": "registry:ui",
+      "description": "role=toolbar with WAI-ARIA roving tabindex (single tab stop, arrow/Home/End) + separators.",
+      "integrity": "sha256-N5t03HzzCP1xXnF2Tmn8MQB+NE4NVylacQX5q1o8y/s="
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "description": "cn() class-merge helper.",
@@ -419,6 +437,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "Sdd+m18ay1bvU7D0zuFvUKwh3t/9hWatlW9r8Kv1jucdo7fwd5xreVr0qTco0Ik9w+xWbQ+9F7LGYVi3uOpaAQ==",
+  "signature": "GtYhSQo+ByqZhdSIPCB58ko8XFH0i2nEhBc9iQQnG9GIZYeBXy1RfKx7kerggBASEfxGXL60lRQIby/Yo6n3AA==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

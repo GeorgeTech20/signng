@@ -64,6 +64,10 @@ import { Rating } from '@/components/ui/rating';
 import { ColorPicker } from '@/components/ui/color-picker';
 import { Kanban, type KanbanColumn } from '@/components/ui/kanban';
 import { NotificationCenter } from '@/components/ui/notification-center';
+import { SignngField } from '@/components/ui/form';
+import { RangeSlider } from '@/components/ui/range-slider';
+import { SIGNNG_TOOLBAR } from '@/components/ui/toolbar';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 interface Demo { name: string; cat: string; code: string }
@@ -86,6 +90,7 @@ interface Demo { name: string; cat: string; code: string }
     DataTable, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_FILE_UPLOAD, LoginForm,
     StatCard, EmptyState, Timeline, Stepper, NumberInput, MultiSelect, TagInput, TreeView, DateRangePicker,
     Rating, ColorPicker, Kanban, NotificationCenter,
+    SignngField, RangeSlider, ...SIGNNG_TOOLBAR, ReactiveFormsModule,
   ],
   templateUrl: './showcase.html',
 })
@@ -306,6 +311,11 @@ export class Showcase {
     { id: 'doing', title: 'En curso', items: [{ id: 'c', title: 'API de pagos', tag: 'backend' }] },
     { id: 'done', title: 'Hecho', items: [{ id: 'd', title: 'Auth', tag: 'backend' }] },
   ]);
+  protected readonly demoForm = new FormGroup({
+    name: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
+    email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+  });
+  protected readonly range = signal<[number, number]>([25, 75]);
   protected readonly notifs = signal([
     { id: '1', title: 'Nuevo usuario', description: 'Ana se unió al equipo', time: 'hace 2h', icon: 'user' as const },
     { id: '2', title: 'Pago recibido', description: '$290 — plan Pro', time: 'hace 5h', icon: 'check' as const },
@@ -352,6 +362,9 @@ export class Showcase {
     { name: 'FormField', cat: 'Formularios', code: `<signng-form-field label="Nombre" description="Tu nombre">\n  <input signngInput />\n</signng-form-field>` },
     { name: 'Toggle', cat: 'Formularios', code: `<signng-toggle [(pressed)]="b">B</signng-toggle>` },
     { name: 'ToggleGroup', cat: 'Formularios', code: `<signng-toggle-group [(value)]="v">…</signng-toggle-group>` },
+    { name: 'Form', cat: 'Formularios', code: `<form [formGroup]="f">\n  <signng-field [control]="f.controls.email" label="Email" [required]="true">\n    <input signngInput formControlName="email" />\n  </signng-field>\n</form>` },
+    { name: 'RangeSlider', cat: 'Formularios', code: `<signng-range-slider [(value)]="range" [min]="0" [max]="100" />` },
+    { name: 'Toolbar', cat: 'Avanzados', code: `<signng-toolbar label="Formato">\n  <button signngToolbarItem signngToggle>B</button>\n  <span signngToolbarSeparator></span>\n  <button signngToolbarItem signngButton size="sm">Exportar</button>\n</signng-toolbar>` },
 
     { name: 'Dialog', cat: 'Overlays', code: `<signng-dialog title="Confirmar" triggerLabel="Abrir">…</signng-dialog>` },
     { name: 'AlertDialog', cat: 'Overlays', code: `<signng-alert-dialog title="¿Eliminar?" …>…</signng-alert-dialog>` },

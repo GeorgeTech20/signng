@@ -25,7 +25,7 @@ const items = index.items
   .map((i) => JSON.parse(readFileSync(resolve(R, `${i.name}.json`), 'utf8')));
 
 const CATEGORIES = [
-  ['Formularios', ['button', 'input', 'label', 'textarea', 'checkbox', 'switch', 'radio-group', 'select', 'slider', 'combobox', 'input-otp', 'form-field']],
+  ['Formularios', ['button', 'input', 'label', 'textarea', 'checkbox', 'switch', 'radio-group', 'select', 'slider', 'range-slider', 'combobox', 'input-otp', 'form-field', 'form']],
   ['Overlays', ['dialog', 'alert-dialog', 'sheet', 'drawer', 'popover', 'tooltip', 'hover-card', 'toast', 'command']],
   ['Navegación', ['tabs', 'accordion', 'dropdown-menu', 'context-menu', 'menubar', 'navigation-menu', 'breadcrumb', 'pagination', 'sidebar']],
   ['Fecha', ['calendar', 'date-picker']],
@@ -33,7 +33,7 @@ const CATEGORIES = [
   ['Interacción', ['toggle', 'toggle-group', 'collapsible', 'scroll-area', 'aspect-ratio', 'carousel', 'resizable']],
   ['Gráficos', ['chart']],
   ['Enterprise', ['data-table', 'chart-analytics', 'file-upload', 'login-form']],
-  ['Avanzados', ['stepper', 'date-range-picker', 'multi-select', 'tag-input', 'number-input', 'tree-view', 'timeline', 'stat-card', 'empty-state']],
+  ['Avanzados', ['stepper', 'date-range-picker', 'multi-select', 'tag-input', 'number-input', 'tree-view', 'timeline', 'stat-card', 'empty-state', 'toolbar']],
   ['Pro', ['kanban', 'notification-center', 'rating', 'color-picker']],
 ];
 const byName = new Map(items.map((i) => [i.name, i]));
@@ -135,6 +135,9 @@ const PREVIEWS = {
   'color-picker': `<span class="pv-input" style="gap:8px"><span style="width:20px;height:20px;border-radius:5px;background:#6d4aff;border:1px solid var(--color-border)"></span><span style="font-family:ui-monospace,monospace;font-size:12px">#6D4AFF</span></span>`,
   'kanban': `<div style="display:flex;gap:10px">${[['Por hacer', 2], ['En curso', 1], ['Hecho', 1]].map(([t, n]) => `<div style="width:120px;border:1px solid var(--color-border);border-radius:8px;background:color-mix(in oklab,var(--color-muted) 40%,transparent);padding:6px"><div style="font-size:12px;font-weight:600;margin-bottom:6px">${t} <span class="pv-muted">${n}</span></div>${Array.from({ length: n }, () => `<div class="pv-card" style="min-width:0;padding:6px 8px;margin-bottom:5px;font-size:12px">Tarjeta</div>`).join('')}</div>`).join('')}</div>`,
   'notification-center': `<div style="position:relative;display:inline-flex"><span class="pv-chip" style="width:36px;height:36px;justify-content:center;border-radius:8px">${g('<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>')}</span><span style="position:absolute;top:-5px;right:-5px;background:var(--color-destructive);color:#fff;font-size:10px;font-weight:600;border-radius:999px;min-width:17px;height:17px;display:flex;align-items:center;justify-content:center">2</span></div>`,
+  'form': `<div style="width:100%;max-width:280px;text-align:left"><div style="font-size:14px;font-weight:500;margin-bottom:5px">Email <span style="color:var(--color-destructive)">*</span></div><input class="pv-input" style="width:100%;border-color:var(--color-destructive)" value="no-es-email" /><div style="color:var(--color-destructive);font-size:13px;font-weight:500;margin-top:5px">Correo no válido.</div></div>`,
+  'range-slider': `<span class="pv-slider" style="width:240px"><span style="position:absolute;left:25%;right:25%;top:0;height:100%;background:var(--color-primary);border-radius:9999px"></span><b style="left:25%"></b><b style="left:75%"></b></span>`,
+  'toolbar': `<div style="display:inline-flex;align-items:center;gap:4px;border:1px solid var(--color-border);border-radius:8px;padding:4px;background:var(--color-background)"><span class="pv-btn outline" style="height:30px;width:32px;justify-content:center;padding:0;font-weight:700">B</span><span class="pv-btn outline" style="height:30px;width:32px;justify-content:center;padding:0;font-style:italic">I</span><span style="width:1px;height:20px;background:var(--color-border);margin:0 2px"></span><span class="pv-btn outline" style="height:30px">Exportar</span></div>`,
 };
 
 function componentHtml(item) {

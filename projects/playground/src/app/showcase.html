@@ -171,6 +171,18 @@
                 <div class="dh"><span class="dn">EmptyState</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'EmptyState'}" /></div>
                 @if (mode('EmptyState')==='code') { <pre class="dco">{{ code('EmptyState') }}</pre> } @else { <div class="dp w-full"><signng-empty-state title="Sin proyectos" description="Crea tu primer proyecto para empezar." icon="search" class="w-full"><button signngButton size="sm">Nuevo proyecto</button></signng-empty-state></div> }
               </article> }
+
+              @if (match('Toolbar')) { <article class="dc">
+                <div class="dh"><span class="dn">Toolbar</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Toolbar'}" /></div>
+                @if (mode('Toolbar')==='code') { <pre class="dco">{{ code('Toolbar') }}</pre> } @else { <div class="dp">
+                  <signng-toolbar label="Formato de texto">
+                    <button signngToolbarItem signngToggle variant="outline" size="sm" aria-label="Negrita">B</button>
+                    <button signngToolbarItem signngToggle variant="outline" size="sm" aria-label="Cursiva"><em>I</em></button>
+                    <span signngToolbarSeparator></span>
+                    <button signngToolbarItem signngButton variant="outline" size="sm">Exportar</button>
+                  </signng-toolbar>
+                </div> }
+              </article> }
             }
 
             <!-- ============ PRO ============ -->
@@ -297,6 +309,29 @@
                     <button signngToggleItem value="list" size="sm">Lista</button>
                     <button signngToggleItem value="grid" size="sm">Grilla</button>
                   </div>
+                </div> }
+              </article> }
+
+              @if (match('Form')) { <article class="dc">
+                <div class="dh"><span class="dn">Form</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">VALIDACIÓN</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Form'}" /></div>
+                @if (mode('Form')==='code') { <pre class="dco">{{ code('Form') }}</pre> } @else { <div class="dp w-full">
+                  <form [formGroup]="demoForm" class="w-full max-w-sm space-y-3">
+                    <signng-field [control]="demoForm.controls.name" label="Nombre" forId="sc-fname" [required]="true" description="Mínimo 3 caracteres.">
+                      <input signngInput id="sc-fname" formControlName="name" placeholder="Tu nombre" class="w-full" />
+                    </signng-field>
+                    <signng-field [control]="demoForm.controls.email" label="Email" forId="sc-femail" [required]="true">
+                      <input signngInput id="sc-femail" type="email" formControlName="email" placeholder="email@ejemplo.com" class="w-full" />
+                    </signng-field>
+                    <button signngButton type="button" (click)="demoForm.markAllAsTouched()">Validar</button>
+                  </form>
+                </div> }
+              </article> }
+
+              @if (match('RangeSlider')) { <article class="dc">
+                <div class="dh"><span class="dn">RangeSlider</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'RangeSlider'}" /></div>
+                @if (mode('RangeSlider')==='code') { <pre class="dco">{{ code('RangeSlider') }}</pre> } @else { <div class="dp w-full">
+                  <signng-range-slider [(value)]="range" [min]="0" [max]="100" ariaLabel="Precio" class="w-full max-w-xs" />
+                  <span class="text-sm text-muted-foreground">{{ range()[0] }} – {{ range()[1] }}</span>
                 </div> }
               </article> }
             }

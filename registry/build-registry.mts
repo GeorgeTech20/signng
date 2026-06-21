@@ -147,6 +147,26 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/notification-center.ts', target: 'src/components/ui/notification-center.ts', type: 'registry:ui' }],
   },
   {
+    name: 'form',
+    type: 'registry:ui',
+    description: 'Validation-aware field (shadcn <Form> analogue): label + control + auto error from reactive-forms validators, aria wired.',
+    dependencies: ['@angular/forms', '@angular/cdk'],
+    files: [{ src: 'ui/form.ts', target: 'src/components/ui/form.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'range-slider',
+    type: 'registry:ui',
+    description: 'Two-thumb range slider [low, high] (Radix-style): pointer drag + keyboard, role=slider per thumb.',
+    files: [{ src: 'ui/range-slider.ts', target: 'src/components/ui/range-slider.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'toolbar',
+    type: 'registry:ui',
+    description: 'role=toolbar with WAI-ARIA roving tabindex (single tab stop, arrow/Home/End) + separators.',
+    registryDependencies: ['utils'],
+    files: [{ src: 'ui/toolbar.ts', target: 'src/components/ui/toolbar.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'utils',
     type: 'registry:lib',
     description: 'cn() class-merge helper.',
