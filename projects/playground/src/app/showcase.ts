@@ -277,53 +277,6 @@ export class Showcase {
     this.notify('Login: ' + JSON.stringify(e));
   }
 
-  // --- visual theme customizer (live CSS-var override on <html>) ---
-  protected readonly customizer = signal(false);
-  protected readonly themeKey = signal('violet');
-  protected readonly radiusKey = signal('0.5');
-  protected readonly PRESETS = [
-    { key: 'violet', label: 'Violeta', primary: '#6d4aff', fg: '#ffffff' },
-    { key: 'blue', label: 'Azul', primary: '#2563eb', fg: '#ffffff' },
-    { key: 'green', label: 'Verde', primary: '#16a34a', fg: '#ffffff' },
-    { key: 'rose', label: 'Rosa', primary: '#e11d48', fg: '#ffffff' },
-    { key: 'orange', label: 'Naranja', primary: '#ea580c', fg: '#ffffff' },
-    { key: 'cyan', label: 'Cian', primary: '#0891b2', fg: '#ffffff' },
-  ];
-  protected readonly RADII = ['0', '0.375', '0.5', '0.75', '1'];
-
-  private style(): CSSStyleDeclaration | null {
-    return typeof document === 'undefined' ? null : document.documentElement.style;
-  }
-  protected applyColor(p: { key: string; primary: string; fg: string }): void {
-    this.themeKey.set(p.key);
-    const s = this.style();
-    if (!s) return;
-    s.setProperty('--color-primary', p.primary);
-    s.setProperty('--color-primary-foreground', p.fg);
-    s.setProperty('--color-ring', p.primary);
-  }
-  protected applyRadius(r: string): void {
-    this.radiusKey.set(r);
-    const s = this.style();
-    if (!s) return;
-    // Tailwind v4 `rounded-*` utilities resolve --radius-{sm,md,lg,xl}; override the whole scale so the
-    // control actually changes component corners (plain --radius is read by nothing). 0.5 == TW defaults.
-    s.setProperty('--radius', `${r}rem`);
-    s.setProperty('--radius-sm', `calc(${r}rem - 4px)`);
-    s.setProperty('--radius-md', `calc(${r}rem - 2px)`);
-    s.setProperty('--radius-lg', `${r}rem`);
-    s.setProperty('--radius-xl', `calc(${r}rem + 4px)`);
-  }
-  protected resetTheme(): void {
-    const s = this.style();
-    if (s) {
-      ['--color-primary', '--color-primary-foreground', '--color-ring',
-        '--radius', '--radius-sm', '--radius-md', '--radius-lg', '--radius-xl'].forEach((k) => s.removeProperty(k));
-    }
-    this.themeKey.set('violet');
-    this.radiusKey.set('0.5'); // TW-default corners ≈ 0.5rem mapping, so the highlighted chip matches reality
-  }
-
   // tier-2 demo state
   protected readonly stepIdx = signal(1);
   protected readonly qty = signal<number | null>(3);
