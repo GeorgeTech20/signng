@@ -90,6 +90,7 @@ export class Dashboard {
   }
 
   protected readonly tab = signal('overview');
+  protected readonly period = signal<string[]>(['month']);
   protected readonly dark = signal(false);
   protected readonly sidebarCollapsed = signal(false);
   protected readonly notifications = signal(true);
