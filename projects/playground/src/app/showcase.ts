@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -86,7 +87,7 @@ interface Demo { name: string; cat: string; code: string }
     '(document:keydown.control.k)': 'focusSearch($event)',
   },
   imports: [
-    NgTemplateOutlet,
+    NgTemplateOutlet, RouterLink,
     Button, Input, Textarea, Switch, Checkbox, RadioGroup, Radio, Select, Slider, Combobox, InputOtp, FormField,
     Dialog, AlertDialog, Sheet, Drawer, Popover, Tooltip, HoverCard, Command, Toaster,
     Accordion, DropdownMenu, ContextMenu, Menubar, Pagination, Calendar, DatePicker,
@@ -114,6 +115,16 @@ export class Showcase {
       if (typeof document !== 'undefined') document.documentElement.classList.remove('dark');
     });
   }
+
+  protected readonly STATS = [
+    { value: '74', label: 'componentes' },
+    { value: '36', label: 'iconos' },
+    { value: '7', label: 'tipos de chart' },
+    { value: '9/9', label: 'tests fail-closed' },
+    { value: '0', label: 'vulnerabilidades runtime' },
+    { value: 'AA', label: 'WCAG 2.2 · axe 0' },
+    { value: 'ed25519', label: 'registry firmado' },
+  ];
 
   protected readonly q = signal('');
   // per-card Preview|Code tab state

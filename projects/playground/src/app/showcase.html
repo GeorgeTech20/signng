@@ -7,7 +7,7 @@
       </span>
       <span class="rounded border border-border px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">v0.1 · MIT</span>
       <div class="flex-1"></div>
-      <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-sm hover:bg-accent">
+      <a href="https://github.com/GeorgeTech20/signng-ui" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-sm hover:bg-accent">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 1A11 11 0 0 0 8.52 22.44c.55.1.75-.24.75-.53v-1.86c-3.06.67-3.7-1.47-3.7-1.47-.5-1.27-1.22-1.61-1.22-1.61-1-.68.08-.67.08-.67 1.1.08 1.68 1.13 1.68 1.13.98 1.68 2.57 1.2 3.2.92.1-.71.38-1.2.7-1.47-2.44-.28-5.01-1.22-5.01-5.43 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.4 10.4 0 0 1 5.5 0C17.46 5.6 18.38 5.9 18.38 5.9c.6 1.52.22 2.64.11 2.92.7.77 1.13 1.75 1.13 2.95 0 4.22-2.58 5.15-5.03 5.42.39.34.74 1.01.74 2.04v3.03c0 .29.2.64.76.53A11 11 0 0 0 12 1Z"/></svg>
         <span class="hidden sm:inline">GitHub</span>
       </a>
@@ -36,6 +36,7 @@
         <code class="rounded-lg border border-[#27272a] bg-[#18181b] px-4 py-2.5 font-mono text-sm text-[#e4e4e7]"><span class="text-[#6a9955]">$</span> pnpm signng add button data-table chart-analytics</code>
         <button signngButton variant="outline" (click)="copy('Button')">Copiar</button>
         <button signngButton variant="ghost" (click)="search.focus()">Explorar ↓</button>
+        <a signngButton variant="ghost" routerLink="/dashboard">Ver dashboard →</a>
       </div>
       <div class="mt-9 flex flex-wrap gap-2">
         <span signngBadge variant="secondary">WCAG 2.2 AA · axe 0</span>
@@ -43,6 +44,16 @@
         <span signngBadge variant="secondary">registry ed25519 firmado</span>
         <span signngBadge variant="secondary">DataTable · charts · Kanban</span>
         <span signngBadge variant="secondary">i18n · dark mode</span>
+      </div>
+    </div>
+    <div class="relative border-t border-border bg-muted/30 py-3">
+      <div class="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-6 text-center sm:grid-cols-4 lg:grid-cols-7">
+        @for (stat of STATS; track stat.label) {
+          <div>
+            <div class="text-lg font-bold tracking-tight">{{ stat.value }}</div>
+            <div class="text-[11px] text-muted-foreground">{{ stat.label }}</div>
+          </div>
+        }
       </div>
     </div>
   </header>
