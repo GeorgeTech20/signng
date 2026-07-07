@@ -3,14 +3,14 @@ import { Icon } from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Toaster, ToastService } from '@/components/ui/toast';
 
-interface Preset {
+export interface Preset {
   key: string;
   label: string;
   primary: string;
   fg: string;
 }
 
-const PRESETS: Preset[] = [
+export const PRESETS: Preset[] = [
   { key: 'violet', label: 'Violet', primary: '#6d4aff', fg: '#ffffff' },
   { key: 'blue', label: 'Blue', primary: '#2563eb', fg: '#ffffff' },
   { key: 'green', label: 'Green', primary: '#16a34a', fg: '#ffffff' },
