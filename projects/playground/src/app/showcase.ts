@@ -116,15 +116,40 @@ export class Showcase {
     });
   }
 
-  protected readonly STATS = [
-    { value: '74', label: 'componentes' },
-    { value: '36', label: 'iconos' },
-    { value: '7', label: 'tipos de chart' },
-    { value: '9/9', label: 'tests fail-closed' },
-    { value: '0', label: 'vulnerabilidades runtime' },
-    { value: 'AA', label: 'WCAG 2.2 · axe 0' },
-    { value: 'ed25519', label: 'registry firmado' },
-  ];
+  // Enterprise audience defaults to English; the shell (hero/nav/categories/search) is bilingual.
+  // Per-component demo copy stays as-is for now — full i18n of all 74 cards is a separate pass.
+  protected readonly lang = signal<'en' | 'es'>('en');
+  private readonly SHELL = {
+    en: {
+      eyebrow: '74 components · Angular 22 · open source',
+      h1a: 'Angular components you ',
+      h1b: 'copy into your repo and own',
+      sub: 'Accessible (WCAG 2.2 AA, axe 0), signals-native, zoneless + SSR. Distributed via a signed registry the CLI verifies before writing. No heavy dependencies.',
+      copy: 'Copy', explore: 'Explore ↓', dashboard: 'View dashboard →',
+      badges: ['WCAG 2.2 AA · axe 0', '~1.2 KB gzip / component', 'ed25519-signed registry', 'DataTable · charts · Kanban', 'i18n · dark mode'],
+      stats: ['components', 'icons', 'chart types', 'fail-closed tests', 'runtime vulnerabilities', 'WCAG 2.2 · axe 0', 'signed registry'],
+      search: 'Search components…  (⌘K)',
+      noResults: (q: string) => `No results for "${q}".`,
+      cats: { Enterprise: 'Enterprise', Avanzados: 'Advanced', Pro: 'Pro', Formularios: 'Forms', Overlays: 'Overlays', 'Navegación': 'Navigation', Datos: 'Data', Display: 'Display', 'Gráficos': 'Charts' } as Record<string, string>,
+    },
+    es: {
+      eyebrow: '74 componentes · Angular 22 · open source',
+      h1a: 'Componentes Angular que ',
+      h1b: 'copias a tu repo y posees',
+      sub: 'Accesibles (WCAG 2.2 AA, axe 0), signals-native, zoneless + SSR. Distribuidos por un registry firmado que el CLI verifica antes de escribir. Sin dependencias pesadas.',
+      copy: 'Copiar', explore: 'Explorar ↓', dashboard: 'Ver dashboard →',
+      badges: ['WCAG 2.2 AA · axe 0', '~1.2 KB gzip / componente', 'registry ed25519 firmado', 'DataTable · charts · Kanban', 'i18n · dark mode'],
+      stats: ['componentes', 'iconos', 'tipos de chart', 'tests fail-closed', 'vulnerabilidades runtime', 'WCAG 2.2 · axe 0', 'registry firmado'],
+      search: 'Buscar componente…  (⌘K)',
+      noResults: (q: string) => `Sin resultados para "${q}".`,
+      cats: { Enterprise: 'Enterprise', Avanzados: 'Avanzados', Pro: 'Pro', Formularios: 'Formularios', Overlays: 'Overlays', 'Navegación': 'Navegación', Datos: 'Datos', Display: 'Display', 'Gráficos': 'Gráficos' } as Record<string, string>,
+    },
+  };
+  protected t() { return this.SHELL[this.lang()]; }
+  protected catLabel(cat: string) { return this.t().cats[cat] ?? cat; }
+
+  protected readonly STATS_VALUES = ['74', '36', '7', '9/9', '0', 'AA', 'ed25519'];
+  protected readonly STATS = computed(() => this.STATS_VALUES.map((value, i) => ({ value, label: this.t().stats[i] })));
 
   protected readonly q = signal('');
   // per-card Preview|Code tab state

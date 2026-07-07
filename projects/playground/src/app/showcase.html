@@ -13,7 +13,11 @@
         <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 1A11 11 0 0 0 8.52 22.44c.55.1.75-.24.75-.53v-1.86c-3.06.67-3.7-1.47-3.7-1.47-.5-1.27-1.22-1.61-1.22-1.61-1-.68.08-.67.08-.67 1.1.08 1.68 1.13 1.68 1.13.98 1.68 2.57 1.2 3.2.92.1-.71.38-1.2.7-1.47-2.44-.28-5.01-1.22-5.01-5.43 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.4 10.4 0 0 1 5.5 0C17.46 5.6 18.38 5.9 18.38 5.9c.6 1.52.22 2.64.11 2.92.7.77 1.13 1.75 1.13 2.95 0 4.22-2.58 5.15-5.03 5.42.39.34.74 1.01.74 2.04v3.03c0 .29.2.64.76.53A11 11 0 0 0 12 1Z"/></svg>
         <span class="hidden sm:inline">GitHub</span>
       </a>
-      <button (click)="dark.set(!dark())" [attr.aria-label]="dark() ? 'Modo claro' : 'Modo oscuro'" aria-pressed="false"
+      <div class="inline-flex overflow-hidden rounded-md border border-border text-xs">
+        <button (click)="lang.set('en')" [class]="'px-2 py-1.5 ' + (lang()==='en' ? 'bg-accent font-semibold text-accent-foreground' : 'text-muted-foreground hover:bg-accent/50')">EN</button>
+        <button (click)="lang.set('es')" [class]="'px-2 py-1.5 ' + (lang()==='es' ? 'bg-accent font-semibold text-accent-foreground' : 'text-muted-foreground hover:bg-accent/50')">ES</button>
+      </div>
+      <button (click)="dark.set(!dark())" [attr.aria-label]="dark() ? 'Light mode' : 'Dark mode'" aria-pressed="false"
         class="inline-flex size-9 items-center justify-center rounded-md border border-border hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
         <signng-icon [name]="dark() ? 'sun' : 'moon'" [size]="17" />
       </button>
@@ -25,32 +29,25 @@
     <div class="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-primary/10 via-primary/[0.03] to-transparent"></div>
     <div class="fade-up relative mx-auto max-w-6xl px-6 py-16 sm:py-20">
       <span class="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1 text-xs text-muted-foreground">
-        <span class="size-1.5 rounded-full bg-primary"></span> 73 componentes · Angular 22 · open source
+        <span class="size-1.5 rounded-full bg-primary"></span> {{ t().eyebrow }}
       </span>
       <h1 class="mt-5 max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight sm:text-6xl">
-        Componentes Angular que <span class="text-primary">copias a tu repo y posees</span>.
+        {{ t().h1a }}<span class="text-primary">{{ t().h1b }}</span>.
       </h1>
-      <p class="mt-5 max-w-2xl text-lg text-muted-foreground">
-        Accesibles (WCAG 2.2 AA, axe 0), signals-native, zoneless + SSR. Distribuidos por un registry
-        firmado que el CLI verifica antes de escribir. Sin dependencias pesadas.
-      </p>
+      <p class="mt-5 max-w-2xl text-lg text-muted-foreground">{{ t().sub }}</p>
       <div class="mt-7 flex flex-wrap items-center gap-3">
         <code class="rounded-lg border border-[#27272a] bg-[#18181b] px-4 py-2.5 font-mono text-sm text-[#e4e4e7]"><span class="text-[#6a9955]">$</span> pnpm signng add button data-table chart-analytics</code>
-        <button signngButton variant="outline" (click)="copy('Button')">Copiar</button>
-        <button signngButton variant="ghost" (click)="search.focus()">Explorar ↓</button>
-        <a signngButton variant="ghost" routerLink="/dashboard">Ver dashboard →</a>
+        <button signngButton variant="outline" (click)="copy('Button')">{{ t().copy }}</button>
+        <button signngButton variant="ghost" (click)="search.focus()">{{ t().explore }}</button>
+        <a signngButton variant="ghost" routerLink="/dashboard">{{ t().dashboard }}</a>
       </div>
       <div class="mt-9 flex flex-wrap gap-2">
-        <span signngBadge variant="secondary">WCAG 2.2 AA · axe 0</span>
-        <span signngBadge variant="secondary">~1.2 KB gzip / componente</span>
-        <span signngBadge variant="secondary">registry ed25519 firmado</span>
-        <span signngBadge variant="secondary">DataTable · charts · Kanban</span>
-        <span signngBadge variant="secondary">i18n · dark mode</span>
+        @for (b of t().badges; track b) { <span signngBadge variant="secondary">{{ b }}</span> }
       </div>
     </div>
     <div class="relative border-t border-border bg-muted/30 py-3">
       <div class="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-6 text-center sm:grid-cols-4 lg:grid-cols-7">
-        @for (stat of STATS; track stat.label) {
+        @for (stat of STATS(); track stat.label) {
           <div>
             <div class="text-lg font-bold tracking-tight">{{ stat.value }}</div>
             <div class="text-[11px] text-muted-foreground">{{ stat.label }}</div>
@@ -65,20 +62,20 @@
     <div class="mx-auto flex max-w-6xl items-center gap-3 px-6 py-3">
       <span class="text-muted-foreground"><signng-icon name="search" [size]="18" /></span>
       <input #search signngInput class="flex-1 border-0 bg-transparent shadow-none focus-visible:ring-0"
-        placeholder="Buscar componente…  (⌘K)" [value]="q()" (input)="q.set($any($event.target).value)" />
+        [placeholder]="t().search" [value]="q()" (input)="q.set($any($event.target).value)" />
       <span class="hidden rounded border border-border px-1.5 py-0.5 text-xs text-muted-foreground sm:inline">⌘K</span>
     </div>
   </div>
 
   <main class="mx-auto max-w-6xl px-6 py-10">
     @if (!anyMatch()) {
-      <p class="py-20 text-center text-muted-foreground">Sin resultados para “{{ q() }}”.</p>
+      <p class="py-20 text-center text-muted-foreground">{{ t().noResults(q()) }}</p>
     }
 
     @for (cat of CATS; track cat) {
       @if (catHasMatch(cat)) {
         <section class="mb-10">
-          <h2 class="mb-4 border-b border-border pb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">{{ cat }}</h2>
+          <h2 class="mb-4 border-b border-border pb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">{{ catLabel(cat) }}</h2>
           <div class="grid gap-5" [class.lg:grid-cols-2]="cat !== 'Enterprise'">
 
             <!-- ============ ENTERPRISE ============ -->
