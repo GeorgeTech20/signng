@@ -33,8 +33,21 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
         @for (b of BLOCKS; track b) {
           <button (click)="block.set(b)" [class]="'rounded-md px-3 py-1.5 text-sm ' + (block() === b ? 'bg-accent font-medium text-accent-foreground' : 'text-muted-foreground hover:bg-accent/50')">{{ b }}</button>
         }
+        <div class="ml-auto flex items-center gap-1 rounded-md border border-border p-0.5">
+          @for (d of DEVICES; track d.key) {
+            <button
+              (click)="device.set(d.key)"
+              [attr.aria-label]="d.label"
+              [attr.aria-pressed]="device() === d.key"
+              [class]="'inline-flex size-7 items-center justify-center rounded ' + (device() === d.key ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-accent/50')"
+            >
+              <signng-icon [name]="d.icon" [size]="15" />
+            </button>
+          }
+        </div>
       </div>
 
+      <div [class]="'mx-auto overflow-x-auto transition-[max-width] duration-200 ' + DEVICE_WIDTH[device()]">
       @switch (block()) {
         <!-- ============ AUTH ============ -->
         @case ('Auth') {
@@ -221,12 +234,25 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
           </div>
         }
       }
+      </div>
     </div>
   `,
 })
 export class Blocks {
   protected readonly BLOCKS = ['Auth', 'Pricing', 'Settings', 'Stats', 'Mail', 'Cards'] as const;
   protected readonly block = signal<'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards'>('Auth');
+
+  protected readonly DEVICES = [
+    { key: 'desktop' as const, label: 'Desktop', icon: 'monitor' as const },
+    { key: 'tablet' as const, label: 'Tablet', icon: 'tablet' as const },
+    { key: 'mobile' as const, label: 'Mobile', icon: 'smartphone' as const },
+  ];
+  protected readonly DEVICE_WIDTH: Record<'desktop' | 'tablet' | 'mobile', string> = {
+    desktop: 'max-w-none',
+    tablet: 'max-w-3xl border-x border-border',
+    mobile: 'max-w-sm border-x border-border',
+  };
+  protected readonly device = signal<'desktop' | 'tablet' | 'mobile'>('desktop');
   protected readonly openMail = signal('1');
   protected readonly inbox = [
     { id: '1', from: 'Ana Torres', subject: 'Propuesta Q3 lista', preview: 'Adjunto el plan trimestral con métricas…', time: '10:24', unread: true, fallback: 'AT' },
