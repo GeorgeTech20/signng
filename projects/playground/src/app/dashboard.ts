@@ -49,6 +49,11 @@ import { Drawer } from '@/components/ui/drawer';
 import { FormField } from '@/components/ui/form-field';
 import { SIGNNG_SIDEBAR } from '@/components/ui/sidebar';
 import { SIGNNG_ANALYTICS_CHARTS } from '@/components/ui/chart-analytics';
+import { DataTable, type DataColumn, type Row as TableRow } from '@/components/ui/data-table';
+import { Kanban, type KanbanColumn } from '@/components/ui/kanban';
+import { Timeline } from '@/components/ui/timeline';
+import { CodeBlock } from '@/components/ui/code-block';
+import { StatCard } from '@/components/ui/stat-card';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 interface Row {
@@ -69,7 +74,7 @@ interface Row {
     Dialog, AlertDialog, Sheet, Popover, Tooltip, HoverCard, Command,
     Accordion, DropdownMenu, ContextMenu, Menubar, Pagination, Calendar, DatePicker,
     Avatar, Badge, Separator, Skeleton, Progress, Toggle, Collapsible, ScrollArea, AspectRatio, SignngResizable,
-    Icon, Drawer, FormField, ...SIGNNG_CHART, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_SIDEBAR,
+    Icon, Drawer, FormField, DataTable, Kanban, Timeline, CodeBlock, StatCard, ...SIGNNG_CHART, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_SIDEBAR,
     ...SIGNNG_CARD, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_BREADCRUMB, ...SIGNNG_TOGGLE_GROUP,
     ...SIGNNG_CAROUSEL, ...SIGNNG_NAVIGATION_MENU, ...SIGNNG_TABS,
   ],
@@ -93,8 +98,116 @@ export class Dashboard {
   protected readonly tab = signal('overview');
   protected readonly period = signal<string[]>(['month']);
 
-  // Sidebar-driven dashboard variants — Resumen (existing) vs Analítica (charts-heavy).
-  protected readonly view = signal<'overview' | 'analytics'>('overview');
+  // Sidebar-driven dashboard variants — Resumen (existing), Analítica (charts-heavy),
+  // Equipo/CRM (data-table + kanban pipeline + timeline), Facturación (invoices + billing KPIs).
+  protected readonly view = signal<'overview' | 'analytics' | 'crm' | 'billing'>('overview');
+  // Preview|Code — shadcn-blocks style: each variant exposes the composition markup that builds it.
+  protected readonly dashMode = signal<'preview' | 'code'>('preview');
+  protected readonly DASH_CODE: Record<'overview' | 'analytics' | 'crm' | 'billing', string> = {
+    overview: `<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  @for (s of stats; track s.label) {
+    <div signngCard>
+      <div signngCardHeader>
+        <div signngCardDescription>{{ s.label }}</div>
+        <span signngCardTitle>{{ s.value }}</span>
+        <span signngBadge [variant]="s.good ? 'default' : 'destructive'">{{ s.delta }}</span>
+      </div>
+      <div signngCardContent>
+        <signng-progress [value]="s.goal" />
+        <signng-sparkline [values]="s.trend" />
+      </div>
+    </div>
+  }
+</div>
+<div class="grid gap-4 lg:grid-cols-3">
+  <div signngCard><signng-bar-chart [data]="chartBars" /></div>
+  <div signngCard><signng-line-chart [data]="lineData" /></div>
+  <div signngCard><signng-donut-chart [data]="donutData" /></div>
+</div>`,
+    analytics: `<div class="grid gap-4 lg:grid-cols-2">
+  <div signngCard><signng-multi-line-chart [series]="mlSeries" [labels]="mlLabels" /></div>
+  <div signngCard><signng-stacked-bar-chart [series]="stackSeries" [labels]="stackLabels" /></div>
+</div>
+<div class="grid gap-4 lg:grid-cols-3">
+  <div signngCard><signng-grouped-bar-chart [series]="stackSeries" [labels]="stackLabels" /></div>
+  <div signngCard><signng-scatter-chart [data]="scatter" /></div>
+  <div signngCard><signng-heatmap [matrix]="heat" /></div>
+</div>`,
+    crm: `<div signngCard>
+  <signng-kanban [(columns)]="pipeline" (moved)="onMove($event)" />
+</div>
+<div class="grid gap-4 lg:grid-cols-3">
+  <div signngCard class="lg:col-span-2">
+    <signng-data-table [(data)]="rows" [columns]="cols" [selectable]="true" [pageSize]="5" />
+  </div>
+  <div signngCard><signng-timeline [items]="activity" /></div>
+</div>`,
+    billing: `<div class="grid gap-4 sm:grid-cols-3">
+  <signng-stat-card label="MRR" value="$48.2k" delta="+12%" [up]="true" icon="dollar-sign" />
+  <signng-stat-card label="Facturas pagadas" value="128" delta="+9" [up]="true" icon="check-circle" />
+  <signng-stat-card label="Vencidas" value="4" delta="-2" [up]="true" icon="alert-circle" />
+</div>
+<div signngCard>
+  <table signngTable>
+    <thead signngTableHeader>…</thead>
+    <tbody>
+      @for (f of invoices; track f.id) {
+        <tr signngTableRow>
+          <td signngTableCell>{{ f.id }}</td>
+          <td signngTableCell>{{ f.client }}</td>
+          <td signngTableCell><span signngBadge [variant]="f.variant">{{ f.status }}</span></td>
+          <td signngTableCell class="text-right">{{ f.amount }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>`,
+  };
+  protected viewTitle(): string {
+    const v = this.view();
+    return v === 'analytics' ? 'Analítica' : v === 'crm' ? 'Equipo y pipeline' : v === 'billing' ? 'Facturación' : 'Resumen';
+  }
+  protected viewSubtitle(): string {
+    const v = this.view();
+    return v === 'analytics'
+      ? 'Ingresos, cohortes y actividad por segmento.'
+      : v === 'crm'
+        ? 'Ventas por persona, oportunidades y actividad reciente.'
+        : v === 'billing'
+          ? 'Facturas, cobros y estado de pagos.'
+          : 'Métricas clave de tu cuenta · actualizado hace 2 min.';
+  }
+  protected readonly invoices = [
+    { id: 'INV-0128', client: 'Fintech LatAm', date: '02 Jul 2026', amount: '$1,290.00', status: 'Pagada', variant: 'default' as const },
+    { id: 'INV-0127', client: 'Retail Andino', date: '28 Jun 2026', amount: '$580.00', status: 'Pagada', variant: 'default' as const },
+    { id: 'INV-0126', client: 'Aseguradora Sur', date: '21 Jun 2026', amount: '$2,340.00', status: 'Pendiente', variant: 'secondary' as const },
+    { id: 'INV-0125', client: 'Banco Central', date: '02 Jun 2026', amount: '$4,120.00', status: 'Vencida', variant: 'destructive' as const },
+    { id: 'INV-0124', client: 'Clínica Norte', date: '28 May 2026', amount: '$860.00', status: 'Pagada', variant: 'default' as const },
+  ];
+  protected readonly crmRows = signal<TableRow[]>([
+    { id: 1, name: 'Ana Torres', dept: 'Ventas', sales: 4200, status: 'activo' },
+    { id: 2, name: 'Luis Méndez', dept: 'Ventas', sales: 3100, status: 'activo' },
+    { id: 3, name: 'Sofía Ruiz', dept: 'Marketing', sales: 2800, status: 'invitado' },
+    { id: 4, name: 'Diego Soto', dept: 'Marketing', sales: 5200, status: 'activo' },
+    { id: 5, name: 'Elena Vega', dept: 'Soporte', sales: 1900, status: 'suspendido' },
+    { id: 6, name: 'Marco Díaz', dept: 'Ventas', sales: 6100, status: 'activo' },
+  ]);
+  protected readonly crmCols: DataColumn[] = [
+    { key: 'name', header: 'Nombre', sortable: true },
+    { key: 'dept', header: 'Departamento', sortable: true },
+    { key: 'sales', header: 'Ventas', sortable: true, editable: true, align: 'right', format: (v) => '$' + Number(v).toLocaleString() },
+    { key: 'status', header: 'Estado' },
+  ];
+  protected readonly pipeline = signal<KanbanColumn[]>([
+    { id: 'lead', title: 'Lead', items: [{ id: 'a', title: 'Fintech LatAm', tag: 'inbound' }, { id: 'b', title: 'Aseguradora Sur', tag: 'referral' }] },
+    { id: 'demo', title: 'Demo', items: [{ id: 'c', title: 'Banco Central', tag: 'enterprise' }] },
+    { id: 'won', title: 'Cerrado', items: [{ id: 'd', title: 'Retail Andino', tag: 'pro' }] },
+  ]);
+  protected readonly activity = [
+    { title: 'Usuario creado', time: 'hace 2h', description: 'Ana Torres se unió al equipo.', icon: 'user' as const, variant: 'primary' as const },
+    { title: 'Pago recibido', time: 'hace 5h', description: '$290 — plan Pro.', icon: 'check' as const, variant: 'success' as const },
+    { title: 'Ticket abierto', time: 'ayer', description: 'Bug en exportación.', icon: 'alert' as const, variant: 'destructive' as const },
+  ];
   protected readonly mlSeries = [
     { name: '2025', values: [30, 42, 38, 55, 60, 72] },
     { name: '2026', values: [40, 48, 52, 50, 68, 80] },

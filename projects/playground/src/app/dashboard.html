@@ -9,9 +9,9 @@
     </div>
     <div signngSidebarContent>
       <signng-sidebar-item icon="home" label="Dashboard" [active]="view() === 'overview'" (click)="view.set('overview')" />
-      <signng-sidebar-item icon="users" label="Usuarios" />
+      <signng-sidebar-item icon="users" label="Usuarios" [active]="view() === 'crm'" (click)="view.set('crm')" />
       <signng-sidebar-item icon="bar" label="Analítica" [active]="view() === 'analytics'" (click)="view.set('analytics')" />
-      <signng-sidebar-item icon="calendar" label="Facturación" />
+      <signng-sidebar-item icon="credit-card" label="Facturación" [active]="view() === 'billing'" (click)="view.set('billing')" />
       <signng-sidebar-item icon="settings" label="Preferencias" />
     </div>
     <div signngSidebarFooter>
@@ -75,10 +75,14 @@
     <!-- Page header: title + subtitle + period control + action (real-product framing) -->
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-semibold tracking-tight">{{ view() === 'analytics' ? 'Analítica' : 'Resumen' }}</h1>
-        <p class="mt-1 text-sm text-muted-foreground">{{ view() === 'analytics' ? 'Ingresos, cohortes y actividad por segmento.' : 'Métricas clave de tu cuenta · actualizado hace 2 min.' }}</p>
+        <h1 class="text-2xl font-semibold tracking-tight">{{ viewTitle() }}</h1>
+        <p class="mt-1 text-sm text-muted-foreground">{{ viewSubtitle() }}</p>
       </div>
       <div class="flex items-center gap-2">
+        <div class="flex rounded-md bg-muted p-0.5 text-xs">
+          <button (click)="dashMode.set('preview')" [class]="'rounded px-2 py-1 ' + (dashMode() === 'preview' ? 'bg-background shadow-sm' : 'text-muted-foreground')">Preview</button>
+          <button (click)="dashMode.set('code')" [class]="'rounded px-2 py-1 ' + (dashMode() === 'code' ? 'bg-background shadow-sm' : 'text-muted-foreground')">Code</button>
+        </div>
         <div signngToggleGroup [(value)]="period" type="single" aria-label="Periodo">
           <button signngToggleItem value="week" size="sm">Semana</button>
           <button signngToggleItem value="month" size="sm">Mes</button>
@@ -87,6 +91,10 @@
         <button signngButton variant="outline" size="sm" class="gap-1.5"><signng-icon name="download" [size]="15" /> Exportar</button>
       </div>
     </div>
+
+    @if (dashMode() === 'code') {
+      <signng-code [code]="DASH_CODE[view()]" />
+    } @else {
 
     @if (view() === 'analytics') {
       <!-- ============ ANALYTICS VARIANT — multi-series charts the Resumen view doesn't show ============ -->
@@ -113,6 +121,64 @@
           <div signngCard class="reveal">
             <div signngCardHeader class="pb-2"><span signngCardTitle class="text-sm">Actividad por día/segmento</span></div>
             <div signngCardContent class="flex justify-center pt-0"><signng-heatmap [matrix]="heat" [height]="140" /></div>
+          </div>
+        </div>
+      </div>
+    } @else if (view() === 'crm') {
+      <!-- ============ CRM VARIANT — pipeline + team table + activity ============ -->
+      <div class="fade-up space-y-6">
+        <div signngCard class="reveal">
+          <div signngCardHeader class="pb-2"><span signngCardTitle class="flex items-center gap-2 text-sm"><signng-icon name="briefcase" [size]="15" /> Pipeline de ventas</span></div>
+          <div signngCardContent class="pt-0"><signng-kanban [(columns)]="pipeline" (moved)="notify('Oportunidad movida')" /></div>
+        </div>
+        <div class="grid gap-4 lg:grid-cols-3">
+          <div signngCard class="reveal lg:col-span-2">
+            <div signngCardHeader class="pb-2"><span signngCardTitle class="flex items-center gap-2 text-sm"><signng-icon name="users" [size]="15" /> Ventas por persona</span></div>
+            <div signngCardContent class="pt-0">
+              <signng-data-table [(data)]="crmRows" [columns]="crmCols" [selectable]="true" [pageSize]="5" caption="ventas por persona" />
+            </div>
+          </div>
+          <div signngCard class="reveal">
+            <div signngCardHeader class="pb-2"><span signngCardTitle class="flex items-center gap-2 text-sm"><signng-icon name="clock" [size]="15" /> Actividad reciente</span></div>
+            <div signngCardContent class="pt-0"><signng-timeline [items]="activity" /></div>
+          </div>
+        </div>
+      </div>
+    } @else if (view() === 'billing') {
+      <!-- ============ BILLING VARIANT — invoices + payment KPIs ============ -->
+      <div class="fade-up space-y-6">
+        <div class="grid gap-4 sm:grid-cols-3">
+          <signng-stat-card label="MRR" [value]="'$48.2k'" delta="+12%" [up]="true" icon="dollar-sign" class="reveal" />
+          <signng-stat-card label="Facturas pagadas" [value]="128" delta="+9" [up]="true" icon="check-circle" class="reveal" />
+          <signng-stat-card label="Vencidas" [value]="4" delta="-2" [up]="true" icon="alert-circle" class="reveal" />
+        </div>
+        <div signngCard class="reveal">
+          <div signngCardHeader class="pb-2">
+            <span signngCardTitle class="flex items-center gap-2 text-sm"><signng-icon name="credit-card" [size]="15" /> Facturas recientes</span>
+          </div>
+          <div signngCardContent class="pt-0">
+            <table signngTable>
+              <thead signngTableHeader>
+                <tr signngTableRow>
+                  <th signngTableHead>Factura</th>
+                  <th signngTableHead>Cliente</th>
+                  <th signngTableHead>Fecha</th>
+                  <th signngTableHead>Estado</th>
+                  <th signngTableHead class="text-right">Monto</th>
+                </tr>
+              </thead>
+              <tbody signngTableBody>
+                @for (f of invoices; track f.id) {
+                  <tr signngTableRow>
+                    <td signngTableCell class="font-mono text-xs">{{ f.id }}</td>
+                    <td signngTableCell>{{ f.client }}</td>
+                    <td signngTableCell class="text-muted-foreground">{{ f.date }}</td>
+                    <td signngTableCell><span signngBadge [variant]="f.variant">{{ f.status }}</span></td>
+                    <td signngTableCell class="text-right tabular-nums">{{ f.amount }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -408,6 +474,7 @@
         </div>
       </div>
     </div>
+    }
     }
   </div>
   </div>
