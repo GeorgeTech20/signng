@@ -101,6 +101,15 @@ export class Dashboard {
   // Sidebar-driven dashboard variants — Resumen (existing), Analítica (charts-heavy),
   // Equipo/CRM (data-table + kanban pipeline + timeline), Facturación (invoices + billing KPIs).
   protected readonly view = signal<'overview' | 'analytics' | 'crm' | 'billing'>('overview');
+  // Shell variants — 'sidebar' (app chrome with collapsible sidebar) vs 'topnav' (no sidebar,
+  // sections in the header bar). Same views, different navigation chrome.
+  protected readonly layout = signal<'sidebar' | 'topnav'>('sidebar');
+  protected readonly NAV_ITEMS: Array<{ key: 'overview' | 'analytics' | 'crm' | 'billing'; label: string }> = [
+    { key: 'overview', label: 'Dashboard' },
+    { key: 'crm', label: 'Usuarios' },
+    { key: 'analytics', label: 'Analítica' },
+    { key: 'billing', label: 'Facturación' },
+  ];
   // Preview|Code — shadcn-blocks style: each variant exposes the composition markup that builds it.
   protected readonly dashMode = signal<'preview' | 'code'>('preview');
   protected readonly DASH_CODE: Record<'overview' | 'analytics' | 'crm' | 'billing', string> = {
