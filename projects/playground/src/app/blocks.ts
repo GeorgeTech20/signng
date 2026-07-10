@@ -15,6 +15,8 @@ import { SIGNNG_CARD } from '@/components/ui/card';
 import { SIGNNG_CHART } from '@/components/ui/chart';
 import { CodeBlock } from '@/components/ui/code-block';
 
+type BlockKey = 'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards';
+
 /**
  * Blocks gallery — full-page composed templates (shadcn "blocks" style) assembled from signng components:
  * Auth (split brand panel + login), Pricing (3 tiers), Settings (nav + profile form), Stats (KPI grid +
@@ -31,37 +33,62 @@ import { CodeBlock } from '@/components/ui/code-block';
     <div class="min-h-screen bg-background text-foreground">
       <div class="sticky top-0 z-20 flex flex-wrap items-center gap-1 border-b border-border bg-background/90 px-4 py-2 backdrop-blur">
         <a routerLink="/" class="mr-3 flex items-center gap-2 font-bold hover:opacity-80"><span class="text-primary"><signng-icon name="bar" [size]="18" /></span> Blocks</a>
-        @for (b of BLOCKS; track b) {
-          <button (click)="block.set(b)" [class]="'rounded-md px-3 py-1.5 text-sm ' + (block() === b ? 'bg-accent font-medium text-accent-foreground' : 'text-muted-foreground hover:bg-accent/50')">{{ b }}</button>
+        @for (b of BLOCKS_META; track b.key) {
+          <a [href]="'/blocks#b-' + b.key" class="rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent/50 hover:text-foreground">{{ b.key }}</a>
         }
-        <div class="ml-auto flex rounded-md bg-muted p-0.5 text-xs">
-          <button (click)="mode.set('preview')" [class]="'rounded px-2 py-1 ' + (mode() === 'preview' ? 'bg-background shadow-sm' : '')">Preview</button>
-          <button (click)="mode.set('code')" [class]="'rounded px-2 py-1 ' + (mode() === 'code' ? 'bg-background shadow-sm' : '')">Code</button>
-        </div>
-        <div class="flex items-center gap-1 rounded-md border border-border p-0.5">
-          @for (d of DEVICES; track d.key) {
-            <button
-              (click)="device.set(d.key)"
-              [attr.aria-label]="d.label"
-              [attr.aria-pressed]="device() === d.key"
-              [class]="'inline-flex size-7 items-center justify-center rounded ' + (device() === d.key ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-accent/50')"
-            >
-              <signng-icon [name]="d.icon" [size]="15" />
-            </button>
-          }
-        </div>
       </div>
 
-      @if (mode() === 'code') {
-        <div class="p-4"><signng-code [code]="CODE[block()]" /></div>
-      } @else {
-      <!-- @container: block layouts below use container-query variants (@lg:/@2xl:/@4xl:) instead of
-           viewport breakpoints, so the Desktop/Tablet/Mobile width toggle actually re-flows them. -->
-      <div [class]="'@container mx-auto overflow-x-auto transition-[max-width] duration-200 ' + DEVICE_WIDTH[device()]">
-      @switch (block()) {
+      <!-- Centered hero (shadcn /blocks pattern): the page presents blocks as artifacts, it isn't the app itself -->
+      <header class="fade-up mx-auto max-w-3xl px-6 pb-10 pt-16 text-center">
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Bloques listos para <span class="text-primary">copiar y poseer</span></h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
+          Páginas completas compuestas con componentes signng — mismo registry firmado, mismo CLI, cero dependencias extra.
+        </p>
+        <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+          <a signngButton routerLink="/dashboard">Ver dashboard →</a>
+          <a signngButton variant="outline" routerLink="/">Ver componentes</a>
+        </div>
+      </header>
+
+      <div class="mx-auto max-w-6xl space-y-16 px-4 pb-24">
+        @for (b of BLOCKS_META; track b.key) {
+          <section [id]="'b-' + b.key" class="reveal scroll-mt-16">
+            <!-- Per-block toolbar: mode, description, device, install command -->
+            <div class="mb-3 flex flex-wrap items-center gap-3">
+              <div class="flex rounded-md bg-muted p-0.5 text-xs">
+                <button (click)="setMode(b.key, 'preview')" [class]="'rounded px-2 py-1 ' + (modeOf(b.key) === 'preview' ? 'bg-background shadow-sm' : 'text-muted-foreground')">Preview</button>
+                <button (click)="setMode(b.key, 'code')" [class]="'rounded px-2 py-1 ' + (modeOf(b.key) === 'code' ? 'bg-background shadow-sm' : 'text-muted-foreground')">Code</button>
+              </div>
+              <span class="text-sm text-muted-foreground">{{ b.desc }}</span>
+              <div class="ml-auto flex items-center gap-2">
+                <div class="flex items-center gap-1 rounded-md border border-border p-0.5">
+                  @for (d of DEVICES; track d.key) {
+                    <button
+                      (click)="setDevice(b.key, d.key)"
+                      [attr.aria-label]="d.label"
+                      [attr.aria-pressed]="deviceOf(b.key) === d.key"
+                      [class]="'inline-flex size-7 items-center justify-center rounded ' + (deviceOf(b.key) === d.key ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-accent/50')"
+                    >
+                      <signng-icon [name]="d.icon" [size]="15" />
+                    </button>
+                  }
+                </div>
+                <code class="hidden rounded-md border border-border bg-muted/40 px-2.5 py-1.5 font-mono text-xs lg:block">pnpm signng add {{ b.install }}</code>
+              </div>
+            </div>
+
+            <!-- Framed preview: the block renders inside a bounded container, not full-bleed -->
+            <div class="overflow-hidden rounded-xl border border-border shadow-sm">
+              @if (modeOf(b.key) === 'code') {
+                <signng-code [code]="CODE[b.key]" />
+              } @else {
+                <!-- @container: block layouts use container-query variants (@lg:/@2xl:/@4xl:), so the
+                     Desktop/Tablet/Mobile toggle re-flows them regardless of viewport width. -->
+                <div [class]="'@container mx-auto overflow-x-auto transition-[max-width] duration-200 ' + DEVICE_WIDTH[deviceOf(b.key)]">
+                @switch (b.key) {
         <!-- ============ AUTH ============ -->
         @case ('Auth') {
-          <div class="fade-up grid min-h-[calc(100vh-49px)] @4xl:grid-cols-2">
+          <div class="fade-up grid min-h-[560px] @4xl:grid-cols-2">
             <div class="relative hidden flex-col justify-between overflow-hidden bg-primary p-10 text-primary-foreground @4xl:flex">
               <div class="flex items-center gap-2 text-lg font-bold"><signng-icon name="bar" [size]="22" /> signng</div>
               <div>
@@ -166,7 +193,7 @@ import { CodeBlock } from '@/components/ui/code-block';
 
         <!-- ============ MAIL ============ -->
         @case ('Mail') {
-          <div class="grid h-[calc(100vh-49px)] grid-cols-1 @2xl:grid-cols-[320px_1fr]">
+          <div class="grid h-[560px] grid-cols-1 @2xl:grid-cols-[320px_1fr]">
             <div class="overflow-auto border-r border-border">
               <div class="border-b border-border px-4 py-3 font-semibold">Bandeja de entrada</div>
               @for (m of inbox; track m.id) {
@@ -243,15 +270,41 @@ import { CodeBlock } from '@/components/ui/code-block';
             </div>
           </div>
         }
-      }
+                }
+                </div>
+              }
+            </div>
+          </section>
+        }
       </div>
-      }
     </div>
   `,
 })
 export class Blocks {
-  protected readonly BLOCKS = ['Auth', 'Pricing', 'Settings', 'Stats', 'Mail', 'Cards'] as const;
-  protected readonly block = signal<'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards'>('Auth');
+  protected readonly BLOCKS_META: Array<{ key: BlockKey; desc: string; install: string }> = [
+    { key: 'Auth', desc: 'Login con panel de marca y proveedores sociales', install: 'login-form' },
+    { key: 'Pricing', desc: 'Tres planes con destacado y lista de features', install: 'card badge button' },
+    { key: 'Settings', desc: 'Página de configuración con navegación lateral', install: 'card input switch' },
+    { key: 'Stats', desc: 'KPIs con sparkline + gráficos de barras y donut', install: 'stat-card chart' },
+    { key: 'Mail', desc: 'Bandeja de entrada de dos paneles', install: 'avatar badge separator' },
+    { key: 'Cards', desc: 'Patrones de tarjeta compuestos', install: 'card chart switch' },
+  ];
+
+  // Per-block Preview|Code + device state (each framed section is independent, shadcn-style).
+  private readonly modes = signal<Record<string, 'preview' | 'code'>>({});
+  private readonly devices = signal<Record<string, 'desktop' | 'tablet' | 'mobile'>>({});
+  protected modeOf(k: string): 'preview' | 'code' {
+    return this.modes()[k] ?? 'preview';
+  }
+  protected setMode(k: string, m: 'preview' | 'code'): void {
+    this.modes.update((s) => ({ ...s, [k]: m }));
+  }
+  protected deviceOf(k: string): 'desktop' | 'tablet' | 'mobile' {
+    return this.devices()[k] ?? 'desktop';
+  }
+  protected setDevice(k: string, d: 'desktop' | 'tablet' | 'mobile'): void {
+    this.devices.update((s) => ({ ...s, [k]: d }));
+  }
 
   protected readonly DEVICES = [
     { key: 'desktop' as const, label: 'Desktop', icon: 'monitor' as const },
@@ -263,9 +316,6 @@ export class Blocks {
     tablet: 'max-w-3xl border-x border-border',
     mobile: 'max-w-sm border-x border-border',
   };
-  protected readonly device = signal<'desktop' | 'tablet' | 'mobile'>('desktop');
-  protected readonly mode = signal<'preview' | 'code'>('preview');
-
   protected readonly CODE: Record<'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards', string> = {
     Auth: `<div class="grid lg:grid-cols-2">
   <div class="bg-primary p-10 text-primary-foreground">
