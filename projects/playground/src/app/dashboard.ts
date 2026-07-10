@@ -48,6 +48,7 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
 import { Drawer } from '@/components/ui/drawer';
 import { FormField } from '@/components/ui/form-field';
 import { SIGNNG_SIDEBAR } from '@/components/ui/sidebar';
+import { SIGNNG_ANALYTICS_CHARTS } from '@/components/ui/chart-analytics';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 interface Row {
@@ -68,7 +69,7 @@ interface Row {
     Dialog, AlertDialog, Sheet, Popover, Tooltip, HoverCard, Command,
     Accordion, DropdownMenu, ContextMenu, Menubar, Pagination, Calendar, DatePicker,
     Avatar, Badge, Separator, Skeleton, Progress, Toggle, Collapsible, ScrollArea, AspectRatio, SignngResizable,
-    Icon, Drawer, FormField, ...SIGNNG_CHART, ...SIGNNG_SIDEBAR,
+    Icon, Drawer, FormField, ...SIGNNG_CHART, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_SIDEBAR,
     ...SIGNNG_CARD, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_BREADCRUMB, ...SIGNNG_TOGGLE_GROUP,
     ...SIGNNG_CAROUSEL, ...SIGNNG_NAVIGATION_MENU, ...SIGNNG_TABS,
   ],
@@ -91,6 +92,24 @@ export class Dashboard {
 
   protected readonly tab = signal('overview');
   protected readonly period = signal<string[]>(['month']);
+
+  // Sidebar-driven dashboard variants — Resumen (existing) vs Analítica (charts-heavy).
+  protected readonly view = signal<'overview' | 'analytics'>('overview');
+  protected readonly mlSeries = [
+    { name: '2025', values: [30, 42, 38, 55, 60, 72] },
+    { name: '2026', values: [40, 48, 52, 50, 68, 80] },
+  ];
+  protected readonly mlLabels = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
+  protected readonly stackSeries = [
+    { name: 'Free', values: [20, 25, 22, 30] },
+    { name: 'Pro', values: [14, 18, 20, 24] },
+    { name: 'Team', values: [6, 8, 10, 12] },
+  ];
+  protected readonly stackLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
+  protected readonly scatter = [
+    { x: 10, y: 20 }, { x: 25, y: 35 }, { x: 40, y: 28 }, { x: 55, y: 60 }, { x: 70, y: 52 }, { x: 85, y: 78 }, { x: 30, y: 45 }, { x: 60, y: 30 },
+  ];
+  protected readonly heat = [[2, 5, 8, 3], [6, 9, 4, 7], [1, 3, 9, 5], [8, 6, 2, 4]];
   protected readonly dark = signal(false);
   protected readonly sidebarCollapsed = signal(false);
   protected readonly notifications = signal(true);
