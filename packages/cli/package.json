@@ -2,7 +2,9 @@
   "name": "@signng/cli",
   "version": "0.0.1",
   "type": "module",
-  "description": "Secure copy-paste installer for signng components (SRI-verified, sandboxed writer).",
+  "description": "Secure copy-paste installer for SignNG components (SRI-verified, sandboxed writer).",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/GeorgeTech20/signng" },
   "bin": {
     "signng": "./dist/index.mjs",
     "signng": "./dist/index.mjs"
