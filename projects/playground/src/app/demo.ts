@@ -103,7 +103,7 @@ export class Demo {
     { value: 'solid', label: 'Solid' },
   ];
   protected readonly faq = [
-    { value: 'a', title: '¿Qué es signng?', content: 'Librería de componentes Angular signals-native.' },
+    { value: 'a', title: '¿Qué es SignNG?', content: 'Librería de componentes Angular signals-native.' },
     { value: 'b', title: '¿Es accesible?', content: 'Sí — WCAG 2.2 AA, axe en CI, a11y heredada de @angular/aria.' },
     { value: 'c', title: '¿Cómo se instala?', content: 'Por CLI con verificación de firma + SRI.' },
   ];

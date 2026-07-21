@@ -13,8 +13,8 @@
       "target": "src/components/ui/separator.ts",
       "type": "registry:ui",
       "content": "import { Directive, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/** Styled Separator (helm). role=separator with orientation. */\n@Directive({\n  selector: '[signngSeparator]',\n  host: {\n    role: 'separator',\n    '[attr.aria-orientation]': 'orientation()',\n    '[class]': 'cls()',\n  },\n})\nexport class Separator {\n  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');\n  readonly class = input('');\n  protected readonly cls = computed(() =>\n    cn('shrink-0 bg-border', this.orientation() === 'horizontal' ? 'h-px w-full' : 'h-full w-px', this.class()),\n  );\n}\n",
-      "integrity": "sha256-7t7zWHIqlki/i4gavwtz0I5Q9WY6oJodwlokPkJ0Ifg="
+      "integrity": "sha256-E92angGHc6+b93gYeslMTescDsMPgtBLo1axGQaLx68="
     }
   ],
-  "integrity": "sha256-LQHjsytehFpYf+HxmGutbbba6gIzJYjVseqr4Z8sgeo="
+  "integrity": "sha256-Yyas+XTI2YXSu2h+G8Z9h0rizE88vcmGQk4zJGsvrI8="
 }

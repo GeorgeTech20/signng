@@ -1,5 +1,5 @@
 // Static docs-site generator — reads the SIGNED registry and emits docs/index.html.
-// Dogfoods the signng oklch theme; foregrounds the signed-distribution story (the enterprise wedge).
+// Dogfoods the SignNG oklch theme; foregrounds the signed-distribution story (the enterprise wedge).
 // Run: pnpm docs
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
@@ -103,7 +103,7 @@ const PREVIEWS = {
   drawer: `<div class="pv-card" style="width:280px;border-radius:14px 14px 0 0"><div style="width:36px;height:4px;border-radius:9999px;background:var(--color-muted);margin:0 auto 10px"></div><div style="font-weight:600">Hoja inferior</div><div class="pv-muted">Drawer estilo móvil.</div></div>`,
   popover: `<div class="pv-menu" style="padding:14px"><div style="font-weight:600;font-size:14px;padding:0 0 4px">Dimensiones</div><div class="pv-muted" style="padding:0">Ajusta ancho y alto.</div></div>`,
   tooltip: `<span style="position:relative;background:var(--color-foreground);color:var(--color-background);font-size:12px;padding:6px 10px;border-radius:7px">Añadir a la biblioteca</span>`,
-  'hover-card': `<div class="pv-card" style="max-width:300px;display:flex;gap:.7rem"><span class="pv-avatar">@</span><div><div style="font-weight:600;font-size:14px">@signng</div><div class="pv-muted">Componentes Angular que posees.</div></div></div>`,
+  'hover-card': `<div class="pv-card" style="max-width:300px;display:flex;gap:.7rem"><span class="pv-avatar">@</span><div><div style="font-weight:600;font-size:14px">@SignNG</div><div class="pv-muted">Componentes Angular que posees.</div></div></div>`,
   command: `<div class="pv-menu" style="min-width:300px;padding:0"><div style="padding:10px 12px;border-bottom:1px solid var(--color-border);color:var(--color-muted-foreground);font-size:13px">Escribe un comando…</div><div style="padding:6px"><div class="on" style="padding:7px 10px;border-radius:6px;font-size:13px">Crear usuario</div><div style="padding:7px 10px;font-size:13px">Ir a facturación</div></div></div>`,
   tabs: `<div><div class="pv-tabs"><span class="pv-tab on">Cuenta</span><span class="pv-tab">Contraseña</span><span class="pv-tab">Equipo</span></div></div>`,
   accordion: `<div class="pv-card" style="min-width:320px;padding:0"><div style="padding:12px 16px;display:flex;justify-content:space-between;border-bottom:1px solid var(--color-border)"><span style="font-weight:500;font-size:14px">¿Es accesible?</span><span class="pv-muted">${chev}</span></div><div style="padding:12px 16px" class="pv-muted">Sí. Sigue WAI-ARIA APG.</div></div>`,
@@ -192,7 +192,7 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>signng — componentes Angular que son tuyos</title>
+<title>SignNG — componentes Angular que son tuyos</title>
 <style>
 ${themeCss}
 * { box-sizing: border-box; }
@@ -297,7 +297,7 @@ ${nav}
 </ul></aside>
 <main>
   <section id="hero">
-    <h1>signng</h1>
+    <h1>SignNG</h1>
     <p class="tagline">Componentes Angular accesibles (WCAG 2.2 AA), signals-native, zoneless + SSR — que copias a tu repo y <strong>posees</strong>. Instalados por un CLI que verifica firma + integridad antes de escribir.</p>
     <div class="patterns">
       <div><strong>Heredar a11y</strong><br/>wrap de @angular/aria (Tabs, Select, Menu…)</div>
@@ -369,7 +369,7 @@ document.documentElement.classList.toggle('dark', isDark);</code></pre>
   <section id="faq">
     <h2>FAQ</h2>
     <details class="card"><summary style="font-size:15px;color:var(--color-foreground);font-weight:500">¿Por qué no usar Angular Material o PrimeNG?</summary>
-      <p class="desc" style="margin-top:.5rem">Son paquetes de <code>node_modules</code>: reescribir su look pelea con su CSS. signng copia el <em>source</em> a tu repo — lo posees y editas como cualquier archivo tuyo, igual que shadcn en React.</p></details>
+      <p class="desc" style="margin-top:.5rem">Son paquetes de <code>node_modules</code>: reescribir su look pelea con su CSS. SignNG copia el <em>source</em> a tu repo — lo posees y editas como cualquier archivo tuyo, igual que shadcn en React.</p></details>
     <details class="card"><summary style="font-size:15px;color:var(--color-foreground);font-weight:500">¿Es accesible de verdad?</summary>
       <p class="desc" style="margin-top:.5rem">Sí. WCAG 2.2 AA validado con <strong>axe en CI</strong> (0 violaciones) sobre 32 specs Playwright, bajo SSR + hidratación + zoneless. El ARIA vive en host bindings — un consumidor no lo puede quitar.</p></details>
     <details class="card"><summary style="font-size:15px;color:var(--color-foreground);font-weight:500">¿Cómo se actualiza un componente copiado?</summary>
@@ -419,7 +419,7 @@ const iconsPage = `<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>signng — librería de iconos</title>
+<title>SignNG — librería de iconos</title>
 <style>
 ${themeCss}
 * { box-sizing: border-box; }
@@ -451,7 +451,7 @@ input[type=search]:focus { box-shadow: 0 0 0 2px var(--color-ring); }
   <header>
     <h1>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
-      Librería de iconos <span class="muted">${ICON_ENTRIES.length} · signng</span>
+      Librería de iconos <span class="muted">${ICON_ENTRIES.length} · SignNG</span>
     </h1>
     <button class="toggle" onclick="document.documentElement.classList.toggle('dark')">◐ tema</button>
   </header>

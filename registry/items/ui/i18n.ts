@@ -1,7 +1,7 @@
 import { InjectionToken, type Provider } from '@angular/core';
 
 /**
- * Centralised UI strings for signng components (the labels NOT supplied as component inputs — mostly
+ * Centralised UI strings for SignNG components (the labels NOT supplied as component inputs — mostly
  * icon-button aria-labels + a few defaults). Defaults are English; translate the whole library from
  * one place with `provideSignngI18n({...})`. Components read it via `inject(SIGNNG_I18N)`.
  *
@@ -83,7 +83,7 @@ export const SIGNNG_I18N = new InjectionToken<SignngMessages>('SIGNNG_I18N', {
   factory: () => SIGNNG_MESSAGES_EN,
 });
 
-/** Provide a (partial) translation of the signng UI strings, merged over the English defaults. */
+/** Provide a (partial) translation of the SignNG UI strings, merged over the English defaults. */
 export function provideSignngI18n(messages: Partial<SignngMessages>): Provider {
   return { provide: SIGNNG_I18N, useValue: { ...SIGNNG_MESSAGES_EN, ...messages } };
 }

@@ -13,8 +13,8 @@
       "target": "src/components/ui/form-field.ts",
       "type": "registry:ui",
       "content": "import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/**\n * Form field wrapper (helm) — label + projected control + description + error message. Presentational\n * and form-library-agnostic: bind `invalid`/`error` from your reactive form, e.g.\n * `[invalid]=\"c.invalid && c.touched\" [error]=\"c.errors?.['required'] ? 'Requerido' : ''\"`.\n * Set `htmlFor` to the projected control's id so the label associates. The error has role=alert.\n */\n@Component({\n  selector: 'signng-form-field',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'block space-y-1.5' },\n  template: `\n    <label [attr.for]=\"htmlFor() || null\" [class]=\"labelClass()\">{{ label() }}</label>\n    <ng-content />\n    @if (description() && !(invalid() && error())) {\n      <p class=\"text-xs text-muted-foreground\">{{ description() }}</p>\n    }\n    @if (invalid() && error()) {\n      <p class=\"text-xs font-medium text-destructive\" role=\"alert\">{{ error() }}</p>\n    }\n  `,\n})\nexport class FormField {\n  readonly label = input('');\n  readonly description = input('');\n  readonly error = input('');\n  readonly invalid = input(false);\n  readonly htmlFor = input('');\n\n  protected readonly labelClass = computed(() =>\n    cn('text-sm font-medium leading-none', this.invalid() ? 'text-destructive' : ''),\n  );\n}\n",
-      "integrity": "sha256-p9JOvI/pJtbTcoZyYPiE11FKu3r0MjZTMzBnmNs/EZw="
+      "integrity": "sha256-oQmtTvgGywUIttZoH2cLQPe8OFVyOMGlyjUpn6+Mwn8="
     }
   ],
-  "integrity": "sha256-9m8kBkmPIfbd0ubSx/0DLPqsMobsR/SNg0EZyvh7VlI="
+  "integrity": "sha256-ppTsNB8A8RSqte/5EPeBuR4KvZJL78saNHIgZaDAAxE="
 }

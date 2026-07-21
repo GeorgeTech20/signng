@@ -11,8 +11,8 @@
       "target": "src/components/ui/aspect-ratio.ts",
       "type": "registry:ui",
       "content": "import { Directive, input } from '@angular/core';\n\n/** Aspect-ratio box (helm). `<div signngAspectRatio ratio=\"16/9\">`. Children fill the box. */\n@Directive({\n  selector: '[signngAspectRatio]',\n  host: {\n    class: 'block w-full overflow-hidden',\n    '[style.aspect-ratio]': 'ratio()',\n  },\n})\nexport class AspectRatio {\n  readonly ratio = input('16/9');\n}\n",
-      "integrity": "sha256-ilmZ3UxUl3PJHa0MZ+ndRgFd+LQ5kETJTObEyQcHrOM="
+      "integrity": "sha256-iy4mFsaIjQHe5Yd/1VjsvtTciolKHgZSbFULFXJ7wIw="
     }
   ],
-  "integrity": "sha256-CWVlCmnbNUVDc1A7PbDYHo2nxaFZMyY3+q09b+TByyo="
+  "integrity": "sha256-emguE2/fleQI1lIK8sl0BMoJvZzKpEZx5vSces9wnok="
 }

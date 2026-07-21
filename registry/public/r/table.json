@@ -13,8 +13,8 @@
       "target": "src/components/ui/table.ts",
       "type": "registry:ui",
       "content": "import { Directive, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/** Table part directives (helm). Native <table> semantics + skin. */\n@Directive({ selector: 'table[signngTable]', host: { '[class]': 'cls()' } })\nexport class Table {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('w-full caption-bottom text-sm', this.class()));\n}\n\n@Directive({ selector: 'thead[signngTableHeader]', host: { '[class]': 'cls()' } })\nexport class TableHeader {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('[&_tr]:border-b', this.class()));\n}\n\n@Directive({ selector: 'tbody[signngTableBody]', host: { '[class]': 'cls()' } })\nexport class TableBody {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('[&_tr:last-child]:border-0', this.class()));\n}\n\n@Directive({ selector: 'tr[signngTableRow]', host: { '[class]': 'cls()' } })\nexport class TableRow {\n  readonly class = input('');\n  protected readonly cls = computed(() =>\n    cn('border-b border-border transition-colors hover:bg-muted/50', this.class()),\n  );\n}\n\n@Directive({ selector: 'th[signngTableHead]', host: { '[class]': 'cls()' } })\nexport class TableHead {\n  readonly class = input('');\n  protected readonly cls = computed(() =>\n    cn('h-12 px-4 text-left align-middle font-medium text-muted-foreground', this.class()),\n  );\n}\n\n@Directive({ selector: 'td[signngTableCell]', host: { '[class]': 'cls()' } })\nexport class TableCell {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('p-4 align-middle', this.class()));\n}\n\nexport const SIGNNG_TABLE = [Table, TableHeader, TableBody, TableRow, TableHead, TableCell] as const;\n",
-      "integrity": "sha256-RtrlZt9z8UbfDeqICwDKRbyfIuVD47FZmVddCWeQ6Oc="
+      "integrity": "sha256-fcargV0yG6GDvUF+VgKy/xlmj2BL66FuiVA13nshs7o="
     }
   ],
-  "integrity": "sha256-4ZcPUwJUjWvpkNCDryQCwp/VVC7TYmdkNK1z9jJF0mc="
+  "integrity": "sha256-0lRBzMBkP4kbfpQ8PZoDdJRxIwVqm3Gi7PFPMiDnPeQ="
 }

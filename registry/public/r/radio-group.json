@@ -15,8 +15,8 @@
       "target": "src/components/ui/radio-group.ts",
       "type": "registry:ui",
       "content": "import { ChangeDetectionStrategy, Component, inject } from '@angular/core';\nimport { SignngRadio, SignngRadioGroup } from '@signng/core/radio-group';\n\n/**\n * Styled RadioGroup (helm) over the @signng/core/radio-group compound primitive.\n * Container: `<signng-radio-group [(value)]=\"x\" aria-labelledby=\"...\">`.\n * Item: `<signng-radio value=\"a\">Label</signng-radio>` — the projected text is the radio's name.\n */\n@Component({\n  selector: 'signng-radio-group',\n  hostDirectives: [\n    { directive: SignngRadioGroup, inputs: ['value', 'disabled', 'orientation'], outputs: ['valueChange'] },\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'grid gap-2' },\n  template: `<ng-content />`,\n})\nexport class RadioGroup {}\n\n@Component({\n  selector: 'signng-radio',\n  hostDirectives: [{ directive: SignngRadio, inputs: ['value', 'disabled'] }],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: {\n    class:\n      'inline-flex items-center gap-2 text-sm cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-disabled:cursor-not-allowed aria-disabled:opacity-50',\n  },\n  template: `\n    <span\n      class=\"flex size-5 shrink-0 items-center justify-center rounded-full border border-primary\"\n    >\n      @if (radio.checked()) {\n        <span class=\"size-2.5 rounded-full bg-primary\"></span>\n      }\n    </span>\n    <ng-content />\n  `,\n})\nexport class Radio {\n  protected readonly radio = inject(SignngRadio, { self: true });\n}\n",
-      "integrity": "sha256-GtvJiqWkAPaTSPhgg4R1dp1/RE5ToxM7AmtMyaCeF6g="
+      "integrity": "sha256-cnMA/lVywJvHSRD1cNap2WCC8wgr/KhFcs1uDnujCT8="
     }
   ],
-  "integrity": "sha256-ZKsSLQVEHVA1Ml6p3scn/jXEEbzcASrgZwssUbvUw2o="
+  "integrity": "sha256-l2p01BEWkcOm7clzHTntazPSRZihctZ0f3prmCaYUHQ="
 }

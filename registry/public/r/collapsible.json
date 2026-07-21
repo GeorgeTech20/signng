@@ -15,8 +15,8 @@
       "target": "src/components/ui/collapsible.ts",
       "type": "registry:ui",
       "content": "import { ChangeDetectionStrategy, Component, inject, input, model } from '@angular/core';\nimport { _IdGenerator } from '@angular/cdk/a11y';\nimport { cn } from '@/lib/utils';\n\n/**\n * Styled Collapsible (helm) — a single disclosure (trigger + lazily-rendered region). The trigger is\n * a native button with aria-expanded + aria-controls; the region is rendered only while open.\n */\n@Component({\n  selector: 'signng-collapsible',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <button\n      type=\"button\"\n      [attr.aria-expanded]=\"open()\"\n      [attr.aria-controls]=\"contentId\"\n      (click)=\"open.update((v) => !v)\"\n      [class]=\"\n        cn(\n          'group flex w-full items-center justify-between rounded-md px-1 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',\n          triggerClass()\n        )\n      \"\n    >\n      {{ triggerLabel() }}\n      <svg\n        viewBox=\"0 0 24 24\"\n        fill=\"none\"\n        stroke=\"currentColor\"\n        stroke-width=\"2\"\n        class=\"size-4 shrink-0 transition-transform group-aria-expanded:rotate-180\"\n        aria-hidden=\"true\"\n      >\n        <path d=\"M6 9l6 6 6-6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n      </svg>\n    </button>\n    @if (open()) {\n      <div [id]=\"contentId\" class=\"px-1 pb-2 pt-1 text-sm\">\n        <ng-content />\n      </div>\n    }\n  `,\n})\nexport class Collapsible {\n  readonly open = model(false);\n  readonly triggerLabel = input('');\n  readonly triggerClass = input('');\n\n  protected readonly cn = cn;\n  protected readonly contentId = inject(_IdGenerator).getId('signng-collapsible-');\n}\n",
-      "integrity": "sha256-I22sAHbrK/BzFZsyQLgJvZMOVBgGpJ3dO7a+Ag/8xuQ="
+      "integrity": "sha256-jtse0lx5vvo3lEArU+W5KQTyyOqop6YBQvlUCTUJY/o="
     }
   ],
-  "integrity": "sha256-FDOTBd6eY4onJzjFWWwTFX653NfvsCzS56Bw+OxIpM8="
+  "integrity": "sha256-jI3bFr9scqbqcAOTJ3bjJYchMhmIwi9rUzdxIHjxuQc="
 }

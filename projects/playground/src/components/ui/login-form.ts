@@ -13,7 +13,7 @@ export interface AuthSubmit {
 }
 
 /**
- * LoginForm (helm block) — a composed auth card (shadcn-"blocks" style) over the signng primitives
+ * LoginForm (helm block) — a composed auth card (shadcn-"blocks" style) over the SignNG primitives
  * (Card, Input, Label, Button). One component, three `mode`s: login / signup / forgot. Optional social
  * providers. Emits a typed `submitted` payload; the host owns the actual auth call. Native form semantics
  * (Enter submits), proper `autocomplete` tokens + `type=password`, signals-only, OnPush.

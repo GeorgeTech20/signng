@@ -9,7 +9,7 @@ export interface AccordionItem {
 
 /**
  * Styled Accordion (helm) over @angular/aria's accordion directives — a11y (keyboard, aria-expanded,
- * lazy panel content) is inherited from Google; signng adds the skin + chevron.
+ * lazy panel content) is inherited from Google; SignNG adds the skin + chevron.
  */
 @Component({
   selector: 'signng-accordion',

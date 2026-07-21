@@ -2,7 +2,7 @@
  * Heuristic 12-step OKLCH scale generator (Radix-Colors-style grouping: 1-2 app bg,
  * 3-5 component bg/border/hover, 6-8 borders/separators, 9-10 solid/accent, 11-12 text) —
  * NOT Radix's algorithm (that's proprietary/unpublished), just a perceptually-reasonable
- * ramp built from OKLab, which signng's tokens already use. Only generates a scale for a
+ * ramp built from OKLab, which SignNG's tokens already use. Only generates a scale for a
  * single brand color; does not touch the app's actual semantic tokens (background,
  * foreground, border, etc.) — see color-system skill for why that's a separate migration.
  */

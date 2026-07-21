@@ -5,7 +5,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { routes } from './app.routes';
 import { provideSignngI18n } from '@/components/ui/i18n';
 
-// Demo: signng defaults to English; this translates every built-in UI string to Spanish from one place.
+// Demo: SignNG defaults to English; this translates every built-in UI string to Spanish from one place.
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),

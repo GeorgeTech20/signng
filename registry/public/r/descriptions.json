@@ -11,8 +11,8 @@
       "target": "src/components/ui/descriptions.ts",
       "type": "registry:ui",
       "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\n\nexport interface DescItem {\n  label: string;\n  value: string;\n}\n\n/**\n * Descriptions (helm) — a labelled key/value detail list (admin \"view record\" pages). Renders a semantic\n * `<dl>` with `<dt>`/`<dd>` pairs in a configurable column grid; `bordered` boxes it. Column count uses an\n * inline grid-template (so it's Tailwind-purge safe). Presentational, OnPush.\n */\n@Component({\n  selector: 'signng-descriptions',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'block' },\n  template: `\n    <dl\n      [class]=\"bordered() ? 'grid gap-x-6 overflow-hidden rounded-lg border border-border' : 'grid gap-x-6 gap-y-1'\"\n      [style.grid-template-columns]=\"'repeat(' + columns() + ', minmax(0, 1fr))'\"\n    >\n      @for (it of items(); track $index) {\n        <div [class]=\"bordered() ? 'border-b border-border px-4 py-2.5' : 'py-1'\">\n          <dt class=\"text-xs text-muted-foreground\">{{ it.label }}</dt>\n          <dd class=\"mt-0.5 text-sm font-medium\">{{ it.value }}</dd>\n        </div>\n      }\n    </dl>\n  `,\n})\nexport class Descriptions {\n  readonly items = input<DescItem[]>([]);\n  readonly columns = input(1);\n  readonly bordered = input(false);\n}\n",
-      "integrity": "sha256-8s0ojaLKuQfpaoGTerx8dGTZQ5s1EG4c/Q6JIprJd6s="
+      "integrity": "sha256-yhWFNzKZT6fG4vBBfAKqKa8JoKz9ZTACFgCzwME5aCE="
     }
   ],
-  "integrity": "sha256-EmvihhyT5PfGtwBlRpNfGV9OpxJXWQTqN+pO84ew3bo="
+  "integrity": "sha256-C9g5V02HsfGelIFwjboZ9LbgSBDVy8v8QkR4dwb1M0w="
 }

@@ -11,8 +11,8 @@
       "target": "src/components/ui/spinner.ts",
       "type": "registry:ui",
       "content": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\n\n/**\n * Spinner (helm) — a loading indicator. role=status with an accessible label so screen readers announce\n * the busy state; the spin animation uses Tailwind's `animate-spin` and is paused under\n * prefers-reduced-motion by the browser/utility. Pure SVG, OnPush, no deps.\n */\n@Component({\n  selector: 'signng-spinner',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'inline-flex items-center gap-2' },\n  template: `\n    <svg\n      [attr.width]=\"size()\"\n      [attr.height]=\"size()\"\n      viewBox=\"0 0 24 24\"\n      fill=\"none\"\n      class=\"animate-spin text-current motion-reduce:animate-none\"\n      role=\"status\"\n      [attr.aria-label]=\"label() || 'Cargando'\"\n    >\n      <circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"currentColor\" stroke-width=\"3\" class=\"opacity-20\" />\n      <path d=\"M12 2a10 10 0 0 1 10 10\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" />\n    </svg>\n    @if (label()) { <span class=\"text-sm text-muted-foreground\">{{ label() }}</span> }\n  `,\n})\nexport class Spinner {\n  readonly size = input(20);\n  readonly label = input('');\n}\n",
-      "integrity": "sha256-5tSozbQXmSvBH+dU3d2QUMwS4pVcSsn/NpfpdhYqxb4="
+      "integrity": "sha256-+AGs2QSiAB0aHDTb971STqDmYz6DzV3WsvbJBPsxEb4="
     }
   ],
-  "integrity": "sha256-z41rzZebichUsoUsBAWLiT3FbSCRC345JtnIs3KTZms="
+  "integrity": "sha256-GMF/epLTYI/H6frTMfVsXPbgAvhkN5BkbgXIqPr2vk8="
 }

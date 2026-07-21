@@ -13,8 +13,8 @@
       "target": "src/components/ui/input.ts",
       "type": "registry:ui",
       "content": "import { Directive, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/** Styled native input (helm). Attribute directive — keeps full native input semantics + a11y. */\n@Directive({\n  selector: 'input[signngInput]',\n  host: {\n    '[class]': 'classes()',\n  },\n})\nexport class Input {\n  readonly class = input('');\n  protected readonly classes = computed(() =>\n    cn(\n      'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',\n      this.class(),\n    ),\n  );\n}\n",
-      "integrity": "sha256-6279P83F5wceepiDuCauc7Yl1akSI603ZezwCiGFpF0="
+      "integrity": "sha256-8TPg93bRohygQWolHBPPPi1amyvnISpwmtyef9Vti3U="
     }
   ],
-  "integrity": "sha256-jb41M+HjkKS6cUrgXu5nbkt2mci/VIIpZGLQzxs/6tg="
+  "integrity": "sha256-vhI9UfShC8h7x/K14UBsY4BgGgmbU55R4KEOYj/ycRc="
 }
