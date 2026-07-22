@@ -53,6 +53,11 @@
                 "glob": "*.json",
                 "input": "registry/public/r",
                 "output": "/r"
+              },
+              {
+                "glob": "signing.pub",
+                "input": "registry/keys",
+                "output": "/keys"
               }
             ],
             "styles": ["projects/playground/src/styles.css"],

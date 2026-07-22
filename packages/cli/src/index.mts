@@ -18,7 +18,7 @@ interface UiConfig {
 }
 
 const DEFAULT_CONFIG: UiConfig = {
-  registry: '../../registry/public/r',
+  registry: 'https://georgetech20.github.io/signng/r',
   aliases: { components: 'src/components', ui: 'src/components/ui', lib: 'src/lib' },
   theme: 'src/signng-theme.css',
 };
@@ -63,7 +63,7 @@ function showDiff(target: string, oldContent: string, newContent: string): void 
 async function runAdd(names: string[], opts: { cwd: string; yes?: boolean; dryRun?: boolean }) {
   const projectRoot = resolve(process.cwd(), opts.cwd);
   const config = loadConfig(projectRoot);
-  const base = resolve(projectRoot, config.registry);
+  const base = resolveBase(projectRoot, config.registry);
 
   console.log(pc.bold(`\nsignng add ${names.join(' ')}`));
   console.log(pc.dim(`  project : ${projectRoot}`));
@@ -126,9 +126,24 @@ function ensureCssImport(projectRoot: string, cssTarget: string): void {
   }
 }
 
-function pinSigner(base: string): string | undefined {
-  // Local POC: read the published pubkey beside the registry (registry/public/r -> registry/keys).
-  // Production (https): fetch the cosign/Sigstore identity out-of-band and pin it here.
+/** `https://…/r` -> stays a URL; a local dev path resolves against the project root as before. */
+function resolveBase(projectRoot: string, registry: string): string {
+  return /^https?:\/\//i.test(registry) ? registry.replace(/\/$/, '') : resolve(projectRoot, registry);
+}
+
+async function pinSigner(base: string): Promise<string | undefined> {
+  if (/^https:\/\//i.test(base)) {
+    // Deployed alongside the registry, one level up: <site>/r + <site>/keys/signing.pub.
+    const url = `${base.replace(/\/[^/]+$/, '')}/keys/signing.pub`;
+    try {
+      const res = await fetch(url, { redirect: 'error' });
+      if (!res.ok) return undefined;
+      return normalizePem(await res.text());
+    } catch {
+      return undefined;
+    }
+  }
+  // Local dev: read the pubkey beside the registry (registry/public/r -> registry/keys).
   const localPub = resolve(base, '..', '..', 'keys', 'signing.pub');
   return existsSync(localPub) ? normalizePem(readFileSync(localPub, 'utf8')) : undefined;
 }
@@ -136,9 +151,9 @@ function pinSigner(base: string): string | undefined {
 async function runInit(opts: { cwd: string; registry: string; yes?: boolean }) {
   const projectRoot = resolve(process.cwd(), opts.cwd);
   const cfgFile = resolve(projectRoot, 'ui.config.json');
-  const base = resolve(projectRoot, opts.registry);
+  const base = resolveBase(projectRoot, opts.registry);
 
-  const signer = pinSigner(base);
+  const signer = await pinSigner(base);
   if (!signer) console.log(pc.yellow('⚠ no signer pubkey found — `add` will refuse until one is pinned.'));
 
   const existing = existsSync(cfgFile) ? JSON.parse(readFileSync(cfgFile, 'utf8')) : {};
