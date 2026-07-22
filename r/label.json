@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "label",
+  "type": "registry:ui",
+  "description": "Styled native label.",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/label.ts",
+      "target": "src/components/ui/label.ts",
+      "type": "registry:ui",
+      "content": "import { Directive, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/** Styled native label (helm). Attribute directive. Use with `for` to associate a control (a11y). */\n@Directive({\n  selector: 'label[signngLabel]',\n  host: {\n    '[class]': 'classes()',\n  },\n})\nexport class Label {\n  readonly class = input('');\n  protected readonly classes = computed(() =>\n    cn('text-sm font-medium leading-none select-none', this.class()),\n  );\n}\n",
+      "integrity": "sha256-1EaUO+l9wOnzLh3j3MrfBOSRTQTb8k60ibZ8k9xwmko="
+    }
+  ],
+  "integrity": "sha256-at54PXzklj3Ff07srqNjuOipshbSW/b+0nZ2NQTXGsg="
+}

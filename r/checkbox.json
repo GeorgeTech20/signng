@@ -1,0 +1,22 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "checkbox",
+  "type": "registry:ui",
+  "description": "Tri-state checkbox (role=checkbox, mixed) on @signng/core/checkbox.",
+  "dependencies": [
+    "@signng/core"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/checkbox.ts",
+      "target": "src/components/ui/checkbox.ts",
+      "type": "registry:ui",
+      "content": "import {\n  ChangeDetectionStrategy,\n  Component,\n  booleanAttribute,\n  computed,\n  effect,\n  forwardRef,\n  input,\n  model,\n  signal,\n} from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { SignngCheckbox } from '@signng/core/checkbox';\nimport { cn } from '@/lib/utils';\n\n/**\n * Styled tri-state Checkbox (helm) over the @signng/core/checkbox primitive.\n * Implements ControlValueAccessor — works with `formControlName`/`[(ngModel)]` in a reactive\n * or template-driven form, on top of the plain `[(checked)]` signal binding.\n */\n@Component({\n  selector: 'signng-checkbox',\n  imports: [SignngCheckbox],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => Checkbox), multi: true }],\n  template: `\n    <button\n      type=\"button\"\n      signngCheckbox\n      [(checked)]=\"checked\"\n      [(indeterminate)]=\"indeterminate\"\n      [disabled]=\"isDisabled()\"\n      [attr.aria-labelledby]=\"ariaLabelledby()\"\n      [attr.aria-label]=\"ariaLabel()\"\n      (blur)=\"onTouched()\"\n      [class]=\"\n        cn(\n          'inline-flex size-6 shrink-0 items-center justify-center rounded border border-primary shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground',\n          class()\n        )\n      \"\n    >\n      @if (checked() && !indeterminate()) {\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" class=\"size-4\" aria-hidden=\"true\">\n          <path d=\"M5 12l5 5L20 7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n        </svg>\n      } @else if (indeterminate()) {\n        <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" class=\"size-4\" aria-hidden=\"true\">\n          <path d=\"M5 12h14\" stroke-linecap=\"round\" />\n        </svg>\n      }\n    </button>\n  `,\n})\nexport class Checkbox implements ControlValueAccessor {\n  readonly checked = model(false);\n  readonly indeterminate = model(false);\n  readonly disabled = input(false, { transform: booleanAttribute });\n  readonly ariaLabel = input<string | undefined>(undefined);\n  readonly ariaLabelledby = input<string | undefined>(undefined);\n  readonly class = input('');\n  protected readonly cn = cn;\n\n  private readonly formDisabled = signal(false);\n  protected readonly isDisabled = computed(() => this.disabled() || this.formDisabled());\n\n  private onChange: (value: boolean) => void = () => {};\n  protected onTouched: () => void = () => {};\n\n  constructor() {\n    // Bridge the signal model -> CVA onChange (fires on writeValue's own set() too; harmless/idempotent).\n    effect(() => this.onChange(this.checked()));\n  }\n\n  writeValue(value: boolean): void {\n    this.checked.set(!!value);\n  }\n  registerOnChange(fn: (value: boolean) => void): void {\n    this.onChange = fn;\n  }\n  registerOnTouched(fn: () => void): void {\n    this.onTouched = fn;\n  }\n  setDisabledState(isDisabled: boolean): void {\n    this.formDisabled.set(isDisabled);\n  }\n}\n",
+      "integrity": "sha256-9msNrpl9m4DaxNognQEOu7N/PUv792YDqQT2WHdpHWY="
+    }
+  ],
+  "integrity": "sha256-2Y/gVkRj3010DAeB2Sg7mGh+znk+FtAku7fmrnoQ2+g="
+}

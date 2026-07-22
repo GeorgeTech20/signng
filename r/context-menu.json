@@ -1,0 +1,24 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "context-menu",
+  "type": "registry:ui",
+  "description": "Right-click menu over @angular/aria Menu, positioned at the pointer (CDK overlay).",
+  "dependencies": [
+    "@angular/cdk",
+    "@angular/aria"
+  ],
+  "registryDependencies": [
+    "utils",
+    "overlay"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/context-menu.ts",
+      "target": "src/components/ui/context-menu.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, inject, input, output, signal } from '@angular/core';\nimport { _IdGenerator } from '@angular/cdk/a11y';\nimport {\n  CdkConnectedOverlay,\n  type ConnectedPosition,\n  type FlexibleConnectedPositionStrategyOrigin,\n} from '@angular/cdk/overlay';\nimport { Menu, MenuItem } from '@angular/aria/menu';\n\nexport interface MenuOption {\n  value: string;\n  label: string;\n  disabled?: boolean;\n}\n\n/**\n * Styled ContextMenu (helm) — right-click a projected region to open an @angular/aria Menu at the\n * pointer (CDK overlay connected to the click point). role=menu/menuitem, roving + typeahead inherited.\n * Focus moves to the first item on open; Escape/outside-click dismiss. Requires the `overlay` item.\n */\n@Component({\n  selector: 'signng-context-menu',\n  imports: [CdkConnectedOverlay, Menu, MenuItem],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: {\n    '(contextmenu)': 'onContext($event)',\n    '(document:keydown.escape)': 'onEscape()',\n  },\n  template: `\n    <ng-content />\n    <ng-template\n      cdkConnectedOverlay\n      [cdkConnectedOverlayOrigin]=\"origin()\"\n      [cdkConnectedOverlayOpen]=\"open()\"\n      [cdkConnectedOverlayPositions]=\"positions\"\n      [cdkConnectedOverlayHasBackdrop]=\"true\"\n      cdkConnectedOverlayBackdropClass=\"cdk-overlay-transparent-backdrop\"\n      [cdkConnectedOverlayPush]=\"true\"\n      (attach)=\"onAttach()\"\n      (backdropClick)=\"open.set(false)\"\n    >\n      <div\n        ngMenu\n        [id]=\"menuId\"\n        [attr.aria-label]=\"label() || 'Menú contextual'\"\n        (itemSelected)=\"select($event)\"\n        class=\"z-50 min-w-44 overflow-auto rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md outline-none\"\n      >\n        @for (item of items(); track item.value) {\n          <button\n            ngMenuItem\n            [value]=\"item.value\"\n            [disabled]=\"!!item.disabled\"\n            class=\"flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[active]:bg-accent data-[active]:text-accent-foreground aria-disabled:pointer-events-none aria-disabled:opacity-50\"\n          >\n            {{ item.label }}\n          </button>\n        }\n      </div>\n    </ng-template>\n  `,\n})\nexport class ContextMenu {\n  readonly items = input<MenuOption[]>([]);\n  readonly label = input('');\n  readonly selected = output<string>();\n  readonly open = signal(false);\n  readonly origin = signal<FlexibleConnectedPositionStrategyOrigin>({ x: 0, y: 0 });\n\n  protected readonly menuId = inject(_IdGenerator).getId('signng-context-');\n\n  protected onContext(event: MouseEvent): void {\n    event.preventDefault();\n    this.origin.set({ x: event.clientX, y: event.clientY });\n    this.open.set(true);\n  }\n\n  protected select(value: string): void {\n    this.selected.emit(value);\n    this.open.set(false);\n  }\n\n  protected onEscape(): void {\n    if (this.open()) this.open.set(false);\n  }\n\n  protected onAttach(): void {\n    queueMicrotask(() => {\n      const menu = document.getElementById(this.menuId);\n      const first = menu?.querySelector<HTMLElement>('[role=\"menuitem\"]:not([aria-disabled=\"true\"])');\n      (first ?? menu)?.focus();\n    });\n  }\n\n  protected readonly positions: ConnectedPosition[] = [\n    { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'top' },\n    { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'top' },\n  ];\n}\n",
+      "integrity": "sha256-UXqAb866HI0Ftrib2Ow1C4Qt3Bxksc/u5i4eoAOVJIM="
+    }
+  ],
+  "integrity": "sha256-z78xahAr/6Y3oDxFwRQtjoaqt0RMKhXnwihvfBj/l2U="
+}

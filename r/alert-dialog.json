@@ -1,0 +1,25 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "alert-dialog",
+  "type": "registry:ui",
+  "description": "Confirm/cancel modal (role=alertdialog) on @signng/core/dialog.",
+  "dependencies": [
+    "@signng/core",
+    "@angular/cdk"
+  ],
+  "registryDependencies": [
+    "utils",
+    "button",
+    "overlay"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/alert-dialog.ts",
+      "target": "src/components/ui/alert-dialog.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';\nimport { CdkTrapFocus, _IdGenerator } from '@angular/cdk/a11y';\nimport { SignngDialogTrigger } from '@signng/core/dialog';\nimport { Button } from '@/components/ui/button';\n\n/**\n * Styled AlertDialog (helm) — a confirm/cancel modal over the @signng/core/dialog trigger\n * primitive (centered, scroll-blocked, backdrop, Esc, focus restore). role=alertdialog +\n * aria-modal + APG naming. Emits `confirmed` on the confirm action. Requires the `overlay` item.\n */\n@Component({\n  selector: 'signng-alert-dialog',\n  imports: [SignngDialogTrigger, CdkTrapFocus, Button],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    <button signngButton variant=\"destructive\" [signngDialogTrigger]=\"content\">{{ triggerLabel() }}</button>\n    <ng-template #content let-ctx>\n      <div\n        cdkTrapFocus\n        [cdkTrapFocusAutoCapture]=\"true\"\n        role=\"alertdialog\"\n        aria-modal=\"true\"\n        [attr.aria-labelledby]=\"title() ? titleId : null\"\n        [attr.aria-label]=\"title() ? null : 'Confirmación'\"\n        [attr.aria-describedby]=\"description() ? descId : null\"\n        class=\"w-[calc(100vw-2rem)] max-w-md rounded-lg border border-border bg-background p-6 shadow-lg\"\n      >\n        <h2 [id]=\"titleId\" class=\"text-lg font-semibold\">{{ title() }}</h2>\n        @if (description()) {\n          <p [id]=\"descId\" class=\"mt-2 text-sm text-muted-foreground\">{{ description() }}</p>\n        }\n        <div class=\"mt-6 flex justify-end gap-2\">\n          <button signngButton variant=\"outline\" (click)=\"ctx.close()\">{{ cancelLabel() }}</button>\n          <button signngButton variant=\"destructive\" (click)=\"confirmed.emit(); ctx.close()\">\n            {{ confirmLabel() }}\n          </button>\n        </div>\n      </div>\n    </ng-template>\n  `,\n})\nexport class AlertDialog {\n  readonly title = input('¿Estás seguro?');\n  readonly description = input('Esta acción no se puede deshacer.');\n  readonly triggerLabel = input('Eliminar');\n  readonly cancelLabel = input('Cancelar');\n  readonly confirmLabel = input('Confirmar');\n  readonly confirmed = output<void>();\n\n  protected readonly titleId = inject(_IdGenerator).getId('signng-alertdialog-title-');\n  protected readonly descId = inject(_IdGenerator).getId('signng-alertdialog-desc-');\n}\n",
+      "integrity": "sha256-s4vfhNh533nyLqZfmhpDEIjkx+FKQBOukeoBB7zK+Ys="
+    }
+  ],
+  "integrity": "sha256-/PZHXDrkZPkuXKQwAtnTUZZwotKFEPHK3zHoHGtkQ/M="
+}

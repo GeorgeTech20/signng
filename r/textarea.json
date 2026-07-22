@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "description": "Styled native textarea.",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/textarea.ts",
+      "target": "src/components/ui/textarea.ts",
+      "type": "registry:ui",
+      "content": "import { Directive, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/** Styled native textarea (helm). Attribute directive — keeps native textarea semantics + a11y. */\n@Directive({\n  selector: 'textarea[signngTextarea]',\n  host: {\n    '[class]': 'classes()',\n  },\n})\nexport class Textarea {\n  readonly class = input('');\n  protected readonly classes = computed(() =>\n    cn(\n      'flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',\n      this.class(),\n    ),\n  );\n}\n",
+      "integrity": "sha256-mNOVap2T+PTo+Tx54jLDH8bL6ePPi0rkh5yVKjoHRa4="
+    }
+  ],
+  "integrity": "sha256-g7slZtZShtqPbugvodTwD9X7Ya8TUEHUb8Dqqo6VSvM="
+}

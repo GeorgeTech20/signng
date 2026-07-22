@@ -1,0 +1,22 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "alert",
+  "type": "registry:ui",
+  "description": "Alert callout (title/description directives, CVA variants).",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/alert.ts",
+      "target": "src/components/ui/alert.ts",
+      "type": "registry:ui",
+      "content": "import { Directive, computed, input } from '@angular/core';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\nexport const alertVariants = cva('relative w-full rounded-lg border px-4 py-3 text-sm', {\n  variants: {\n    variant: {\n      default: 'bg-background text-foreground border-border',\n      destructive: 'border-destructive/50 text-destructive',\n    },\n  },\n  defaultVariants: { variant: 'default' },\n});\n\n/**\n * Alert part directives (helm). A styled container — NO role by default (a static info box is not a\n * live region). For dynamic important messages add role=\"alert\" (assertive) or role=\"status\" yourself.\n */\n@Directive({ selector: '[signngAlert]', host: { '[class]': 'cls()' } })\nexport class Alert {\n  readonly variant = input<VariantProps<typeof alertVariants>['variant']>('default');\n  readonly class = input('');\n  protected readonly cls = computed(() => cn(alertVariants({ variant: this.variant() }), this.class()));\n}\n\n@Directive({ selector: '[signngAlertTitle]', host: { '[class]': 'cls()' } })\nexport class AlertTitle {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('mb-1 font-medium leading-none tracking-tight', this.class()));\n}\n\n@Directive({ selector: '[signngAlertDescription]', host: { '[class]': 'cls()' } })\nexport class AlertDescription {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('text-sm [&_p]:leading-relaxed', this.class()));\n}\n\nexport const SIGNNG_ALERT = [Alert, AlertTitle, AlertDescription] as const;\n",
+      "integrity": "sha256-3cO60/zHpuutajju6T0aJcqluQKzHD2mHhvwV6irvhM="
+    }
+  ],
+  "integrity": "sha256-6JlgwbHu0zBH/HKh9G2EWibbWFfESNnyM0UaPBZ7cms="
+}

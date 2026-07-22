@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "stepper",
+  "type": "registry:ui",
+  "description": "Multi-step wizard progress indicator (numbered nodes, connectors, aria-current).",
+  "dependencies": [],
+  "registryDependencies": [
+    "icon"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/stepper.ts",
+      "target": "src/components/ui/stepper.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';\nimport { Icon } from '@/components/ui/icon';\n\nexport interface Step {\n  label: string;\n  description?: string;\n}\n\n/**\n * Stepper (helm) — a multi-step progress indicator for wizards. Shows a numbered node per step\n * (checkmark once complete, ring while active), connectors between them, and labels. `current` is a\n * two-way 0-based model; when `clickable`, completed/active steps are focusable buttons. Horizontal or\n * vertical. aria: ol/li with aria-current=\"step\". Signals-only, OnPush.\n */\n@Component({\n  selector: 'signng-stepper',\n  imports: [Icon],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'block' },\n  template: `\n    <ol [class]=\"orientation() === 'vertical' ? 'flex flex-col gap-1' : 'flex items-center'\">\n      @for (step of steps(); track $index; let i = $index; let last = $last) {\n        <li [class]=\"orientation() === 'vertical' ? 'flex gap-3' : 'flex flex-1 items-center last:flex-none'\"\n          [attr.aria-current]=\"i === current() ? 'step' : null\">\n          <div class=\"flex flex-col items-center\" [class.flex-row]=\"orientation() === 'horizontal'\">\n            <button\n              type=\"button\"\n              [disabled]=\"!clickable() || i > current()\"\n              (click)=\"clickable() && i <= current() && current.set(i)\"\n              [class]=\"node(i)\"\n            >\n              @if (i < current()) { <signng-icon name=\"check\" [size]=\"15\" /> } @else { {{ i + 1 }} }\n            </button>\n          </div>\n          <div [class]=\"orientation() === 'vertical' ? 'pb-4' : 'ml-2 mr-3'\">\n            <div [class]=\"'text-sm font-medium ' + (i <= current() ? 'text-foreground' : 'text-muted-foreground')\">{{ step.label }}</div>\n            @if (step.description) { <div class=\"text-xs text-muted-foreground\">{{ step.description }}</div> }\n          </div>\n          @if (!last && orientation() === 'horizontal') {\n            <div [class]=\"'h-px flex-1 ' + (i < current() ? 'bg-primary' : 'bg-border')\"></div>\n          }\n        </li>\n      }\n    </ol>\n  `,\n})\nexport class Stepper {\n  readonly steps = input<Step[]>([]);\n  readonly current = model(0);\n  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');\n  readonly clickable = input(false);\n\n  protected node(i: number): string {\n    const base =\n      'flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default ' +\n      (this.clickable() && i <= this.current() ? 'cursor-pointer' : '');\n    if (i < this.current()) return base + ' bg-primary text-primary-foreground';\n    if (i === this.current()) return base + ' border-2 border-primary text-primary';\n    return base + ' border border-border text-muted-foreground';\n  }\n}\n",
+      "integrity": "sha256-85hjwHIKzXuoH4TyHqLqfjczokfGqtJ83JV0BqoyGEk="
+    }
+  ],
+  "integrity": "sha256-e3MHjD2wDgVEtX+HodFslj52FU7Wt7OHMLtJnwkV07E="
+}

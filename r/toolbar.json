@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "toolbar",
+  "type": "registry:ui",
+  "description": "role=toolbar with WAI-ARIA roving tabindex (single tab stop, arrow/Home/End) + separators.",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/toolbar.ts",
+      "target": "src/components/ui/toolbar.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, Directive, ElementRef, computed, contentChildren, effect, inject, input, signal } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/**\n * Toolbar (helm) — a role=toolbar container with WAI-ARIA roving tabindex: the toolbar is a single tab\n * stop, and ArrowLeft/Right (or Up/Down) + Home/End move focus across its items. Put `signngToolbarItem`\n * on each focusable control (button/toggle) and `signngToolbarSeparator` between groups. Signals-only, OnPush.\n */\n@Directive({\n  selector: '[signngToolbarItem]',\n  host: { '[attr.tabindex]': 'tabindex()' },\n})\nexport class ToolbarItem {\n  readonly el = inject<ElementRef<HTMLElement>>(ElementRef);\n  readonly tabindex = signal(-1);\n}\n\n@Directive({\n  selector: '[signngToolbarSeparator]',\n  host: { role: 'separator', 'aria-orientation': 'vertical', '[class]': 'cls()' },\n})\nexport class ToolbarSeparator {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('mx-1 h-5 w-px bg-border', this.class()));\n}\n\n@Component({\n  selector: 'signng-toolbar',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: {\n    role: 'toolbar',\n    '[attr.aria-label]': 'label() || null',\n    '[attr.aria-orientation]': 'orientation()',\n    '(keydown)': 'onKey($event)',\n    '[class]': 'cls()',\n  },\n  template: `<ng-content />`,\n})\nexport class Toolbar {\n  readonly label = input('');\n  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');\n  readonly class = input('');\n\n  private readonly items = contentChildren(ToolbarItem);\n  private readonly active = signal(0);\n  protected readonly cls = computed(() => cn('inline-flex items-center gap-1 rounded-md border border-border bg-background p-1', this.class()));\n\n  constructor() {\n    // roving tabindex: only the active item is tabbable\n    effect(() => {\n      const list = this.items();\n      const a = Math.min(this.active(), Math.max(0, list.length - 1));\n      list.forEach((it, i) => it.tabindex.set(i === a ? 0 : -1));\n    });\n  }\n\n  protected onKey(e: KeyboardEvent): void {\n    const list = this.items();\n    if (!list.length) return;\n    const fwd = this.orientation() === 'vertical' ? 'ArrowDown' : 'ArrowRight';\n    const back = this.orientation() === 'vertical' ? 'ArrowUp' : 'ArrowLeft';\n    let next = this.active();\n    if (e.key === fwd) next = (this.active() + 1) % list.length;\n    else if (e.key === back) next = (this.active() - 1 + list.length) % list.length;\n    else if (e.key === 'Home') next = 0;\n    else if (e.key === 'End') next = list.length - 1;\n    else return;\n    e.preventDefault();\n    this.active.set(next);\n    list[next].el.nativeElement.focus();\n  }\n}\n\nexport const SIGNNG_TOOLBAR = [Toolbar, ToolbarItem, ToolbarSeparator] as const;\n",
+      "integrity": "sha256-TwQZ26VJ49cuO97G+znIFbZld8z7vlhJxXz2HR9RsOY="
+    }
+  ],
+  "integrity": "sha256-qQSt+C4GdN7LWkUyNqdTmDR5aWd1fJ3MrGjeITx4T2g="
+}

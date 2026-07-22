@@ -1,0 +1,26 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "dropdown-menu",
+  "type": "registry:ui",
+  "description": "Dropdown menu over @angular/aria Menu (role=menu, roving, typeahead) in a CDK overlay.",
+  "dependencies": [
+    "@signng/core",
+    "@angular/cdk",
+    "@angular/aria"
+  ],
+  "registryDependencies": [
+    "utils",
+    "button",
+    "overlay"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/dropdown-menu.ts",
+      "target": "src/components/ui/dropdown-menu.ts",
+      "type": "registry:ui",
+      "content": "import {\n  ChangeDetectionStrategy,\n  Component,\n  ElementRef,\n  inject,\n  input,\n  output,\n  signal,\n  viewChild,\n} from '@angular/core';\nimport { _IdGenerator } from '@angular/cdk/a11y';\nimport { CdkConnectedOverlay, CdkOverlayOrigin, type ConnectedPosition } from '@angular/cdk/overlay';\nimport { Menu, MenuItem } from '@angular/aria/menu';\nimport { Button } from '@/components/ui/button';\n\nexport interface MenuOption {\n  value: string;\n  label: string;\n  disabled?: boolean;\n}\n\n/**\n * Styled DropdownMenu (helm) — trigger button + CDK overlay hosting @angular/aria's Menu/MenuItem\n * (role=menu/menuitem, arrow-key roving, typeahead inherited). Selection is wired through the menu's\n * `(itemSelected)` output so BOTH mouse and keyboard (Enter/Space) activate items — a per-item\n * `(click)` would miss keyboard, since aria preventDefaults the key event. cdkTrapFocus auto-capture,\n * transparent backdrop outside-click, document Escape; focus returns to the trigger on close.\n * Requires the `overlay` registry item. SSR-safe (overlay only on click).\n */\n@Component({\n  selector: 'signng-dropdown-menu',\n  imports: [CdkConnectedOverlay, CdkOverlayOrigin, Menu, MenuItem, Button],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: {\n    '(document:keydown.escape)': 'onEscape()',\n  },\n  template: `\n    <button\n      #trigger\n      cdkOverlayOrigin\n      #origin=\"cdkOverlayOrigin\"\n      signngButton\n      variant=\"outline\"\n      aria-haspopup=\"menu\"\n      [attr.aria-expanded]=\"open()\"\n      [attr.aria-controls]=\"open() ? menuId : null\"\n      (click)=\"open.set(!open())\"\n    >\n      {{ triggerLabel() }}\n    </button>\n    <ng-template\n      cdkConnectedOverlay\n      [cdkConnectedOverlayOrigin]=\"origin\"\n      [cdkConnectedOverlayOpen]=\"open()\"\n      [cdkConnectedOverlayPositions]=\"positions\"\n      [cdkConnectedOverlayHasBackdrop]=\"true\"\n      cdkConnectedOverlayBackdropClass=\"cdk-overlay-transparent-backdrop\"\n      [cdkConnectedOverlayPush]=\"true\"\n      (attach)=\"onAttach()\"\n      (backdropClick)=\"close()\"\n    >\n      <div\n        ngMenu\n        [id]=\"menuId\"\n        [attr.aria-label]=\"label() || 'Menu'\"\n        (itemSelected)=\"select($event)\"\n        class=\"z-50 min-w-48 overflow-auto rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md outline-none\"\n      >\n        @for (item of items(); track item.value) {\n          <button\n            ngMenuItem\n            [value]=\"item.value\"\n            [disabled]=\"!!item.disabled\"\n            class=\"flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[active]:bg-accent data-[active]:text-accent-foreground aria-disabled:pointer-events-none aria-disabled:opacity-50\"\n          >\n            {{ item.label }}\n          </button>\n        }\n      </div>\n    </ng-template>\n  `,\n})\nexport class DropdownMenu {\n  readonly items = input<MenuOption[]>([]);\n  readonly triggerLabel = input('Open menu');\n  readonly label = input('');\n  readonly open = signal(false);\n  readonly selected = output<string>();\n\n  private readonly trigger = viewChild.required<ElementRef<HTMLElement>>('trigger');\n  protected readonly menuId = inject(_IdGenerator).getId('signng-menu-');\n\n  protected select(value: string): void {\n    this.selected.emit(value);\n    this.close();\n  }\n\n  /** On overlay attach, move focus to the first enabled menuitem so keyboard nav works (APG). */\n  protected onAttach(): void {\n    queueMicrotask(() => {\n      const menu = document.getElementById(this.menuId);\n      const first = menu?.querySelector<HTMLElement>('[role=\"menuitem\"]:not([aria-disabled=\"true\"])');\n      (first ?? menu)?.focus();\n    });\n  }\n\n  protected close(): void {\n    this.open.set(false);\n    this.trigger().nativeElement.focus(); // return focus to trigger (APG menu button)\n  }\n\n  protected onEscape(): void {\n    if (this.open()) this.close();\n  }\n\n  protected readonly positions: ConnectedPosition[] = [\n    { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 6 },\n    { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -6 },\n  ];\n}\n",
+      "integrity": "sha256-lVIQ1thhOhbtNiKoSN80oEWnF8E/sTpJq32Ujti/9lc="
+    }
+  ],
+  "integrity": "sha256-asOPQwbGWxm7NBIxDUtIj8qOfkG2AWyLs6uggLjM4sQ="
+}

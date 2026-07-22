@@ -1,0 +1,22 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "switch",
+  "type": "registry:ui",
+  "description": "Accessible switch (role=switch) on @signng/core/switch.",
+  "dependencies": [
+    "@signng/core"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/switch.ts",
+      "target": "src/components/ui/switch.ts",
+      "type": "registry:ui",
+      "content": "import {\n  ChangeDetectionStrategy,\n  Component,\n  booleanAttribute,\n  computed,\n  effect,\n  forwardRef,\n  input,\n  model,\n  signal,\n} from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { SignngSwitch } from '@signng/core/switch';\nimport { cn } from '@/lib/utils';\n\n/**\n * Styled Switch (helm). Behaviour + a11y from the versioned @signng/core/switch primitive.\n * Implements ControlValueAccessor — works with `formControlName`/`[(ngModel)]`.\n */\n@Component({\n  selector: 'signng-switch',\n  imports: [SignngSwitch],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => Switch), multi: true }],\n  template: `\n    <button\n      type=\"button\"\n      signngSwitch\n      [(checked)]=\"checked\"\n      [disabled]=\"isDisabled()\"\n      (blur)=\"onTouched()\"\n      [attr.aria-labelledby]=\"ariaLabelledby()\"\n      [attr.aria-label]=\"ariaLabel()\"\n      [class]=\"\n        cn(\n          'group inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-disabled:cursor-not-allowed aria-disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input',\n          class()\n        )\n      \"\n    >\n      <!-- thumb position reads the primitive's authoritative host data-state, not a duplicated signal -->\n      <span\n        class=\"pointer-events-none block size-5 rounded-full bg-background shadow-lg ring-0 transition-transform group-data-[state=checked]:translate-x-5 group-data-[state=unchecked]:translate-x-0\"\n      ></span>\n    </button>\n  `,\n})\nexport class Switch implements ControlValueAccessor {\n  readonly checked = model(false);\n  readonly disabled = input(false, { transform: booleanAttribute });\n  readonly ariaLabel = input<string | undefined>(undefined);\n  readonly ariaLabelledby = input<string | undefined>(undefined);\n  readonly class = input('');\n  protected readonly cn = cn;\n\n  private readonly formDisabled = signal(false);\n  protected readonly isDisabled = computed(() => this.disabled() || this.formDisabled());\n\n  private onChange: (value: boolean) => void = () => {};\n  protected onTouched: () => void = () => {};\n\n  constructor() {\n    effect(() => this.onChange(this.checked()));\n  }\n\n  writeValue(value: boolean): void {\n    this.checked.set(!!value);\n  }\n  registerOnChange(fn: (value: boolean) => void): void {\n    this.onChange = fn;\n  }\n  registerOnTouched(fn: () => void): void {\n    this.onTouched = fn;\n  }\n  setDisabledState(isDisabled: boolean): void {\n    this.formDisabled.set(isDisabled);\n  }\n}\n",
+      "integrity": "sha256-QKUTUDFsKHtVUdm11aD+6a7OyhjA7mybVVnMYtRFy5k="
+    }
+  ],
+  "integrity": "sha256-b+nAgCh8zhf4amVzGo/5rfA4PbzQVAmTRSKJFSzKEK8="
+}

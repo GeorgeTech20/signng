@@ -1,0 +1,478 @@
+{
+  "$schema": "https://signng.dev/schema/registry.json",
+  "name": "signng",
+  "homepage": "https://signng.dev",
+  "items": [
+    {
+      "name": "i18n",
+      "type": "registry:lib",
+      "description": "SIGNNG_I18N token + provideSignngI18n() — translate all built-in UI strings from one place.",
+      "integrity": "sha256-o9Br+gAQRi8hPB1hxqq/8FcOfTBo04ieCS6KHc91Z4E="
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "description": "Smart DataTable: sort, global search, row selection, inline edit, grouping, pagination, CSV export.",
+      "integrity": "sha256-Nt1/q7z1xsGuWWjsf46x7rcaqIKlTQzimfkmXPLEioI="
+    },
+    {
+      "name": "chart-analytics",
+      "type": "registry:ui",
+      "description": "Multi-series analytics charts: multi-line, stacked/grouped bars, scatter, heatmap, legend, hover crosshair.",
+      "integrity": "sha256-k2bxR3lFFt+FcQMIBpKfrmt/yxKYcy6IukbBlvbPqYo="
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "description": "Drag-and-drop FileUpload + ImageUpload (thumbnail preview), type/size validation.",
+      "integrity": "sha256-DbhaBbf9Rip+QNPhMVFtVq+zDdg+SBz/iQonvdcVYes="
+    },
+    {
+      "name": "login-form",
+      "type": "registry:ui",
+      "description": "Composed auth block (login / signup / forgot) with optional social providers.",
+      "integrity": "sha256-2PWQ8jcP2zOHS+guLuC13rxUDc+lrC1eXMCC4E4iXcw="
+    },
+    {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "description": "KPI tile: label, value, colored delta chip, optional icon.",
+      "integrity": "sha256-smkwGWE5P7amNjfkTcaK7sEVv4Wnop3zpHd8OS9M1UY="
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "description": "Centered empty/zero-results placeholder with icon, title, action slot.",
+      "integrity": "sha256-6cXX1PrVANrk049SjJpC/FK6HZTeEWdlOtklnG0seF4="
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "description": "Vertical activity feed with colored nodes, title, time, description.",
+      "integrity": "sha256-olwbmY8ccSy+n8rpwi9fk32pzzaX5bIt3VPFMMgrL7k="
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "description": "Multi-step wizard progress indicator (numbered nodes, connectors, aria-current).",
+      "integrity": "sha256-e3MHjD2wDgVEtX+HodFslj52FU7Wt7OHMLtJnwkV07E="
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "description": "Numeric spinner: clamp, step, prefix/suffix, arrow keys, role=spinbutton.",
+      "integrity": "sha256-urEXMwybf4HYLjzG6nExZXD3aeDIXtHpW/k2a35Gd/E="
+    },
+    {
+      "name": "multi-select",
+      "type": "registry:ui",
+      "description": "Multi-select with removable chips + toggle checklist panel (aria-multiselectable).",
+      "integrity": "sha256-z0kwe5YkhgNthUCSmvNo1zOwOY0YYsqT58i4g66QOFQ="
+    },
+    {
+      "name": "tag-input",
+      "type": "registry:ui",
+      "description": "Free-text tag entry: Enter/comma adds, Backspace removes, dedup.",
+      "integrity": "sha256-MP53MMwZdVhw4/ySmkHtGJj8oe38AwZTI9wzDpSV48o="
+    },
+    {
+      "name": "tree-view",
+      "type": "registry:ui",
+      "description": "Collapsible hierarchy (file-explorer), recursive ng-template, role=tree.",
+      "integrity": "sha256-g/68ei3839hjK9dfdsS0ZHCZZEnRiqGgrTSre+qNAD0="
+    },
+    {
+      "name": "date-range-picker",
+      "type": "registry:ui",
+      "description": "Popover month grid selecting a start-end date range with tinted in-range days.",
+      "integrity": "sha256-VIxOEhnvh2rnduueN4ebXnPcXH6dKo8hGCxJdjjzdWI="
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "description": "Star rating control (hover preview, keyboard, role=slider).",
+      "integrity": "sha256-IsVQ9gB+Nnp/Cw+r3IPE4FewlDAdRdP8jE3xvgjiCis="
+    },
+    {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "description": "Color picker: preset swatches + native picker + hex field, popover.",
+      "integrity": "sha256-wea4HCsG0V2P2kxWYbGFA2u8tGO4wCDZKHCgaFmYSxs="
+    },
+    {
+      "name": "kanban",
+      "type": "registry:ui",
+      "description": "Drag-and-drop Kanban board on @angular/cdk/drag-drop (reorder + cross-column transfer).",
+      "integrity": "sha256-pmSgMpV/LZTH1LWqotzAikXQyWTAEBaOSiaGsSphSsU="
+    },
+    {
+      "name": "notification-center",
+      "type": "registry:ui",
+      "description": "Bell trigger + unread badge + dropdown inbox (mark read / mark all).",
+      "integrity": "sha256-TIR2OL+gOhZt02e0QzWCmHcUhTSl+qiFEAf1x71CF6c="
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "description": "Validation-aware field (shadcn <Form> analogue): label + control + auto error from reactive-forms validators, aria wired.",
+      "integrity": "sha256-2z5A2iP/FE7QiZZAG/92oYR7XjRkXX07Ll82sCKkRRQ="
+    },
+    {
+      "name": "range-slider",
+      "type": "registry:ui",
+      "description": "Two-thumb range slider [low, high] (Radix-style): pointer drag + keyboard, role=slider per thumb.",
+      "integrity": "sha256-aQDoS0tp/Nq+zCwdd89D9+AP69eQ5vKZ7egcErk4FAk="
+    },
+    {
+      "name": "toolbar",
+      "type": "registry:ui",
+      "description": "role=toolbar with WAI-ARIA roving tabindex (single tab stop, arrow/Home/End) + separators.",
+      "integrity": "sha256-qQSt+C4GdN7LWkUyNqdTmDR5aWd1fJ3MrGjeITx4T2g="
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "description": "Loading spinner (role=status, accessible label, animate-spin, reduced-motion safe).",
+      "integrity": "sha256-GMF/epLTYI/H6frTMfVsXPbgAvhkN5BkbgXIqPr2vk8="
+    },
+    {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "description": "Hour + minute picker via native selects (HH:mm, configurable minute step), zero deps.",
+      "integrity": "sha256-HMS0DqR1uyKLR6i+rFvjouyEQKpDntI4HGYJnWy0OfQ="
+    },
+    {
+      "name": "segmented",
+      "type": "registry:ui",
+      "description": "iOS-style segmented control with sliding pill indicator (role=radiogroup, arrow keys).",
+      "integrity": "sha256-57mxNdDTcUbrTZxOpyzybkTfoynZvue4gF3mvDxyAt4="
+    },
+    {
+      "name": "transfer",
+      "type": "registry:ui",
+      "description": "Dual-list transfer/shuttle: check + move items between source and target panels.",
+      "integrity": "sha256-mpTvX1zDywSrdO7AI+Xn8HkOw1zuk6PfZn2dv0ljQR4="
+    },
+    {
+      "name": "descriptions",
+      "type": "registry:ui",
+      "description": "Semantic key/value detail list (dl/dt/dd) in a column grid; optional bordered box.",
+      "integrity": "sha256-C9g5V02HsfGelIFwjboZ9LbgSBDVy8v8QkR4dwb1M0w="
+    },
+    {
+      "name": "code",
+      "type": "registry:ui",
+      "description": "Syntax-highlighted code block (always-dark like shadcn) + copy button; safe tokenizer, no deps.",
+      "integrity": "sha256-nFMaGOe9pEeqC6vCS/ihro5dyS6bVvfGdrAt/2illAI="
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "description": "cn() class-merge helper.",
+      "integrity": "sha256-19saZq7QlRK4R1B3muj7uHJxWQKaV9ig2LPadhq0zBk="
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "description": "Button with CVA variants. WCAG 2.2 AA focus + target size.",
+      "integrity": "sha256-Y56pamJ74moum5+ZqInCXP2BLNSuxlvs13N8MweQLh0="
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "description": "Accessible slider styled on the @signng/core/slider primitive.",
+      "integrity": "sha256-HJf6Q5xV8pvnT5wUewHZPe+KdeWXykHRgsoU0IRjF/o="
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "description": "Accessible switch (role=switch) on @signng/core/switch.",
+      "integrity": "sha256-b+nAgCh8zhf4amVzGo/5rfA4PbzQVAmTRSKJFSzKEK8="
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "description": "Tri-state checkbox (role=checkbox, mixed) on @signng/core/checkbox.",
+      "integrity": "sha256-2Y/gVkRj3010DAeB2Sg7mGh+znk+FtAku7fmrnoQ2+g="
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "description": "Styled native input.",
+      "integrity": "sha256-vhI9UfShC8h7x/K14UBsY4BgGgmbU55R4KEOYj/ycRc="
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "description": "Styled native label.",
+      "integrity": "sha256-at54PXzklj3Ff07srqNjuOipshbSW/b+0nZ2NQTXGsg="
+    },
+    {
+      "name": "overlay",
+      "type": "registry:style",
+      "description": "CDK overlay prebuilt CSS + dialog backdrop. Required by dialog/tooltip/popover.",
+      "integrity": "sha256-V4EK26CSnmqGKNrBF5J/gznfCcouhRihOSx8S1foWsQ="
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "description": "Modal dialog (focus trap, backdrop, Esc, restore focus) on @signng/core/dialog.",
+      "integrity": "sha256-Lpl0bayiPhI+kOXO3XA6u+ClCeuivrnzbX5xZkfdVC4="
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "description": "Tooltip via CDK connected overlay (hover/focus, role=tooltip).",
+      "integrity": "sha256-O1kVaKdlXWQK3kvlGWjMLTI3cmhCS0sCBIlOCc7hAkQ="
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "description": "Accessible radio group (roving tabindex, arrow nav) on @signng/core/radio-group.",
+      "integrity": "sha256-0FvE/FBopl/ZGzwrBcE77fibf7MJTPuvd+XSYiKbvoE="
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "description": "Non-modal popover (CDK connected overlay, outside-click + Esc dismiss).",
+      "integrity": "sha256-lB5/bKf8NdJ5tAeHsTj9xikbPMYBjzYONkUKOpb7Xxk="
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "description": "Styled native textarea.",
+      "integrity": "sha256-g7slZtZShtqPbugvodTwD9X7Ya8TUEHUb8Dqqo6VSvM="
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "description": "Accordion over @angular/aria (keyboard, aria-expanded, lazy content inherited).",
+      "integrity": "sha256-/zu5wjBlcXMoyR4wMe5bc2r1PeDWsf6TWuEvN77ka84="
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "description": "Select: trigger + CDK overlay hosting @angular/aria Listbox (single-select).",
+      "integrity": "sha256-XqpGDysu5H3AkrG8AiUsTgxlUsXx2W/YxK7IznEFpyI="
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "description": "Card part directives (header/title/description/content/footer).",
+      "integrity": "sha256-WckX0DAZUF/fXa0MpnUKWK/Hr7eki3eGvW+x6e1OSww="
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "description": "Badge with CVA variants.",
+      "integrity": "sha256-cUSSYIIFLgcjxYSxVKbpCdP+fPEcCbgtCZEXf/RyeW8="
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "description": "Separator (role=separator, orientation).",
+      "integrity": "sha256-Yyas+XTI2YXSu2h+G8Z9h0rizE88vcmGQk4zJGsvrI8="
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "description": "Avatar with image + initials fallback; src run through an image-scoped URL allowlist.",
+      "integrity": "sha256-5lkvKktFdvpVdV9TYNkVqotxGxKmmN1ZzPsAGBBj7c0="
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "description": "Confirm/cancel modal (role=alertdialog) on @signng/core/dialog.",
+      "integrity": "sha256-/PZHXDrkZPkuXKQwAtnTUZZwotKFEPHK3zHoHGtkQ/M="
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "description": "Dropdown menu over @angular/aria Menu (role=menu, roving, typeahead) in a CDK overlay.",
+      "integrity": "sha256-asOPQwbGWxm7NBIxDUtIj8qOfkG2AWyLs6uggLjM4sQ="
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "description": "Date-grid calendar (controlled APG grid: arrows/Home/End/PageUp-Down, Intl labels).",
+      "integrity": "sha256-HisaBQfLSSQ5KFBaO1EEss/TS1+K+vv+zpSfB0Bsbzg="
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "description": "Date picker: trigger button + Calendar in a CDK overlay dialog (focus trap, Esc).",
+      "integrity": "sha256-Rh0tgBv4kCgncEGJ47htCSAmUTUgiEMaPrDCBhM2GNE="
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "description": "Searchable single-select (controlled APG combobox: input + CDK overlay listbox).",
+      "integrity": "sha256-Vg8druCjOjn2rhwtRjGvUW7J6704v/W0z7KSuVjKoOg="
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "description": "Side drawer (edge-positioned modal) on @signng/core/dialog.",
+      "integrity": "sha256-rEbv2/ASzWE9Hj7ky7qxViQqPost8KtZIm/wdIfS7Yg="
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "description": "Toast service + viewport (signal queue, auto-dismiss, aria-live status/alert).",
+      "integrity": "sha256-jKih6o15Cidfse5+fQxSYFsaLJUzzy+sWj2TtrKGKnA="
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "description": "Alert callout (title/description directives, CVA variants).",
+      "integrity": "sha256-6JlgwbHu0zBH/HKh9G2EWibbWFfESNnyM0UaPBZ7cms="
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "description": "Skeleton loading placeholder (decorative, aria-hidden).",
+      "integrity": "sha256-/1cZZty52s+93sRom+1JFcpOpTrM2RhdyYCiBEg0ZV8="
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "description": "Progress bar (role=progressbar, aria-valuenow/min/max).",
+      "integrity": "sha256-pjpgRtprXYpge/DpW6a2W5kVeeQ7QoCGE0DTQcyiwOM="
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "description": "Table part directives (native semantics + skin).",
+      "integrity": "sha256-0lRBzMBkP4kbfpQ8PZoDdJRxIwVqm3Gi7PFPMiDnPeQ="
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "description": "Two-state toggle button (aria-pressed, CVA variants).",
+      "integrity": "sha256-qClWXfeajoy7+5Aef8GOoeNx8q7dAIki1aM0w/gzoZc="
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "description": "Single disclosure (aria-expanded + lazy region).",
+      "integrity": "sha256-jI3bFr9scqbqcAOTJ3bjJYchMhmIwi9rUzdxIHjxuQc="
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "description": "Supplementary hover/focus card (CDK overlay, hoverable, Esc).",
+      "integrity": "sha256-0MAkzQIS+88kvuDfZfbRWOiO/siM2UIhfimP51opSdA="
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "description": "Bottom-sheet drawer (grab handle) on @signng/core/dialog.",
+      "integrity": "sha256-ciWX7wPHEk1iiOWLRP69f0bqvVpZ7cSIRuE2nXLgA1M="
+    },
+    {
+      "name": "form-field",
+      "type": "registry:ui",
+      "description": "Form field wrapper (label + control + description + error, role=alert).",
+      "integrity": "sha256-ppTsNB8A8RSqte/5EPeBuR4KvZJL78saNHIgZaDAAxE="
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "description": "Collapsible app-shell sidebar (header/content/footer + items + trigger).",
+      "integrity": "sha256-nYz7g8oFCfij5TZhmUjrAFRjFM9+a3v5aIA8K5u64zA="
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "description": "Minimal pure-SVG charts (bar, line, donut, sparkline) — signals, role=img, no deps.",
+      "integrity": "sha256-Mt+S8czpDwR5eTvFbCU9DSosaNi/iIkb6nDbqxutRWg="
+    },
+    {
+      "name": "icon",
+      "type": "registry:ui",
+      "description": "Owned minimal stroke icon set (~30 feather-style) rendered as path d (no innerHTML).",
+      "integrity": "sha256-vWMVp/U0M5ZO20PBij7d/yY470ZQLMTW3vEK4xxdzto="
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "description": "Navigation menu: disclosure triggers revealing projected panels (CDK overlay, hover/click).",
+      "integrity": "sha256-zEu7t3b5rghAFLuM4JSuB9vuRSyLqlI6YFlu3AspoA8="
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "description": "Menubar: role=menubar of menu buttons, each an @angular/aria Menu in a CDK overlay.",
+      "integrity": "sha256-zR/JeREhoZ7HpWto9pJqOQ51eXAirl6l0V3eGdSnDQo="
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "description": "Segmented OTP input (role=group, auto-advance, paste, numeric autofill).",
+      "integrity": "sha256-N/bqUee5bYHjSJBy3fQMxRzXoMyjTm2faHRVDzFeT/E="
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "description": "Carousel region (prev/next + arrow keys, aria-roledescription, live region).",
+      "integrity": "sha256-zjWGVoQn+jAeb9idUas4/6P+nujlllONwFrwchz8Ac0="
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "description": "Resizable two-panel split (pointer drag + keyboard, role=separator).",
+      "integrity": "sha256-GL5JdI7pmodoGMY1fImwQJhfO6+n75iciYKfEWJx3t8="
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "description": "Roving toggle group (single/multiple, role=group, arrow nav) reusing toggle variants.",
+      "integrity": "sha256-YyrDd7BSRYS9bQtHImhWT8xa6XdXV56IZtOjIrZ6ghg="
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "description": "Right-click menu over @angular/aria Menu, positioned at the pointer (CDK overlay).",
+      "integrity": "sha256-z78xahAr/6Y3oDxFwRQtjoaqt0RMKhXnwihvfBj/l2U="
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "description": "Styled scroll container (thin themed scrollbar).",
+      "integrity": "sha256-bmUbuZ3D9qMOOshaG7MPo2H92n1wRNPI4gEWcAGm5f0="
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "description": "Aspect-ratio box.",
+      "integrity": "sha256-emguE2/fleQI1lIK8sl0BMoJvZzKpEZx5vSces9wnok="
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "description": "Breadcrumb nav part directives (aria-current page, separator).",
+      "integrity": "sha256-VARkriPHqRdVb1e2IQVbaYZLdbNzXKo9DlmmTLXZGz4="
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "description": "Pagination nav (prev/next + windowed page numbers, aria-current page).",
+      "integrity": "sha256-zNSm8UQonuBwCaQowiQKx90Y4HqA4nmtHL7qkaHfOAs="
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "description": "Command palette: modal (@signng/core/dialog) + filtered command listbox.",
+      "integrity": "sha256-tcb3Arn0bgTPpNKf5+SmBiwMFkV3fIg4XlpZNIw84XE="
+    },
+    {
+      "name": "theme",
+      "type": "registry:theme",
+      "description": "SignNG oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
+      "integrity": "sha256-PZ8B7j8rqbkp42ZRvUZED2gwzZqHYcgxpchB7bhtbiE="
+    }
+  ],
+  "algorithm": "ed25519",
+  "signature": "OnnqMq9FHdOZoZBEUNoFprts2xsiV9AL2EA6cKAbA6KIo9lJaTdokXuHAdzGLfnnH0V2ibUAMm3WiiLBB9rbAQ==",
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
+}

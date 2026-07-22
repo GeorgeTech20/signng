@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "skeleton",
+  "type": "registry:ui",
+  "description": "Skeleton loading placeholder (decorative, aria-hidden).",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/skeleton.ts",
+      "target": "src/components/ui/skeleton.ts",
+      "type": "registry:ui",
+      "content": "import { Directive, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/** Skeleton placeholder (helm). Decorative (aria-hidden) pulsing block. */\n@Directive({\n  selector: '[signngSkeleton]',\n  host: {\n    'aria-hidden': 'true',\n    '[class]': 'cls()',\n  },\n})\nexport class Skeleton {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('animate-pulse rounded-md bg-muted', this.class()));\n}\n",
+      "integrity": "sha256-hdKzdiK6rVtDTiegOy9NJg9X3tdnOsu8Y6OoNv+kwRQ="
+    }
+  ],
+  "integrity": "sha256-/1cZZty52s+93sRom+1JFcpOpTrM2RhdyYCiBEg0ZV8="
+}

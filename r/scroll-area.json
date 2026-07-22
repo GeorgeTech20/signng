@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "scroll-area",
+  "type": "registry:ui",
+  "description": "Styled scroll container (thin themed scrollbar).",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/scroll-area.ts",
+      "target": "src/components/ui/scroll-area.ts",
+      "type": "registry:ui",
+      "content": "import { Directive, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/** Styled scroll container (helm). Native overflow + thin themed scrollbar. Set a max height. */\n@Directive({\n  selector: '[signngScrollArea]',\n  host: {\n    // Keyboard users must be able to focus + scroll the region (axe scrollable-region-focusable).\n    tabindex: '0',\n    '[class]': 'cls()',\n  },\n})\nexport class ScrollArea {\n  readonly class = input('');\n  protected readonly cls = computed(() =>\n    cn(\n      'relative overflow-auto rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring [scrollbar-width:thin] [scrollbar-color:var(--color-border)_transparent]',\n      this.class(),\n    ),\n  );\n}\n",
+      "integrity": "sha256-aR5tIosIstOB4XNH3N8kzSXDA+j+Mi785eHJTiLFYUA="
+    }
+  ],
+  "integrity": "sha256-bmUbuZ3D9qMOOshaG7MPo2H92n1wRNPI4gEWcAGm5f0="
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "utils",
+  "type": "registry:lib",
+  "description": "cn() class-merge helper.",
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "target": "src/lib/utils.ts",
+      "type": "registry:lib",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\n/** Merge Tailwind classes with conflict resolution. Copied into the consumer repo. */\nexport function cn(...inputs: ClassValue[]): string {\n  return twMerge(clsx(inputs));\n}\n",
+      "integrity": "sha256-7C0xr5632aMAFtSffNbZw4JlHHZTH4hGDOcciWozUdc="
+    }
+  ],
+  "integrity": "sha256-19saZq7QlRK4R1B3muj7uHJxWQKaV9ig2LPadhq0zBk="
+}

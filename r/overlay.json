@@ -1,0 +1,18 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "overlay",
+  "type": "registry:style",
+  "description": "CDK overlay prebuilt CSS + dialog backdrop. Required by dialog/tooltip/popover.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/signng-overlay.css",
+      "target": "src/signng-overlay.css",
+      "type": "registry:style",
+      "content": "/* signng overlay styles — required by dialog / tooltip / popover (CDK overlay). */\n@import '@angular/cdk/overlay-prebuilt.css';\n\n/* Modal backdrop: opaque, pointer-blocking (clickjacking redress). */\n.signng-dialog-backdrop {\n  background: rgb(0 0 0 / 0.5);\n}\n\n/* Enter motion for every CDK-overlay panel (dialog, popover, dropdown, tooltip, sheet, drawer, select…)\n   — one rule, no per-component edits. Disabled under prefers-reduced-motion (WCAG 2.3.3). */\n@media (prefers-reduced-motion: no-preference) {\n  @keyframes signng-pop-in {\n    from { opacity: 0; transform: scale(0.97) translateY(-2px); }\n    to { opacity: 1; transform: none; }\n  }\n  @keyframes signng-overlay-fade {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n  .cdk-overlay-pane > * {\n    animation: signng-pop-in 0.16s cubic-bezier(0.16, 1, 0.3, 1);\n  }\n  .signng-dialog-backdrop {\n    animation: signng-overlay-fade 0.2s ease-out;\n  }\n}\n",
+      "integrity": "sha256-IShli4kI8vj/m7XHBl83DQNizIkoFWJey6/K59WOSag="
+    }
+  ],
+  "integrity": "sha256-V4EK26CSnmqGKNrBF5J/gznfCcouhRihOSx8S1foWsQ="
+}

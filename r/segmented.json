@@ -1,0 +1,18 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "segmented",
+  "type": "registry:ui",
+  "description": "iOS-style segmented control with sliding pill indicator (role=radiogroup, arrow keys).",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/ui/segmented.ts",
+      "target": "src/components/ui/segmented.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';\n\nexport interface SegmentOption {\n  value: string;\n  label: string;\n}\n\n/**\n * Segmented (helm) — an iOS-style segmented control: a row of options with a sliding pill indicator that\n * animates to the active one. role=radiogroup with role=radio + aria-checked per option; Arrow keys move\n * selection (under prefers-reduced-motion the slide is dropped by the browser). `value` is a two-way model.\n * Signals-only, OnPush, no deps.\n */\n@Component({\n  selector: 'signng-segmented',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'inline-block' },\n  template: `\n    <div\n      role=\"radiogroup\"\n      [attr.aria-label]=\"ariaLabel() || null\"\n      (keydown)=\"onKey($event)\"\n      class=\"relative inline-flex rounded-lg bg-muted p-1 text-sm\"\n    >\n      @if (activeIndex() >= 0) {\n        <div\n          class=\"absolute bottom-1 top-1 rounded-md bg-background shadow-sm transition-all duration-200 motion-reduce:transition-none\"\n          [style.left]=\"'calc(' + activeIndex() * unit() + '% + 4px)'\"\n          [style.width]=\"'calc(' + unit() + '% - 8px)'\"\n        ></div>\n      }\n      @for (opt of options(); track opt.value) {\n        <button\n          type=\"button\"\n          role=\"radio\"\n          [attr.aria-checked]=\"opt.value === value()\"\n          (click)=\"value.set(opt.value)\"\n          [class]=\"\n            'relative z-10 flex-1 whitespace-nowrap rounded-md px-3 py-1.5 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ' +\n            (opt.value === value() ? 'text-foreground' : 'text-muted-foreground hover:text-foreground')\n          \"\n        >\n          {{ opt.label }}\n        </button>\n      }\n    </div>\n  `,\n})\nexport class Segmented {\n  readonly options = input<SegmentOption[]>([]);\n  readonly value = model<string>('');\n  readonly ariaLabel = input('');\n\n  protected readonly activeIndex = computed(() => this.options().findIndex((o) => o.value === this.value()));\n  protected unit(): number {\n    const n = this.options().length;\n    return n ? 100 / n : 0;\n  }\n  protected onKey(e: KeyboardEvent): void {\n    const opts = this.options();\n    if (!opts.length) return;\n    const i = Math.max(0, this.activeIndex());\n    let n = i;\n    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % opts.length;\n    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + opts.length) % opts.length;\n    else return;\n    e.preventDefault();\n    this.value.set(opts[n].value);\n  }\n}\n",
+      "integrity": "sha256-hj/74cXbKjzs72tpyJXtzeTTrxyUolKmEXzwajn1WcA="
+    }
+  ],
+  "integrity": "sha256-57mxNdDTcUbrTZxOpyzybkTfoynZvue4gF3mvDxyAt4="
+}

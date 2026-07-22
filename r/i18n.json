@@ -1,0 +1,18 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "i18n",
+  "type": "registry:lib",
+  "description": "SIGNNG_I18N token + provideSignngI18n() — translate all built-in UI strings from one place.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/ui/i18n.ts",
+      "target": "src/components/ui/i18n.ts",
+      "type": "registry:lib",
+      "content": "import { InjectionToken, type Provider } from '@angular/core';\n\n/**\n * Centralised UI strings for SignNG components (the labels NOT supplied as component inputs — mostly\n * icon-button aria-labels + a few defaults). Defaults are English; translate the whole library from\n * one place with `provideSignngI18n({...})`. Components read it via `inject(SIGNNG_I18N)`.\n *\n * Per-instance text (label/title/placeholder/triggerLabel/items) is still passed as inputs, and dates\n * are locale-aware via Intl (Calendar/DatePicker `locale` + `weekStartsOn`) — this token covers the rest.\n */\nexport interface SignngMessages {\n  close: string;\n  selectPlaceholder: string;\n  options: string;\n  empty: string;\n  searchPlaceholder: string;\n  calendarPrevMonth: string;\n  calendarNextMonth: string;\n  calendarLabel: string;\n  paginationLabel: string;\n  paginationPrev: string;\n  paginationNext: string;\n  paginationPage: (n: number) => string;\n  carouselLabel: string;\n  carouselPrev: string;\n  carouselNext: string;\n  carouselRoleDescription: string;\n  slideRoleDescription: string;\n  slideOf: (i: number, total: number) => string;\n  sidebarToggle: string;\n  sidebarNav: string;\n  toastClose: string;\n  toastRegion: string;\n  menu: string;\n  contextMenu: string;\n  dialog: string;\n  panel: string;\n  confirmation: string;\n  moreInfo: string;\n  datePicker: string;\n  resizePanels: string;\n  otpGroup: string;\n  otpDigit: (i: number, total: number) => string;\n}\n\nexport const SIGNNG_MESSAGES_EN: SignngMessages = {\n  close: 'Close',\n  selectPlaceholder: 'Select…',\n  options: 'Options',\n  empty: 'No results',\n  searchPlaceholder: 'Search…',\n  calendarPrevMonth: 'Previous month',\n  calendarNextMonth: 'Next month',\n  calendarLabel: 'Calendar',\n  paginationLabel: 'Pagination',\n  paginationPrev: 'Previous page',\n  paginationNext: 'Next page',\n  paginationPage: (n) => `Page ${n}`,\n  carouselLabel: 'Carousel',\n  carouselPrev: 'Previous slide',\n  carouselNext: 'Next slide',\n  carouselRoleDescription: 'carousel',\n  slideRoleDescription: 'slide',\n  slideOf: (i, total) => `${i} of ${total}`,\n  sidebarToggle: 'Toggle sidebar',\n  sidebarNav: 'Main navigation',\n  toastClose: 'Close',\n  toastRegion: 'Notifications',\n  menu: 'Menu',\n  contextMenu: 'Context menu',\n  dialog: 'Dialog',\n  panel: 'Panel',\n  confirmation: 'Confirmation',\n  moreInfo: 'More information',\n  datePicker: 'Date picker',\n  resizePanels: 'Resize panels',\n  otpGroup: 'Verification code',\n  otpDigit: (i, total) => `Digit ${i} of ${total}`,\n};\n\nexport const SIGNNG_I18N = new InjectionToken<SignngMessages>('SIGNNG_I18N', {\n  providedIn: 'root',\n  factory: () => SIGNNG_MESSAGES_EN,\n});\n\n/** Provide a (partial) translation of the SignNG UI strings, merged over the English defaults. */\nexport function provideSignngI18n(messages: Partial<SignngMessages>): Provider {\n  return { provide: SIGNNG_I18N, useValue: { ...SIGNNG_MESSAGES_EN, ...messages } };\n}\n",
+      "integrity": "sha256-JcN1fc/89++XTR+IbKwqHpeVTwKWA5C8+libH+easAY="
+    }
+  ],
+  "integrity": "sha256-o9Br+gAQRi8hPB1hxqq/8FcOfTBo04ieCS6KHc91Z4E="
+}

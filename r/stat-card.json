@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "stat-card",
+  "type": "registry:ui",
+  "description": "KPI tile: label, value, colored delta chip, optional icon.",
+  "dependencies": [],
+  "registryDependencies": [
+    "icon"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/stat-card.ts",
+      "target": "src/components/ui/stat-card.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';\nimport { Icon, type IconName } from '@/components/ui/icon';\n\n/**\n * StatCard (helm) — a KPI tile: label + optional icon, a large value, and a colored delta chip\n * (up = primary, down = destructive). Presentational; signals-only, OnPush. Compose several in a grid.\n */\n@Component({\n  selector: 'signng-stat-card',\n  imports: [Icon],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'block' },\n  template: `\n    <div class=\"rounded-lg border border-border bg-card p-4\">\n      <div class=\"flex items-center justify-between\">\n        <span class=\"text-sm text-muted-foreground\">{{ label() }}</span>\n        @if (icon()) { <span class=\"text-muted-foreground\"><signng-icon [name]=\"icon()!\" [size]=\"16\" /></span> }\n      </div>\n      <div class=\"mt-1.5 flex items-end gap-2\">\n        <span class=\"text-2xl font-semibold tracking-tight\">{{ value() }}</span>\n        @if (delta()) {\n          <span [class]=\"chip()\">\n            <signng-icon [name]=\"up() ? 'trending' : 'arrow-right'\" [size]=\"12\" />\n            {{ delta() }}\n          </span>\n        }\n      </div>\n      @if (hint()) { <p class=\"mt-1 text-xs text-muted-foreground\">{{ hint() }}</p> }\n    </div>\n  `,\n})\nexport class StatCard {\n  readonly label = input('');\n  readonly value = input<string | number>('');\n  readonly delta = input('');\n  readonly up = input(true);\n  readonly icon = input<IconName | undefined>(undefined);\n  readonly hint = input('');\n\n  protected readonly chip = computed(() =>\n    'inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs font-medium ' +\n    (this.up() ? 'bg-primary/10 text-primary' : 'bg-destructive/10 text-destructive'),\n  );\n}\n",
+      "integrity": "sha256-y4S+Mk2AxZaBurHeVJsLND1l4zGFVPVBzfsGLTlEzpY="
+    }
+  ],
+  "integrity": "sha256-smkwGWE5P7amNjfkTcaK7sEVv4Wnop3zpHd8OS9M1UY="
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "number-input",
+  "type": "registry:ui",
+  "description": "Numeric spinner: clamp, step, prefix/suffix, arrow keys, role=spinbutton.",
+  "dependencies": [],
+  "registryDependencies": [
+    "icon"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/number-input.ts",
+      "target": "src/components/ui/number-input.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';\nimport { Icon } from '@/components/ui/icon';\n\n/**\n * NumberInput (helm) — a numeric spinner with clamp, step, prefix/suffix (e.g. \"$\" / \"%\") and\n * keyboard ↑/↓. Value is a two-way `model`. role=spinbutton with aria-valuenow/min/max. Signals-only,\n * OnPush. Empty input maps to null.\n */\n@Component({\n  selector: 'signng-number-input',\n  imports: [Icon],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'inline-block' },\n  template: `\n    <div class=\"inline-flex h-9 items-stretch overflow-hidden rounded-md border border-input bg-background focus-within:ring-2 focus-within:ring-ring\">\n      @if (prefix()) { <span class=\"flex items-center pl-2.5 text-sm text-muted-foreground\">{{ prefix() }}</span> }\n      <input\n        type=\"text\"\n        inputmode=\"decimal\"\n        role=\"spinbutton\"\n        [attr.aria-valuenow]=\"value()\"\n        [attr.aria-valuemin]=\"min() === null ? null : min()\"\n        [attr.aria-valuemax]=\"max() === null ? null : max()\"\n        [attr.aria-label]=\"label() || null\"\n        [value]=\"value() ?? ''\"\n        [placeholder]=\"placeholder()\"\n        (input)=\"onInput($any($event.target).value)\"\n        (keydown.arrowup)=\"$event.preventDefault(); step(1)\"\n        (keydown.arrowdown)=\"$event.preventDefault(); step(-1)\"\n        class=\"w-20 bg-transparent px-2.5 text-sm outline-none\"\n      />\n      @if (suffix()) { <span class=\"flex items-center pr-1 text-sm text-muted-foreground\">{{ suffix() }}</span> }\n      <div class=\"flex flex-col border-l border-input\">\n        <button type=\"button\" tabindex=\"-1\" (click)=\"step(1)\" [disabled]=\"atMax()\" aria-label=\"Aumentar\" class=\"flex flex-1 items-center justify-center px-1.5 hover:bg-accent disabled:opacity-40\">\n          <signng-icon name=\"chevron-up\" [size]=\"12\" />\n        </button>\n        <button type=\"button\" tabindex=\"-1\" (click)=\"step(-1)\" [disabled]=\"atMin()\" aria-label=\"Disminuir\" class=\"flex flex-1 items-center justify-center border-t border-input px-1.5 hover:bg-accent disabled:opacity-40\">\n          <signng-icon name=\"chevron-down\" [size]=\"12\" />\n        </button>\n      </div>\n    </div>\n  `,\n})\nexport class NumberInput {\n  readonly value = model<number | null>(null);\n  readonly min = input<number | null>(null);\n  readonly max = input<number | null>(null);\n  readonly stepBy = input(1);\n  readonly prefix = input('');\n  readonly suffix = input('');\n  readonly placeholder = input('');\n  readonly label = input('');\n\n  protected readonly atMin = computed(() => this.min() !== null && (this.value() ?? this.min()!) <= this.min()!);\n  protected readonly atMax = computed(() => this.max() !== null && (this.value() ?? this.max()!) >= this.max()!);\n\n  protected onInput(raw: string): void {\n    const s = raw.replace(',', '.').trim();\n    if (s === '') {\n      this.value.set(null);\n      return;\n    }\n    const n = Number(s);\n    if (!Number.isNaN(n)) this.value.set(this.clamp(n));\n  }\n  protected step(dir: number): void {\n    const next = (this.value() ?? 0) + dir * this.stepBy();\n    this.value.set(this.clamp(next));\n  }\n  private clamp(n: number): number {\n    const lo = this.min();\n    const hi = this.max();\n    if (lo !== null && n < lo) return lo;\n    if (hi !== null && n > hi) return hi;\n    return n;\n  }\n}\n",
+      "integrity": "sha256-vyFNj9kDv3mX2Fy0HW+rNiCRPKGGWlvNijOL2VGj++U="
+    }
+  ],
+  "integrity": "sha256-urEXMwybf4HYLjzG6nExZXD3aeDIXtHpW/k2a35Gd/E="
+}

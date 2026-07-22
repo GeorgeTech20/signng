@@ -1,0 +1,20 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "description": "Card part directives (header/title/description/content/footer).",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/card.ts",
+      "target": "src/components/ui/card.ts",
+      "type": "registry:ui",
+      "content": "import { Directive, computed, input } from '@angular/core';\nimport { cn } from '@/lib/utils';\n\n/** Card part directives (helm). Compose: `<div signngCard><div signngCardHeader>…`. */\n@Directive({ selector: '[signngCard]', host: { '[class]': 'cls()' } })\nexport class Card {\n  readonly class = input('');\n  protected readonly cls = computed(() =>\n    cn('rounded-lg border border-border bg-card text-card-foreground shadow-sm', this.class()),\n  );\n}\n\n@Directive({ selector: '[signngCardHeader]', host: { '[class]': 'cls()' } })\nexport class CardHeader {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('flex flex-col gap-1.5 p-6', this.class()));\n}\n\n@Directive({ selector: '[signngCardTitle]', host: { '[class]': 'cls()' } })\nexport class CardTitle {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('font-semibold leading-none tracking-tight', this.class()));\n}\n\n@Directive({ selector: '[signngCardDescription]', host: { '[class]': 'cls()' } })\nexport class CardDescription {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('text-sm text-muted-foreground', this.class()));\n}\n\n@Directive({ selector: '[signngCardContent]', host: { '[class]': 'cls()' } })\nexport class CardContent {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('p-6 pt-0', this.class()));\n}\n\n@Directive({ selector: '[signngCardFooter]', host: { '[class]': 'cls()' } })\nexport class CardFooter {\n  readonly class = input('');\n  protected readonly cls = computed(() => cn('flex items-center p-6 pt-0', this.class()));\n}\n\nexport const SIGNNG_CARD = [Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter] as const;\n",
+      "integrity": "sha256-4DUktOxkZnHhqMmVbdOoGFidlaYV7VIF1XvwlgQ9FKg="
+    }
+  ],
+  "integrity": "sha256-WckX0DAZUF/fXa0MpnUKWK/Hr7eki3eGvW+x6e1OSww="
+}

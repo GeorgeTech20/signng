@@ -1,0 +1,23 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "description": "Tooltip via CDK connected overlay (hover/focus, role=tooltip).",
+  "dependencies": [
+    "@angular/cdk"
+  ],
+  "registryDependencies": [
+    "utils",
+    "overlay"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/tooltip.ts",
+      "target": "src/components/ui/tooltip.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, OnDestroy, inject, input, signal } from '@angular/core';\nimport { _IdGenerator } from '@angular/cdk/a11y';\nimport { CdkConnectedOverlay, CdkOverlayOrigin, type ConnectedPosition } from '@angular/cdk/overlay';\n\n/**\n * Styled Tooltip (helm) composed from @angular/cdk/overlay's declarative connected overlay.\n * Shows on hover/focus, hides on leave/blur/Escape. A short cancellable close-delay bridges the gap\n * between trigger and bubble so the pointer can land on the bubble without it detaching (WCAG 1.4.13\n * \"Hoverable\"). The bubble has a stable id; the trigger references it via aria-describedby while open.\n * Overlay opens only on interaction → SSR-safe.\n */\n@Component({\n  selector: 'signng-tooltip',\n  imports: [CdkConnectedOverlay, CdkOverlayOrigin],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: {\n    '(document:keydown.escape)': 'hide()',\n  },\n  template: `\n    <span\n      cdkOverlayOrigin\n      #origin=\"cdkOverlayOrigin\"\n      class=\"inline-flex\"\n      [attr.aria-describedby]=\"open() ? id : null\"\n      (mouseenter)=\"show()\"\n      (mouseleave)=\"scheduleHide()\"\n      (focusin)=\"show()\"\n      (focusout)=\"scheduleHide()\"\n    >\n      <ng-content />\n    </span>\n    <ng-template\n      cdkConnectedOverlay\n      [cdkConnectedOverlayOrigin]=\"origin\"\n      [cdkConnectedOverlayOpen]=\"open()\"\n      [cdkConnectedOverlayPositions]=\"positions\"\n      [cdkConnectedOverlayPush]=\"true\"\n    >\n      <div\n        [id]=\"id\"\n        role=\"tooltip\"\n        (mouseenter)=\"show()\"\n        (mouseleave)=\"scheduleHide()\"\n        class=\"z-50 max-w-xs rounded-md bg-foreground px-3 py-1.5 text-xs text-background shadow-md\"\n      >\n        {{ text() }}\n      </div>\n    </ng-template>\n  `,\n})\nexport class Tooltip implements OnDestroy {\n  readonly text = input('');\n\n  protected readonly id = inject(_IdGenerator).getId('signng-tooltip-');\n  protected readonly open = signal(false);\n  private timer: ReturnType<typeof setTimeout> | undefined;\n\n  protected show(): void {\n    if (this.timer) clearTimeout(this.timer);\n    this.timer = undefined;\n    this.open.set(true);\n  }\n  /** Defer the close so the pointer can cross the trigger→bubble gap (cancelled by show()). */\n  protected scheduleHide(): void {\n    if (typeof setTimeout === 'undefined') return;\n    if (this.timer) clearTimeout(this.timer);\n    this.timer = setTimeout(() => this.open.set(false), 120);\n  }\n  protected hide(): void {\n    if (this.timer) clearTimeout(this.timer);\n    this.timer = undefined;\n    this.open.set(false);\n  }\n  ngOnDestroy(): void {\n    if (this.timer) clearTimeout(this.timer);\n  }\n\n  protected readonly positions: ConnectedPosition[] = [\n    { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom', offsetY: -6 },\n    { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetY: 6 },\n  ];\n}\n",
+      "integrity": "sha256-4Bj5NmAYod2cZxAV8NRAOPiJXbHecmL51ApAYdQY7IA="
+    }
+  ],
+  "integrity": "sha256-O1kVaKdlXWQK3kvlGWjMLTI3cmhCS0sCBIlOCc7hAkQ="
+}

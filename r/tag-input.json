@@ -1,0 +1,21 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "tag-input",
+  "type": "registry:ui",
+  "description": "Free-text tag entry: Enter/comma adds, Backspace removes, dedup.",
+  "dependencies": [],
+  "registryDependencies": [
+    "icon",
+    "i18n"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/tag-input.ts",
+      "target": "src/components/ui/tag-input.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, inject, input, model, signal } from '@angular/core';\nimport { Icon } from '@/components/ui/icon';\nimport { SIGNNG_I18N } from '@/components/ui/i18n';\n\n/**\n * TagInput (helm) — free-text multi-value entry: type + Enter/comma to add a chip, Backspace on an empty\n * field removes the last, click ✕ to remove any. `tags` is a two-way `string[]` model; duplicates and\n * blanks are ignored. Signals-only, OnPush.\n */\n@Component({\n  selector: 'signng-tag-input',\n  imports: [Icon],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'block' },\n  template: `\n    <div\n      (click)=\"field.focus()\"\n      class=\"flex min-h-9 cursor-text flex-wrap items-center gap-1 rounded-md border border-input bg-background px-2 py-1 focus-within:ring-2 focus-within:ring-ring\"\n    >\n      @for (tag of tags(); track $index) {\n        <span class=\"inline-flex items-center gap-1 rounded bg-secondary px-1.5 py-0.5 text-xs text-secondary-foreground\">\n          {{ tag }}\n          <button type=\"button\" (click)=\"removeAt($index)\" [attr.aria-label]=\"'Quitar ' + tag\" class=\"hover:text-foreground\">\n            <signng-icon name=\"x\" [size]=\"12\" />\n          </button>\n        </span>\n      }\n      <input\n        #field\n        type=\"text\"\n        [value]=\"draft()\"\n        [attr.aria-label]=\"label() || null\"\n        [placeholder]=\"tags().length ? '' : (placeholder() || 'Añadir…')\"\n        (input)=\"draft.set($any($event.target).value)\"\n        (keydown)=\"onKey($event)\"\n        (blur)=\"commit()\"\n        class=\"min-w-[80px] flex-1 bg-transparent px-1 py-0.5 text-sm outline-none\"\n      />\n    </div>\n  `,\n})\nexport class TagInput {\n  readonly tags = model<string[]>([]);\n  readonly placeholder = input('');\n  readonly label = input('');\n  protected readonly i18n = inject(SIGNNG_I18N);\n  protected readonly draft = signal('');\n\n  protected onKey(e: KeyboardEvent): void {\n    if (e.key === 'Enter' || e.key === ',') {\n      e.preventDefault();\n      this.commit();\n    } else if (e.key === 'Backspace' && this.draft() === '' && this.tags().length) {\n      this.tags.set(this.tags().slice(0, -1));\n    }\n  }\n  protected commit(): void {\n    const v = this.draft().trim();\n    if (v && !this.tags().includes(v)) this.tags.set([...this.tags(), v]);\n    this.draft.set('');\n  }\n  protected removeAt(i: number): void {\n    this.tags.set(this.tags().filter((_, idx) => idx !== i));\n  }\n}\n",
+      "integrity": "sha256-vHg8nZYt3DWTHvGxkGSh8kDj3LsF6E5itAFwlHiaZos="
+    }
+  ],
+  "integrity": "sha256-MP53MMwZdVhw4/ySmkHtGJj8oe38AwZTI9wzDpSV48o="
+}

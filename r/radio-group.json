@@ -1,0 +1,22 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "radio-group",
+  "type": "registry:ui",
+  "description": "Accessible radio group (roving tabindex, arrow nav) on @signng/core/radio-group.",
+  "dependencies": [
+    "@signng/core"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/radio-group.ts",
+      "target": "src/components/ui/radio-group.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, effect, forwardRef, inject } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { SignngRadio, SignngRadioGroup } from '@signng/core/radio-group';\n\n/**\n * Styled RadioGroup (helm) over the @signng/core/radio-group compound primitive.\n * Container: `<signng-radio-group [(value)]=\"x\" aria-labelledby=\"...\">`.\n * Item: `<signng-radio value=\"a\">Label</signng-radio>` — the projected text is the radio's name.\n * Implements ControlValueAccessor — works with `formControlName`/`[(ngModel)]` too.\n */\n@Component({\n  selector: 'signng-radio-group',\n  hostDirectives: [\n    { directive: SignngRadioGroup, inputs: ['value', 'disabled', 'orientation'], outputs: ['valueChange'] },\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: { class: 'grid gap-2', '(focusout)': 'onTouched()' },\n  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RadioGroup), multi: true }],\n  template: `<ng-content />`,\n})\nexport class RadioGroup implements ControlValueAccessor {\n  // Injected directly (bypasses hostDirectives' template-binding-only forwarding) so CVA can set\n  // value/disabled imperatively — both are `model()` on the primitive, so this is a plain signal write.\n  private readonly group = inject(SignngRadioGroup, { self: true });\n\n  private onChange: (value: string | null) => void = () => {};\n  protected onTouched: () => void = () => {};\n\n  constructor() {\n    effect(() => this.onChange(this.group.value()));\n  }\n\n  writeValue(value: string | null): void {\n    this.group.value.set(value);\n  }\n  registerOnChange(fn: (value: string | null) => void): void {\n    this.onChange = fn;\n  }\n  registerOnTouched(fn: () => void): void {\n    this.onTouched = fn;\n  }\n  setDisabledState(isDisabled: boolean): void {\n    this.group.disabled.set(isDisabled);\n  }\n}\n\n@Component({\n  selector: 'signng-radio',\n  hostDirectives: [{ directive: SignngRadio, inputs: ['value', 'disabled'] }],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: {\n    class:\n      'inline-flex items-center gap-2 text-sm cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-disabled:cursor-not-allowed aria-disabled:opacity-50',\n  },\n  template: `\n    <span\n      class=\"flex size-5 shrink-0 items-center justify-center rounded-full border border-primary\"\n    >\n      @if (radio.checked()) {\n        <span class=\"size-2.5 rounded-full bg-primary\"></span>\n      }\n    </span>\n    <ng-content />\n  `,\n})\nexport class Radio {\n  protected readonly radio = inject(SignngRadio, { self: true });\n}\n",
+      "integrity": "sha256-Xpt0SSrHvMEFD0wGb7RHmk4A/nrV4vF8OQ7tgD/TtqY="
+    }
+  ],
+  "integrity": "sha256-0FvE/FBopl/ZGzwrBcE77fibf7MJTPuvd+XSYiKbvoE="
+}
