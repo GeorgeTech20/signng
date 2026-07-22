@@ -1,11 +1,11 @@
-# Benchmarks & seguridad — signng
+# Benchmarks & seguridad — SignNG
 
 > Datos **medidos**, no estimados. Reproducibles con los comandos al pie. Última corrida: 2026-06-18.
 > Lo que no medimos todavía está marcado **pendiente** — sin inventar números.
 
 ## 1. Footprint por componente (el número que importa)
 
-signng es **copy-paste**: tu bundle solo carga los componentes que importas — no hay un paquete-lib en
+SignNG es **copy-paste**: tu bundle solo carga los componentes que importas — no hay un paquete-lib en
 `node_modules` sumando peso muerto. Tamaño del **código fuente** que copias (gzip):
 
 | Rango | Componentes | gzip |
@@ -31,7 +31,7 @@ Solo 3 utilidades, todas micro y sin CVEs conocidos:
 | `class-variance-authority` | variantes de componente | ~2 KB |
 
 Lo demás (`@angular/*`, `@angular/aria`, `@angular/cdk`) ya está en cualquier app Angular 22 — no es peso
-que signng agregue. **Charts e iconos son SVG/código propio → cero Recharts, cero lucide.**
+que SignNG agregue. **Charts e iconos son SVG/código propio → cero Recharts, cero lucide.**
 
 ## 3. Accesibilidad (medido en CI)
 

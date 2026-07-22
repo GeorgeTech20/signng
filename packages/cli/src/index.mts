@@ -150,7 +150,7 @@ async function runInit(opts: { cwd: string; registry: string; yes?: boolean }) {
 }
 
 const program = new Command();
-program.name('signng').description('signng secure component installer').version('0.0.1');
+program.name('signng').description('SignNG secure component installer').version('0.0.1');
 
 program
   .command('init')

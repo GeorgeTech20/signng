@@ -45,7 +45,7 @@ const bom = {
   bomFormat: 'CycloneDX',
   specVersion: '1.5',
   version: 1,
-  metadata: { component: { type: 'library', name: 'signng-ui', version: '0.0.1' } },
+  metadata: { component: { type: 'library', name: 'signng', version: '0.0.1' } },
   components,
 };
 

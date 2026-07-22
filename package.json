@@ -10,7 +10,7 @@
     "tokens:build": "tsx tokens/build.mjs",
     "registry:build": "tsx registry/build-registry.mts",
     "signng": "tsx packages/cli/src/index.mts",
-    "cli:build": "esbuild packages/cli/src/index.mts --bundle --platform=node --format=esm --target=node20 --packages=external --outfile=packages/cli/dist/index.mjs --banner:js=\"#!/usr/bin/env node\"",
+    "cli:build": "esbuild packages/cli/src/index.mts --bundle --platform=node --format=esm --target=node20 --packages=external --outfile=packages/cli/dist/index.mjs",
     "sbom": "node tools/sbom.mjs",
     "docs": "node tools/docs.mjs",
     "sign:cosign": "node tools/cosign.mjs sign",

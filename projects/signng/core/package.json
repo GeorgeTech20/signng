@@ -2,7 +2,7 @@
   "name": "@signng/core",
   "version": "0.0.1",
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/GeorgeTech20/signng" },
+  "repository": { "type": "git", "url": "git+https://github.com/GeorgeTech20/signng.git" },
   "peerDependencies": {
     "@angular/common": "^22.0.0",
     "@angular/core": "^22.0.0",

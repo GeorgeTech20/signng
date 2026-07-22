@@ -4,10 +4,9 @@
   "type": "module",
   "description": "Secure copy-paste installer for SignNG components (SRI-verified, sandboxed writer).",
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/GeorgeTech20/signng" },
+  "repository": { "type": "git", "url": "git+https://github.com/GeorgeTech20/signng.git" },
   "bin": {
-    "signng": "./dist/index.mjs",
-    "signng": "./dist/index.mjs"
+    "signng": "dist/index.mjs"
   },
   "files": ["dist"],
   "dependencies": {

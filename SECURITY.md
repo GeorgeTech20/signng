@@ -4,7 +4,7 @@
 
 This policy covers the `@signng/core` package, the `@signng/cli` installer, the signed
 component registry, and the documentation app. It does **not** cover applications built *with*
-signng — securing the host app (CSP/Trusted Types delivery, anti-framing headers, HSTS, authn/z)
+SignNG — securing the host app (CSP/Trusted Types delivery, anti-framing headers, HSTS, authn/z)
 is the consumer's responsibility (see the threat-model doc).
 
 ## Supported versions
@@ -27,7 +27,7 @@ or email `security@signng.dev` (PGP key in `/.well-known/security.txt`).
 ## Safe harbor
 
 Good-faith research within this scope will not lead to legal action. Do **not** test against
-third-party apps that merely use signng, exfiltrate data, or run denial-of-service.
+third-party apps that merely use SignNG, exfiltrate data, or run denial-of-service.
 
 ## What we guarantee
 

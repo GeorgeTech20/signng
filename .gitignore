@@ -58,3 +58,6 @@ __screenshots__/
 Thumbs.db
 docs/_preview.png
 dashboard.png
+
+# local Claude Code config/tooling — not part of the published product
+.claude/
